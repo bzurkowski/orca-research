@@ -14,10 +14,10 @@ helm install stable/prometheus-operator \
     receivers:
     - name: webhook
       webhook_configs:
-      - url: http://orca.rca:5000/v1/alerts
+      - url: http://orca.rca:5000/v1/ingestor/prometheus
     route:
       group_by: ['job']
-      group_interval: 5m
+      group_interval: 30s
       group_wait: 30s
       receiver: 'webhook'
       repeat_interval: 12h
