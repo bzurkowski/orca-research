@@ -1,0 +1,339 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Falco · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../integrations/falco.html" />
+    
+    
+    <link rel="prev" href="prometheus.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Testbed</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="prometheus.html">
+            
+                <a href="prometheus.html">
+            
+                    
+                    Prometheus
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="2.2" data-path="falco.html">
+            
+                <a href="falco.html">
+            
+                    
+                    Falco
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Integrations</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" data-path="../integrations/falco.html">
+            
+                <a href="../integrations/falco.html">
+            
+                    
+                    Falco
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Falco</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="falco">Falco</h1>
+<h2 id="installation">Installation</h2>
+<h5 id="enable-dynamic-audit-log-backend">Enable dynamic audit log backend</h5>
+<p>Add required flags to the API Server manifest:</p>
+<pre><code class="lang-bash">  <span class="hljs-comment"># /etc/kubernetes/manifests/kube-apiserver.yaml</span>
+  ...
+  --audit-dynamic-configuration
+  --feature-gates=DynamicAuditing=<span class="hljs-literal">true</span>
+  --runtime-config=auditregistration.k8s.io/v1alpha1=<span class="hljs-literal">true</span>
+</code></pre>
+<p>After saving the file, the API server should be restarted automatically with audit log enabled.</p>
+<ul>
+<li><a href="https://kubernetes.io/docs/tasks/debug-application-cluster/audit/#dynamic-backend" target="_blank">https://kubernetes.io/docs/tasks/debug-application-cluster/audit/#dynamic-backend</a></li>
+<li><a href="https://github.com/falcosecurity/falco/blob/dev/examples/k8s_audit_config/enable-k8s-audit.sh" target="_blank">https://github.com/falcosecurity/falco/blob/dev/examples/k8s_audit_config/enable-k8s-audit.sh</a></li>
+<li><a href="https://github.com/falcosecurity/falco/tree/dev/examples/k8s_audit_config#instructions-for-kubernetes-113" target="_blank">https://github.com/falcosecurity/falco/tree/dev/examples/k8s_audit_config#instructions-for-kubernetes-113</a></li>
+</ul>
+<h5 id="deploy-helm-chart">Deploy Helm chart</h5>
+<p>Install <code>stable/falco</code> chart using Helm with additional flags:</p>
+<pre><code class="lang-bash">  $ helm install stable/falco \
+      --name falco \
+      --namespace falco \
+      --set auditLog.enabled=<span class="hljs-literal">true</span> \
+      --set auditLog.dynamicBackend.enabled=<span class="hljs-literal">true</span> \
+      --set falco.jsonOutput=<span class="hljs-literal">true</span> \
+      --set falco.httpOutput.enabled=<span class="hljs-literal">true</span> \
+      --set falco.httpOutput.url=http://orca.rca:5000/v1/ingestor/falco \
+      --set resources.requests.cpu=100m \
+      --set resources.requests.memory=100Mi \
+      --set resources.limits.cpu=1000m \
+      --set resources.limits.memory=1000Mi
+</code></pre>
+<h5 id="fix-webhook-backend-reference-in-audit-sink-policy">Fix webhook backend reference in Audit Sink policy</h5>
+<p>By default, Falco chart creates an audit sink policy with <code>service</code> webhook reference instead of <code>url</code> reference. It is correct for in-cluster webhook setup, however, for some reason, when using <code>service</code> reference, the specified webhook port is not respected by the API server - it attempts to communicate with the webhook service using HTTPS on port 443. To fix the issue, the created audit sink must be modified to use <code>url</code> reference for which the port is respected.</p>
+<pre><code class="lang-bash">  $ kubectl edit auditsink falco
+</code></pre>
+<pre><code class="lang-yaml"><span class="hljs-attr">  apiVersion:</span> auditregistration.k8s.io/v1alpha1
+<span class="hljs-attr">  kind:</span> AuditSink
+<span class="hljs-attr">  metadata:</span>
+<span class="hljs-attr">    creationTimestamp:</span> <span class="hljs-string">&quot;2020-01-24T15:50:01Z&quot;</span>
+<span class="hljs-attr">    generation:</span> <span class="hljs-number">3</span>
+<span class="hljs-attr">    name:</span> falco
+<span class="hljs-attr">    resourceVersion:</span> <span class="hljs-string">&quot;13417243&quot;</span>
+<span class="hljs-attr">    selfLink:</span> /apis/auditregistration.k8s.io/v1alpha1/auditsinks/falco
+<span class="hljs-attr">    uid:</span> <span class="hljs-number">0741</span>fd30<span class="hljs-bullet">-4</span>bd6<span class="hljs-bullet">-4</span>da6<span class="hljs-bullet">-8490</span><span class="hljs-bullet">-24717670</span>a083
+<span class="hljs-attr">  spec:</span>
+<span class="hljs-attr">    policy:</span>
+<span class="hljs-attr">      level:</span> RequestResponse
+<span class="hljs-attr">      stages:</span>
+<span class="hljs-bullet">      -</span> ResponseComplete
+<span class="hljs-bullet">      -</span> ResponseStarted
+<span class="hljs-attr">    webhook:</span>
+<span class="hljs-attr">      clientConfig:</span>
+<span class="hljs-attr">        url:</span> http://&lt;falco-svc-cluster-ip&gt;:<span class="hljs-number">8765</span>/k8s-audit
+<span class="hljs-attr">      throttle:</span>
+<span class="hljs-attr">        burst:</span> <span class="hljs-number">15</span>
+<span class="hljs-attr">        qps:</span> <span class="hljs-number">10</span>
+</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="prometheus.html" class="navigation navigation-prev " aria-label="Previous page: Prometheus">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="../integrations/falco.html" class="navigation navigation-next " aria-label="Next page: Falco">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Falco","level":"2.2","depth":1,"next":{"title":"Falco","level":"3.1","depth":1,"path":"integrations/falco.md","ref":"integrations/falco.md","articles":[]},"previous":{"title":"Prometheus","level":"2.1","depth":1,"path":"testbed/prometheus.md","ref":"testbed/prometheus.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/falco.md","mtime":"2020-01-26T09:20:05.878Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-01-26T09:54:57.188Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
