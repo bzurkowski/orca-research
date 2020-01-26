@@ -2,6 +2,13 @@
 
 * [Introduction](README.md)
 
+## Research
+
+* [RCA systems](research/rca-systems.md)
+* [Event sourcing](research/event_sourcing.md)
+* [Graph processing](research/graph_processing.md)
+* [Stream processing](research/stream_processing.md)
+
 ## Testbed
 
 * [Prometheus](testbed/prometheus.md)
@@ -10,3 +17,7 @@
 ## Integrations
 
 * [Falco](integrations/falco.md)
+
+## MISC
+
+* [Conferences](misc/conferences.md)
