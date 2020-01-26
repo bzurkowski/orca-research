@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Falco · GitBook</title>
+        <title>Event sourcing · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -57,10 +57,10 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="../misc/conferences.html" />
+    <link rel="next" href="graph_processing.html" />
     
     
-    <link rel="prev" href="../testbed/falco.html" />
+    <link rel="prev" href="rca-systems.html" />
     
 
     </head>
@@ -109,9 +109,9 @@
         
         
     
-        <li class="chapter " data-level="2.1" data-path="../research/rca-systems.html">
+        <li class="chapter " data-level="2.1" data-path="rca-systems.html">
             
-                <a href="../research/rca-systems.html">
+                <a href="rca-systems.html">
             
                     
                     RCA systems
@@ -122,9 +122,9 @@
             
         </li>
     
-        <li class="chapter " data-level="2.2" data-path="../research/event_sourcing.html">
+        <li class="chapter active" data-level="2.2" data-path="event_sourcing.html">
             
-                <a href="../research/event_sourcing.html">
+                <a href="event_sourcing.html">
             
                     
                     Event sourcing
@@ -135,9 +135,9 @@
             
         </li>
     
-        <li class="chapter " data-level="2.3" data-path="../research/graph_processing.html">
+        <li class="chapter " data-level="2.3" data-path="graph_processing.html">
             
-                <a href="../research/graph_processing.html">
+                <a href="graph_processing.html">
             
                     
                     Graph processing
@@ -148,9 +148,9 @@
             
         </li>
     
-        <li class="chapter " data-level="2.4" data-path="../research/stream_processing.html">
+        <li class="chapter " data-level="2.4" data-path="stream_processing.html">
             
-                <a href="../research/stream_processing.html">
+                <a href="stream_processing.html">
             
                     
                     Stream processing
@@ -201,9 +201,9 @@
         
         
     
-        <li class="chapter active" data-level="4.1" data-path="falco.html">
+        <li class="chapter " data-level="4.1" data-path="../integrations/falco.html">
             
-                <a href="falco.html">
+                <a href="../integrations/falco.html">
             
                     
                     Falco
@@ -264,7 +264,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Falco</a>
+        <a href=".." >Event sourcing</a>
     </h1>
 </div>
 
@@ -279,31 +279,15 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="falco">Falco</h1>
-<h2 id="rules">Rules</h2>
-<p>Default syscall rules:</p>
+                                <h1 id="event-sourcing">Event sourcing</h1>
 <ul>
-<li><a href="https://github.com/falcosecurity/falco/blob/dev/rules/falco_rules.yaml" target="_blank">https://github.com/falcosecurity/falco/blob/dev/rules/falco_rules.yaml</a></li>
-</ul>
-<p>Default K8S audit rules:</p>
-<ul>
-<li><a href="https://github.com/falcosecurity/falco/blob/dev/rules/k8s_audit_rules.yaml" target="_blank">https://github.com/falcosecurity/falco/blob/dev/rules/k8s_audit_rules.yaml</a></li>
-</ul>
-<p>Custom rules for application profiles (Nginx, MongoDB, Redis, K8S API Server etc.):</p>
-<ul>
-<li><a href="https://github.com/falcosecurity/falco/blob/dev/rules/application_rules.yaml" target="_blank">https://github.com/falcosecurity/falco/blob/dev/rules/application_rules.yaml</a></li>
-<li><a href="https://github.com/falcosecurity/profiles" target="_blank">https://github.com/falcosecurity/profiles</a></li>
-</ul>
-<h2 id="generating-events">Generating events</h2>
-<p>Falco provides scripts to generate the activity matching the syscall and k8s event rulesets:</p>
-<pre><code class="lang-bash">  $ docker pull sysdig/falco-event-generator
-  $ docker run -it --name falco-event-generator sysdig/falco-event-generator [syscall|k8s_audit (&lt;rule name&gt;|all)|bash]
-</code></pre>
-<p>For K8S audit log:</p>
-<pre><code class="lang-bash">  $ docker run -v <span class="hljs-variable">$HOME</span>/.kube:/root/.kube -it falcosecurity/falco-event-generator k8s_audit
-</code></pre>
-<ul>
-<li><a href="https://falco.org/docs/event-sources/sample-events/" target="_blank">https://falco.org/docs/event-sources/sample-events/</a></li>
+<li><a href="https://medium.com/@drozzy/filling-the-gaps-in-cqrs-and-event-sourced-systems-taxonomy-of-system-components-49a23421e582" target="_blank">https://medium.com/@drozzy/filling-the-gaps-in-cqrs-and-event-sourced-systems-taxonomy-of-system-components-49a23421e582</a></li>
+<li><a href="https://groups.google.com/forum/?utm_source=digest&amp;utm_medium=email#!forum/dddcqrs" target="_blank">https://groups.google.com/forum/?utm_source=digest&amp;utm_medium=email#!forum/dddcqrs</a></li>
+<li><a href="https://danielwhittaker.me/2014/10/02/cqrs-step-step-guide-flow-typical-application/" target="_blank">https://danielwhittaker.me/2014/10/02/cqrs-step-step-guide-flow-typical-application/</a></li>
+<li><p><a href="https://www.youtube.com/watch?v=CFdPDfXy6Y0" target="_blank">https://www.youtube.com/watch?v=CFdPDfXy6Y0</a></p>
+</li>
+<li><p><a href="https://www.youtube.com/watch?v=GzrZworHpIk" target="_blank">https://www.youtube.com/watch?v=GzrZworHpIk</a></p>
+</li>
 </ul>
 
                                 
@@ -332,12 +316,12 @@
 
             
                 
-                <a href="../testbed/falco.html" class="navigation navigation-prev " aria-label="Previous page: Falco">
+                <a href="rca-systems.html" class="navigation navigation-prev " aria-label="Previous page: RCA systems">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="../misc/conferences.html" class="navigation navigation-next " aria-label="Next page: Conferences">
+                <a href="graph_processing.html" class="navigation navigation-next " aria-label="Next page: Graph processing">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -348,7 +332,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Falco","level":"4.1","depth":1,"next":{"title":"Conferences","level":"5.1","depth":1,"path":"misc/conferences.md","ref":"misc/conferences.md","articles":[]},"previous":{"title":"Falco","level":"3.2","depth":1,"path":"testbed/falco.md","ref":"testbed/falco.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"integrations/falco.md","mtime":"2020-01-26T09:54:32.807Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-01-26T12:59:06.819Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Event sourcing","level":"2.2","depth":1,"next":{"title":"Graph processing","level":"2.3","depth":1,"path":"research/graph_processing.md","ref":"research/graph_processing.md","articles":[]},"previous":{"title":"RCA systems","level":"2.1","depth":1,"path":"research/rca-systems.md","ref":"research/rca-systems.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"research/event_sourcing.md","mtime":"2020-01-26T12:56:02.264Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-01-26T12:59:06.819Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
