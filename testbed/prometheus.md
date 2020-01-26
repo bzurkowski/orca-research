@@ -1,13 +1,21 @@
 # Prometheus
 
-```bash
-helm install stable/prometheus-operator \
-    --name prometheus \
-    --namespace monitoring \
-    --values $HOME/orca/helm/examples/prometheus-operator.yaml
-```
+## Installation
 
-```yaml
+##### Deploy Helm chart
+
+Install `stable/prometheus-operator` chart using Helm with additional flags:
+
+  ```bash
+  helm install stable/prometheus-operator \
+      --name prometheus \
+      --namespace monitoring \
+      --values $HOME/orca/helm/examples/integrations/prometheus/prometheus-values.yaml
+  ```
+
+  ```yaml
+  # prometheus-operator.yaml
+  ...
   config:
     global:
       resolve_timeout: 5m
@@ -22,4 +30,4 @@ helm install stable/prometheus-operator \
       receiver: 'webhook'
       repeat_interval: 12h
       routes: []
-```
+  ```
