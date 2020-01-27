@@ -12,6 +12,7 @@
 ## Testbed
 
 * [Prometheus](testbed/prometheus.md)
+* [EFK](testbed/efk.md)
 * [Falco](testbed/falco.md)
 
 ## Integrations
