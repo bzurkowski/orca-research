@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Falco · GitBook</title>
+        <title>Graph · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -57,10 +57,10 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="../integrations/falco.html" />
+    <link rel="next" href="../misc/conferences.html" />
     
     
-    <link rel="prev" href="elastalert.html" />
+    <link rel="prev" href="../integrations/falco.html" />
     
 
     </head>
@@ -168,9 +168,9 @@
         
         
     
-        <li class="chapter " data-level="3.1" data-path="prometheus.html">
+        <li class="chapter " data-level="3.1" data-path="../testbed/prometheus.html">
             
-                <a href="prometheus.html">
+                <a href="../testbed/prometheus.html">
             
                     
                     Prometheus
@@ -181,9 +181,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.2" data-path="efk.html">
+        <li class="chapter " data-level="3.2" data-path="../testbed/efk.html">
             
-                <a href="efk.html">
+                <a href="../testbed/efk.html">
             
                     
                     EFK
@@ -194,9 +194,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.3" data-path="elastalert.html">
+        <li class="chapter " data-level="3.3" data-path="../testbed/elastalert.html">
             
-                <a href="elastalert.html">
+                <a href="../testbed/elastalert.html">
             
                     
                     Elastalert
@@ -207,9 +207,9 @@
             
         </li>
     
-        <li class="chapter active" data-level="3.4" data-path="falco.html">
+        <li class="chapter " data-level="3.4" data-path="../testbed/falco.html">
             
-                <a href="falco.html">
+                <a href="../testbed/falco.html">
             
                     
                     Falco
@@ -247,9 +247,9 @@
         
         
     
-        <li class="chapter " data-level="5.1" data-path="../development/graph.html">
+        <li class="chapter active" data-level="5.1" data-path="graph.html">
             
-                <a href="../development/graph.html">
+                <a href="graph.html">
             
                     
                     Graph
@@ -310,7 +310,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Falco</a>
+        <a href=".." >Graph</a>
     </h1>
 </div>
 
@@ -325,54 +325,21 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="falco">Falco</h1>
-<h2 id="installation">Installation</h2>
-<h5 id="enable-dynamic-audit-log-backend">Enable dynamic audit log backend</h5>
-<p>Add required flags to the API Server manifest:</p>
-<pre><code class="lang-bash">  <span class="hljs-comment"># /etc/kubernetes/manifests/kube-apiserver.yaml</span>
-  ...
-  --audit-dynamic-configuration
-  --feature-gates=DynamicAuditing=<span class="hljs-literal">true</span>
-  --runtime-config=auditregistration.k8s.io/v1alpha1=<span class="hljs-literal">true</span>
-</code></pre>
-<p>After saving the file, the API server should be restarted automatically with audit log enabled.</p>
-<ul>
-<li><a href="https://kubernetes.io/docs/tasks/debug-application-cluster/audit/#dynamic-backend" target="_blank">https://kubernetes.io/docs/tasks/debug-application-cluster/audit/#dynamic-backend</a></li>
-<li><a href="https://github.com/falcosecurity/falco/blob/dev/examples/k8s_audit_config/enable-k8s-audit.sh" target="_blank">https://github.com/falcosecurity/falco/blob/dev/examples/k8s_audit_config/enable-k8s-audit.sh</a></li>
-<li><a href="https://github.com/falcosecurity/falco/tree/dev/examples/k8s_audit_config#instructions-for-kubernetes-113" target="_blank">https://github.com/falcosecurity/falco/tree/dev/examples/k8s_audit_config#instructions-for-kubernetes-113</a></li>
-</ul>
-<h5 id="deploy-helm-chart">Deploy Helm chart</h5>
-<p>Install <code>stable/falco</code> chart using Helm with additional flags:</p>
-<pre><code class="lang-bash">  $ helm install stable/falco \
-      --name falco \
-      --namespace falco \
-      --values <span class="hljs-variable">$HOME</span>/orca/helm/examples/integrations/falco/orca-values.yaml
-</code></pre>
-<h5 id="fix-webhook-backend-reference-in-audit-sink-policy">Fix webhook backend reference in Audit Sink policy</h5>
-<p>By default, Falco chart creates an audit sink policy with <code>service</code> webhook reference instead of <code>url</code> reference. It is correct for in-cluster webhook setup, however, for some reason, when using <code>service</code> reference, the specified webhook port is not respected by the API server - it attempts to communicate with the webhook service using HTTPS on port 443. To fix the issue, the created audit sink must be modified to use <code>url</code> reference for which the port is respected.</p>
-<pre><code class="lang-bash">  $ kubectl edit auditsink falco
-</code></pre>
-<pre><code class="lang-yaml"><span class="hljs-attr">  apiVersion:</span> auditregistration.k8s.io/v1alpha1
-<span class="hljs-attr">  kind:</span> AuditSink
-<span class="hljs-attr">  metadata:</span>
-<span class="hljs-attr">    creationTimestamp:</span> <span class="hljs-string">&quot;2020-01-24T15:50:01Z&quot;</span>
-<span class="hljs-attr">    generation:</span> <span class="hljs-number">3</span>
-<span class="hljs-attr">    name:</span> falco
-<span class="hljs-attr">    resourceVersion:</span> <span class="hljs-string">&quot;13417243&quot;</span>
-<span class="hljs-attr">    selfLink:</span> /apis/auditregistration.k8s.io/v1alpha1/auditsinks/falco
-<span class="hljs-attr">    uid:</span> <span class="hljs-number">0741</span>fd30<span class="hljs-bullet">-4</span>bd6<span class="hljs-bullet">-4</span>da6<span class="hljs-bullet">-8490</span><span class="hljs-bullet">-24717670</span>a083
-<span class="hljs-attr">  spec:</span>
-<span class="hljs-attr">    policy:</span>
-<span class="hljs-attr">      level:</span> RequestResponse
-<span class="hljs-attr">      stages:</span>
-<span class="hljs-bullet">      -</span> ResponseComplete
-<span class="hljs-bullet">      -</span> ResponseStarted
-<span class="hljs-attr">    webhook:</span>
-<span class="hljs-attr">      clientConfig:</span>
-<span class="hljs-attr">        url:</span> http://&lt;falco-svc-cluster-ip&gt;:<span class="hljs-number">8765</span>/k8s-audit
-<span class="hljs-attr">      throttle:</span>
-<span class="hljs-attr">        burst:</span> <span class="hljs-number">15</span>
-<span class="hljs-attr">        qps:</span> <span class="hljs-number">10</span>
+                                <h1 id="graph">Graph</h1>
+<pre><code class="lang-python"><span class="hljs-keyword">from</span> orca.graph.drivers <span class="hljs-keyword">import</span> neo4j
+<span class="hljs-keyword">from</span> orca.graph <span class="hljs-keyword">import</span> graph
+
+host = <span class="hljs-string">&quot;localhost&quot;</span>
+port = <span class="hljs-number">7687</span>
+user = <span class="hljs-string">&quot;neo4j&quot;</span>
+password = <span class="hljs-string">&quot;admin&quot;</span>
+
+driver = neo4j.Neo4jDriver(
+    host=host, port=port, user=user, password=password)
+
+g = graph.Graph(driver)
+
+g.get_nodes(kind=<span class="hljs-string">&apos;falco_alert&apos;</span>)
 </code></pre>
 
                                 
@@ -401,12 +368,12 @@
 
             
                 
-                <a href="elastalert.html" class="navigation navigation-prev " aria-label="Previous page: Elastalert">
+                <a href="../integrations/falco.html" class="navigation navigation-prev " aria-label="Previous page: Falco">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="../integrations/falco.html" class="navigation navigation-next " aria-label="Next page: Falco">
+                <a href="../misc/conferences.html" class="navigation navigation-next " aria-label="Next page: Conferences">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -417,7 +384,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Falco","level":"3.4","depth":1,"next":{"title":"Falco","level":"4.1","depth":1,"path":"integrations/falco.md","ref":"integrations/falco.md","articles":[]},"previous":{"title":"Elastalert","level":"3.3","depth":1,"path":"testbed/elastalert.md","ref":"testbed/elastalert.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/falco.md","mtime":"2020-01-28T11:46:38.169Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-02-10T20:42:47.551Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Graph","level":"5.1","depth":1,"next":{"title":"Conferences","level":"6.1","depth":1,"path":"misc/conferences.md","ref":"misc/conferences.md","articles":[]},"previous":{"title":"Falco","level":"4.1","depth":1,"path":"integrations/falco.md","ref":"integrations/falco.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"development/graph.md","mtime":"2020-02-10T20:41:41.603Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-02-10T20:42:47.551Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
