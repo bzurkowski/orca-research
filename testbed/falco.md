@@ -28,15 +28,7 @@ Install `stable/falco` chart using Helm with additional flags:
   $ helm install stable/falco \
       --name falco \
       --namespace falco \
-      --set auditLog.enabled=true \
-      --set auditLog.dynamicBackend.enabled=true \
-      --set falco.jsonOutput=true \
-      --set falco.httpOutput.enabled=true \
-      --set falco.httpOutput.url=http://orca.rca:5000/v1/ingestor/falco \
-      --set resources.requests.cpu=100m \
-      --set resources.requests.memory=100Mi \
-      --set resources.limits.cpu=1000m \
-      --set resources.limits.memory=1000Mi
+      --values $HOME/orca/helm/examples/integrations/falco/orca-values.yaml
   ```
 
 ##### Fix webhook backend reference in Audit Sink policy
