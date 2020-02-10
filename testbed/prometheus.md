@@ -10,7 +10,7 @@ Install `stable/prometheus-operator` chart using Helm with additional flags:
   helm install stable/prometheus-operator \
       --name prometheus \
       --namespace monitoring \
-      --values $HOME/orca/helm/examples/integrations/prometheus/prometheus-values.yaml
+      --values $HOME/orca/helm/examples/integrations/prometheus/orca-values.yaml
   ```
 
   ```yaml
