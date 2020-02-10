@@ -13,6 +13,7 @@
 
 * [Prometheus](testbed/prometheus.md)
 * [EFK](testbed/efk.md)
+* [Elastalert](testbed/elastalert.md)
 * [Falco](testbed/falco.md)
 
 ## Integrations
