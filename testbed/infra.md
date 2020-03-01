@@ -4,7 +4,8 @@
 
 Name: orca{i}
 
-OS: CentOS 7 (http://ftp.ps.pl/pub/Linux/CentOS/7.7.1908/isos/x86_64/CentOS-7-x86_64-Minimal-1908.iso)
+OS: CentOS 7
+http://ftp.ps.pl/pub/Linux/CentOS/7.7.1908/isos/x86_64/CentOS-7-x86_64-Minimal-1908.iso
 
 CPU:
 
@@ -26,14 +27,14 @@ Disk:
     * Cache mode: none
     * IO mode: native
 
-NIC 1:
+NIC 1 (external network):
 
-    * Network source: Bridge br0 Host device vnet0
+    * Network source: Bridge br0 Host device eth0
     * Device model: virtio
 
-NIC 2:
+NIC 2 (internal network):
 
-    * Network source: Bridge br1 Host device vnet1
+    * Network source: Bridge br1 Host device eth1
     * Device model: virtio
 
 ### Configure network interfaces

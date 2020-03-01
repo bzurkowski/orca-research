@@ -117,7 +117,7 @@ all:
       hosts: {}
 ```
 
-Update `inventory/orca/group_vars/k8s-cluster/k8s-cluster.yaml`
+Update `inventory/orca/group_vars/k8s-cluster/k8s-cluster.yaml`:
 
 ```yaml
 kube_version: v1.15.3
