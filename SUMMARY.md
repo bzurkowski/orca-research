@@ -13,6 +13,7 @@
 
 * [Infrastructure](testbed/infra.md)
 * [Kubernetes](testbed/kubernetes.md)
+* [NFS](testbed/nfs.md)
 * [Prometheus](testbed/prometheus.md)
 * [EFK](testbed/efk.md)
 * [Elastalert](testbed/elastalert.md)
