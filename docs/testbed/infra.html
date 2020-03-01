@@ -361,6 +361,51 @@ OS: CentOS 7</p>
 </code></pre><p>NIC 2:</p>
 <pre><code>* Network source: Bridge br1 Host device vnet1
 * Device model: virtio
+</code></pre><h3 id="configure-network-interfaces">Configure network interfaces</h3>
+<pre><code>$ cat /etc/sysconfig/network-scripts/ifcfg-eth0
+TYPE=&quot;Ethernet&quot;
+PROXY_METHOD=&quot;none&quot;
+BROWSER_ONLY=&quot;no&quot;
+BOOTPROTO=&quot;none&quot;
+DEFROUTE=&quot;yes&quot;
+IPV4_FAILURE_FATAL=&quot;no&quot;
+IPV6INIT=&quot;yes&quot;
+IPV6_AUTOCONF=&quot;yes&quot;
+IPV6_DEFROUTE=&quot;yes&quot;
+IPV6_FAILURE_FATAL=&quot;no&quot;
+IPV6_ADDR_GEN_MODE=&quot;stable-privacy&quot;
+NAME=&quot;eth0&quot;
+UUID=&quot;d0fece49-7eac-4374-a471-8e51d6e3dd9c&quot;
+DEVICE=&quot;eth0&quot;
+ONBOOT=&quot;yes&quot;
+IPADDR=&quot;172.17.66.31&quot;
+PREFIX=&quot;24&quot;
+GATEWAY=&quot;172.17.66.254&quot;
+DNS1=&quot;8.8.8.8&quot;
+DNS2=&quot;172.29.128.101&quot;
+IPV6_PRIVACY=&quot;no&quot;
+</code></pre><pre><code>$ cat /etc/sysconfig/network-scripts/ifcfg-eth0
+TYPE=&quot;Ethernet&quot;
+PROXY_METHOD=&quot;none&quot;
+BROWSER_ONLY=&quot;no&quot;
+BOOTPROTO=&quot;none&quot;
+DEFROUTE=&quot;yes&quot;
+IPV4_FAILURE_FATAL=&quot;no&quot;
+IPV6INIT=&quot;yes&quot;
+IPV6_AUTOCONF=&quot;yes&quot;
+IPV6_DEFROUTE=&quot;yes&quot;
+IPV6_FAILURE_FATAL=&quot;no&quot;
+IPV6_ADDR_GEN_MODE=&quot;stable-privacy&quot;
+NAME=&quot;eth0&quot;
+UUID=&quot;d0fece49-7eac-4374-a471-8e51d6e3dd9c&quot;
+DEVICE=&quot;eth0&quot;
+ONBOOT=&quot;yes&quot;
+IPADDR=&quot;172.17.66.31&quot;
+PREFIX=&quot;24&quot;
+GATEWAY=&quot;172.17.66.254&quot;
+DNS1=&quot;8.8.8.8&quot;
+DNS2=&quot;172.29.128.101&quot;
+IPV6_PRIVACY=&quot;no&quot;
 </code></pre>
                                 
                                 </section>
@@ -404,7 +449,7 @@ OS: CentOS 7</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Infrastructure","level":"3.1","depth":1,"next":{"title":"Prometheus","level":"3.2","depth":1,"path":"testbed/prometheus.md","ref":"testbed/prometheus.md","articles":[]},"previous":{"title":"Stream processing","level":"2.4","depth":1,"path":"research/stream_processing.md","ref":"research/stream_processing.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/infra.md","mtime":"2020-03-01T09:00:00.412Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-01T09:00:21.214Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Infrastructure","level":"3.1","depth":1,"next":{"title":"Prometheus","level":"3.2","depth":1,"path":"testbed/prometheus.md","ref":"testbed/prometheus.md","articles":[]},"previous":{"title":"Stream processing","level":"2.4","depth":1,"path":"research/stream_processing.md","ref":"research/stream_processing.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/infra.md","mtime":"2020-03-01T10:07:12.936Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-01T10:07:26.272Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
