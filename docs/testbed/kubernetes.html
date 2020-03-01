@@ -57,7 +57,7 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="prometheus.html" />
+    <link rel="next" href="nfs.html" />
     
     
     <link rel="prev" href="infra.html" />
@@ -194,7 +194,20 @@
             
         </li>
     
-        <li class="chapter " data-level="3.3" data-path="prometheus.html">
+        <li class="chapter " data-level="3.3" data-path="nfs.html">
+            
+                <a href="nfs.html">
+            
+                    
+                    NFS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.4" data-path="prometheus.html">
             
                 <a href="prometheus.html">
             
@@ -207,7 +220,7 @@
             
         </li>
     
-        <li class="chapter " data-level="3.4" data-path="efk.html">
+        <li class="chapter " data-level="3.5" data-path="efk.html">
             
                 <a href="efk.html">
             
@@ -220,7 +233,7 @@
             
         </li>
     
-        <li class="chapter " data-level="3.5" data-path="elastalert.html">
+        <li class="chapter " data-level="3.6" data-path="elastalert.html">
             
                 <a href="elastalert.html">
             
@@ -233,7 +246,20 @@
             
         </li>
     
-        <li class="chapter " data-level="3.6" data-path="falco.html">
+        <li class="chapter " data-level="3.7" data-path="istio.html">
+            
+                <a href="istio.html">
+            
+                    
+                    Istio
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.8" data-path="falco.html">
             
                 <a href="falco.html">
             
@@ -433,7 +459,7 @@ $ systemctl <span class="hljs-built_in">disable</span> firewalld
 <span class="hljs-attr">    calico-rr:</span>
 <span class="hljs-attr">      hosts:</span> {}
 </code></pre>
-<p>Update <code>inventory/orca/group_vars/k8s-cluster/k8s-cluster.yaml</code></p>
+<p>Update <code>inventory/orca/group_vars/k8s-cluster/k8s-cluster.yaml</code>:</p>
 <pre><code class="lang-yaml"><span class="hljs-attr">kube_version:</span> v1<span class="hljs-number">.15</span><span class="hljs-number">.3</span>
 </code></pre>
 <p>Update <code>inventory/orca/group_vars/k8s-cluster/addons.yml</code>:</p>
@@ -477,7 +503,7 @@ $ systemctl <span class="hljs-built_in">disable</span> firewalld
                 </a>
                 
                 
-                <a href="prometheus.html" class="navigation navigation-next " aria-label="Next page: Prometheus">
+                <a href="nfs.html" class="navigation navigation-next " aria-label="Next page: NFS">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -488,7 +514,7 @@ $ systemctl <span class="hljs-built_in">disable</span> firewalld
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Kubernetes","level":"3.2","depth":1,"next":{"title":"Prometheus","level":"3.3","depth":1,"path":"testbed/prometheus.md","ref":"testbed/prometheus.md","articles":[]},"previous":{"title":"Infrastructure","level":"3.1","depth":1,"path":"testbed/infra.md","ref":"testbed/infra.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/kubernetes.md","mtime":"2020-03-01T10:37:19.622Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-01T10:40:21.531Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Kubernetes","level":"3.2","depth":1,"next":{"title":"NFS","level":"3.3","depth":1,"path":"testbed/nfs.md","ref":"testbed/nfs.md","articles":[]},"previous":{"title":"Infrastructure","level":"3.1","depth":1,"path":"testbed/infra.md","ref":"testbed/infra.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/kubernetes.md","mtime":"2020-03-01T13:14:56.368Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-01T13:32:09.279Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

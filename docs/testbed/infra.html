@@ -194,7 +194,20 @@
             
         </li>
     
-        <li class="chapter " data-level="3.3" data-path="prometheus.html">
+        <li class="chapter " data-level="3.3" data-path="nfs.html">
+            
+                <a href="nfs.html">
+            
+                    
+                    NFS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.4" data-path="prometheus.html">
             
                 <a href="prometheus.html">
             
@@ -207,7 +220,7 @@
             
         </li>
     
-        <li class="chapter " data-level="3.4" data-path="efk.html">
+        <li class="chapter " data-level="3.5" data-path="efk.html">
             
                 <a href="efk.html">
             
@@ -220,7 +233,7 @@
             
         </li>
     
-        <li class="chapter " data-level="3.5" data-path="elastalert.html">
+        <li class="chapter " data-level="3.6" data-path="elastalert.html">
             
                 <a href="elastalert.html">
             
@@ -233,7 +246,20 @@
             
         </li>
     
-        <li class="chapter " data-level="3.6" data-path="falco.html">
+        <li class="chapter " data-level="3.7" data-path="istio.html">
+            
+                <a href="istio.html">
+            
+                    
+                    Istio
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.8" data-path="falco.html">
             
                 <a href="falco.html">
             
@@ -354,7 +380,8 @@
                                 <h1 id="infrastructure-setup">Infrastructure Setup</h1>
 <h3 id="provision-vms">Provision VMs</h3>
 <p>Name: orca{i}</p>
-<p>OS: CentOS 7 (<a href="http://ftp.ps.pl/pub/Linux/CentOS/7.7.1908/isos/x86_64/CentOS-7-x86_64-Minimal-1908.iso" target="_blank">http://ftp.ps.pl/pub/Linux/CentOS/7.7.1908/isos/x86_64/CentOS-7-x86_64-Minimal-1908.iso</a>)</p>
+<p>OS: CentOS 7
+<a href="http://ftp.ps.pl/pub/Linux/CentOS/7.7.1908/isos/x86_64/CentOS-7-x86_64-Minimal-1908.iso" target="_blank">http://ftp.ps.pl/pub/Linux/CentOS/7.7.1908/isos/x86_64/CentOS-7-x86_64-Minimal-1908.iso</a></p>
 <p>CPU:</p>
 <pre><code>* Current allocation: 8
 * Maximum allocation: 8
@@ -368,11 +395,11 @@
 * Storage format: raw
 * Cache mode: none
 * IO mode: native
-</code></pre><p>NIC 1:</p>
-<pre><code>* Network source: Bridge br0 Host device vnet0
+</code></pre><p>NIC 1 (external network):</p>
+<pre><code>* Network source: Bridge br0 Host device eth0
 * Device model: virtio
-</code></pre><p>NIC 2:</p>
-<pre><code>* Network source: Bridge br1 Host device vnet1
+</code></pre><p>NIC 2 (internal network):</p>
+<pre><code>* Network source: Bridge br1 Host device eth1
 * Device model: virtio
 </code></pre><h3 id="configure-network-interfaces">Configure network interfaces</h3>
 <pre><code>$ cat /etc/sysconfig/network-scripts/ifcfg-eth0
@@ -460,7 +487,7 @@ IPV6_PRIVACY=no
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Infrastructure","level":"3.1","depth":1,"next":{"title":"Kubernetes","level":"3.2","depth":1,"path":"testbed/kubernetes.md","ref":"testbed/kubernetes.md","articles":[]},"previous":{"title":"Stream processing","level":"2.4","depth":1,"path":"research/stream_processing.md","ref":"research/stream_processing.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/infra.md","mtime":"2020-03-01T10:40:13.394Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-01T10:40:21.531Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Infrastructure","level":"3.1","depth":1,"next":{"title":"Kubernetes","level":"3.2","depth":1,"path":"testbed/kubernetes.md","ref":"testbed/kubernetes.md","articles":[]},"previous":{"title":"Stream processing","level":"2.4","depth":1,"path":"research/stream_processing.md","ref":"research/stream_processing.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/infra.md","mtime":"2020-03-01T13:16:40.185Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-01T13:32:09.279Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
