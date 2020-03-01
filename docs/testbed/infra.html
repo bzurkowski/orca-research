@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Prometheus · GitBook</title>
+        <title>Infrastructure · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -57,10 +57,10 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="efk.html" />
+    <link rel="next" href="prometheus.html" />
     
     
-    <link rel="prev" href="infra.html" />
+    <link rel="prev" href="../research/stream_processing.html" />
     
 
     </head>
@@ -168,7 +168,7 @@
         
         
     
-        <li class="chapter " data-level="3.1" data-path="infra.html">
+        <li class="chapter active" data-level="3.1" data-path="infra.html">
             
                 <a href="infra.html">
             
@@ -181,7 +181,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="3.2" data-path="prometheus.html">
+        <li class="chapter " data-level="3.2" data-path="prometheus.html">
             
                 <a href="prometheus.html">
             
@@ -323,7 +323,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Prometheus</a>
+        <a href=".." >Infrastructure</a>
     </h1>
 </div>
 
@@ -338,33 +338,30 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="prometheus">Prometheus</h1>
-<h2 id="installation">Installation</h2>
-<h5 id="deploy-helm-chart">Deploy Helm chart</h5>
-<p>Install <code>stable/prometheus-operator</code> chart using Helm with additional flags:</p>
-<pre><code class="lang-bash">  helm install stable/prometheus-operator \
-      --name prometheus \
-      --namespace monitoring \
-      --values <span class="hljs-variable">$HOME</span>/orca/helm/examples/integrations/prometheus/orca-values.yaml
+                                <h1 id="infrastructure-setup">Infrastructure Setup</h1>
+<h3 id="provision-vms">Provision VMs</h3>
+<p>Name: orca{i}
+OS: CentOS 7</p>
+<p>CPU:</p>
+<pre><code>* Current allocation: 8
+* Maximum allocation: 8
+* Model: host-passthrough
+</code></pre><p>Memory:</p>
+<pre><code>* Current allocation: 40960 MiB
+* Maximum allocation: 61449 MiB
+</code></pre><p>Disk:</p>
+<pre><code>* Device type: VirtIO Disk
+* Storage size: 50 GiB
+* Storage format: raw
+* Cache mode: none
+* IO mode: native
+</code></pre><p>NIC 1:</p>
+<pre><code>* Network source: Bridge br0 Host device vnet0
+* Device model: virtio
+</code></pre><p>NIC 2:</p>
+<pre><code>* Network source: Bridge br1 Host device vnet1
+* Device model: virtio
 </code></pre>
-<pre><code class="lang-yaml">  <span class="hljs-comment"># prometheus-operator.yaml</span>
-  ...
-<span class="hljs-attr">  config:</span>
-<span class="hljs-attr">    global:</span>
-<span class="hljs-attr">      resolve_timeout:</span> <span class="hljs-number">5</span>m
-<span class="hljs-attr">    receivers:</span>
-<span class="hljs-attr">    - name:</span> webhook
-<span class="hljs-attr">      webhook_configs:</span>
-<span class="hljs-attr">      - url:</span> http://orca.rca:<span class="hljs-number">5000</span>/v1/ingestor/prometheus
-<span class="hljs-attr">    route:</span>
-<span class="hljs-attr">      group_by:</span> [<span class="hljs-string">&apos;job&apos;</span>]
-<span class="hljs-attr">      group_interval:</span> <span class="hljs-number">30</span>s
-<span class="hljs-attr">      group_wait:</span> <span class="hljs-number">30</span>s
-<span class="hljs-attr">      receiver:</span> <span class="hljs-string">&apos;webhook&apos;</span>
-<span class="hljs-attr">      repeat_interval:</span> <span class="hljs-number">12</span>h
-<span class="hljs-attr">      routes:</span> []
-</code></pre>
-
                                 
                                 </section>
                             
@@ -391,12 +388,12 @@
 
             
                 
-                <a href="infra.html" class="navigation navigation-prev " aria-label="Previous page: Infrastructure">
+                <a href="../research/stream_processing.html" class="navigation navigation-prev " aria-label="Previous page: Stream processing">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="efk.html" class="navigation navigation-next " aria-label="Next page: EFK">
+                <a href="prometheus.html" class="navigation navigation-next " aria-label="Next page: Prometheus">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -407,7 +404,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Prometheus","level":"3.2","depth":1,"next":{"title":"EFK","level":"3.3","depth":1,"path":"testbed/efk.md","ref":"testbed/efk.md","articles":[]},"previous":{"title":"Infrastructure","level":"3.1","depth":1,"path":"testbed/infra.md","ref":"testbed/infra.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/prometheus.md","mtime":"2020-01-28T11:46:19.711Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-01T09:00:21.214Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Infrastructure","level":"3.1","depth":1,"next":{"title":"Prometheus","level":"3.2","depth":1,"path":"testbed/prometheus.md","ref":"testbed/prometheus.md","articles":[]},"previous":{"title":"Stream processing","level":"2.4","depth":1,"path":"research/stream_processing.md","ref":"research/stream_processing.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/infra.md","mtime":"2020-03-01T09:00:00.412Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-01T09:00:21.214Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

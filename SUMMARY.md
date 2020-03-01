@@ -11,6 +11,7 @@
 
 ## Testbed
 
+* [Infrastructure](testbed/infra.md)
 * [Prometheus](testbed/prometheus.md)
 * [EFK](testbed/efk.md)
 * [Elastalert](testbed/elastalert.md)
