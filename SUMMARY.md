@@ -19,6 +19,7 @@
 * [Elastalert](testbed/elastalert.md)
 * [Istio](testbed/istio.md)
 * [Falco](testbed/falco.md)
+* [Test applications](testbed/test-apps.md)
 
 ## Integrations
 
