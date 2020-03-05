@@ -12,6 +12,9 @@ Custom rules for application profiles (Nginx, MongoDB, Redis, K8S API Server etc
 * https://github.com/falcosecurity/falco/blob/dev/rules/application_rules.yaml
 * https://github.com/falcosecurity/profiles
 
+Audit payloads:
+* https://github.com/falcosecurity/falco/tree/master/test/trace_files/k8s_audit
+
 ## Generating events
 
 Falco provides scripts to generate the activity matching the syscall and k8s event rulesets:
