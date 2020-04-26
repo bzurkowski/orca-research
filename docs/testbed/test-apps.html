@@ -405,6 +405,38 @@ $ kubectl label namespace hipster-shop istio-injection=enabled
 <p>Apply Istio manifests:</p>
 <pre><code class="lang-bash">$ kubectl -n hipster-shop apply <span class="hljs-_">-f</span> ./release/istio-manifests.yaml
 </code></pre>
+<h2 id="bookinfo">Bookinfo</h2>
+<p>Clone Istio repository:</p>
+<pre><code class="lang-bash">$ git <span class="hljs-built_in">clone</span> https://github.com/istio/istio.git
+$ <span class="hljs-built_in">cd</span> ./istio
+$ git checkout -b v1.4.5 tags/1.4.5
+</code></pre>
+<p>Create namespace:</p>
+<pre><code class="lang-bash">$ kubectl create namespace bookinfo
+$ kubectl label namespace bookinfo istio-injection=enabled
+</code></pre>
+<p>Apply Kubernetes manifests:</p>
+<pre><code class="lang-bash">$ kubectl -n bookinfo apply <span class="hljs-_">-f</span> samples/bookinfo/platform/kube/bookinfo.yaml
+</code></pre>
+<p>Verify if the application is running:</p>
+<pre><code class="lang-bash">$ kubectl -n bookinfo <span class="hljs-built_in">exec</span> -it \
+    $(kubectl -n bookinfo get pod <span class="hljs-_">-l</span> app=ratings -o jsonpath=<span class="hljs-string">&apos;{.items[0].metadata.name}&apos;</span>) \
+    -c ratings \
+    -- curl productpage:9080/productpage | grep -o <span class="hljs-string">&quot;&lt;title&gt;.*&lt;/title&gt;&quot;</span>
+</code></pre>
+<p>Apply gateway configuration:</p>
+<pre><code class="lang-bash">$ kubectl -n bookinfo apply <span class="hljs-_">-f</span> samples/bookinfo/networking/bookinfo-gateway.yaml
+</code></pre>
+<p>Apply initial destination rules:</p>
+<pre><code class="lang-bash">$ kubectl -n bookinfo apply <span class="hljs-_">-f</span> samples/bookinfo/networking/destination-rule-all.yaml
+</code></pre>
+<p>Apply initial routing rules:</p>
+<pre><code class="lang-bash">$ kubectl -n bookinfo apply <span class="hljs-_">-f</span> samples/bookinfo/networking/virtual-service-all-v1.yaml
+</code></pre>
+<p>Generate load via the Ingress Gateway:</p>
+<pre><code class="lang-bash">ingress_host=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath=<span class="hljs-string">&apos;{.spec.clusterIP}&apos;</span>)
+<span class="hljs-keyword">while</span> <span class="hljs-literal">true</span>; <span class="hljs-keyword">do</span> curl -I http://<span class="hljs-variable">$ingress_host</span>/productpage; sleep 0.1; <span class="hljs-keyword">done</span>
+</code></pre>
 
                                 
                                 </section>
@@ -448,7 +480,7 @@ $ kubectl label namespace hipster-shop istio-injection=enabled
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Test applications","level":"3.9","depth":1,"next":{"title":"Falco","level":"4.1","depth":1,"path":"integrations/falco.md","ref":"integrations/falco.md","articles":[]},"previous":{"title":"Falco","level":"3.8","depth":1,"path":"testbed/falco.md","ref":"testbed/falco.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/test-apps.md","mtime":"2020-03-05T10:43:14.846Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-05T12:05:31.816Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Test applications","level":"3.9","depth":1,"next":{"title":"Falco","level":"4.1","depth":1,"path":"integrations/falco.md","ref":"integrations/falco.md","articles":[]},"previous":{"title":"Falco","level":"3.8","depth":1,"path":"testbed/falco.md","ref":"testbed/falco.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/test-apps.md","mtime":"2020-04-26T18:05:46.385Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-26T18:07:15.682Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
