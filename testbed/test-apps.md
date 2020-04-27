@@ -156,10 +156,15 @@ gen-mesh.dot  gen-mesh.png
 Generate Kubernetes manifests:
 
 ```bash
-$ go run main.go kubernetes ../example-topologies/tree-13-services.yaml
+$ go run main.go kubernetes ../example-topologies/tree-13-services.yaml \
     --client-image=tahler/fortio:prometheus \
     --service-image=tahler/isotope-service:1 \
-    --service-node-selector='isotope=service-pool' \
     --client-node-selector='isotope=client-pool' \
     --service-max-idle-connections-per-host=64 > gen-mesh.yaml
+```
+
+Label nodes:
+
+```bash
+$ kubectl label nodes node2 isotope=client-pool
 ```
