@@ -20,6 +20,7 @@
 * [Istio](testbed/istio.md)
 * [Falco](testbed/falco.md)
 * [Test applications](testbed/test-apps.md)
+* [Tools](testbed/tools.md)
 
 ## Integrations
 
