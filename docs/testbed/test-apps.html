@@ -57,7 +57,7 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="../integrations/falco.html" />
+    <link rel="next" href="tools.html" />
     
     
     <link rel="prev" href="falco.html" />
@@ -285,6 +285,19 @@
             
         </li>
     
+        <li class="chapter " data-level="3.10" data-path="tools.html">
+            
+                <a href="tools.html">
+            
+                    
+                    Tools
+            
+                </a>
+            
+
+            
+        </li>
+    
 
     
         
@@ -437,6 +450,62 @@ $ kubectl label namespace bookinfo istio-injection=enabled
 <pre><code class="lang-bash">ingress_host=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath=<span class="hljs-string">&apos;{.spec.clusterIP}&apos;</span>)
 <span class="hljs-keyword">while</span> <span class="hljs-literal">true</span>; <span class="hljs-keyword">do</span> curl -I http://<span class="hljs-variable">$ingress_host</span>/productpage; sleep 0.1; <span class="hljs-keyword">done</span>
 </code></pre>
+<h2 id="isotope">Isotope</h2>
+<p>Prerequisite: Go lang installed in the system.</p>
+<p>Clone Istio tools:</p>
+<pre><code class="lang-bash">$ git <span class="hljs-built_in">clone</span> https://github.com/istio/tools.git
+</code></pre>
+<p>Install <code>graphviz</code>:</p>
+<pre><code class="lang-bash">$ yum install -y graphviz
+</code></pre>
+<p>Read usage instructions:</p>
+<pre><code class="lang-bash">$ <span class="hljs-built_in">cd</span> ./tools/isotope/convert/
+$ go run main.go -h
+</code></pre>
+<pre><code>Converts a service graph expressed in YAML to various formats
+
+Usage:
+  service-grapher [command]
+
+Available Commands:
+  graphviz    Convert a .yaml file to a Graphviz DOT language file
+  help        Help about any command
+  kubernetes  Convert service graph YAML to manifests for performance testing
+
+Flags:
+  -h, --help   help for service-grapher
+
+Use &quot;service-grapher [command] --help&quot; for more information about a command.
+</code></pre><p>Explore sample mesh topologies:</p>
+<pre><code>$ ls -l .tools/isotope/example-topologies/
+total 92
+-rw-r--r--. 1 root root    92 Apr 27 08:47 1-service.yaml
+-rw-r--r--. 1 root root   406 Apr 27 08:47 10-svc_10-end.yaml
+-rw-r--r--. 1 root root   857 Apr 27 08:47 10-svc_100-end.yaml
+-rw-r--r--. 1 root root   408 Apr 27 08:47 10-svc_1000-end.yaml
+-rw-r--r--. 1 root root   409 Apr 27 08:47 10-svc_10000-end.yaml
+-rw-r--r--. 1 root root 41530 Apr 27 08:47 1000-svc_5000-end.yaml
+-rw-r--r--. 1 root root   223 Apr 27 08:47 canonical-2-replicas.yaml
+-rw-r--r--. 1 root root   227 Apr 27 08:47 canonical.yaml
+-rw-r--r--. 1 root root   124 Apr 27 08:47 chain-2-services.yaml
+-rw-r--r--. 1 root root   105 Apr 27 08:47 chain-3-services.yaml
+-rw-r--r--. 1 root root  4581 Apr 27 08:47 tree-111-services.yaml
+-rw-r--r--. 1 root root   576 Apr 27 08:47 tree-13-services.yaml
+</code></pre><p>Generate mesh graph:</p>
+<pre><code class="lang-bash">$ <span class="hljs-built_in">cd</span> ./tools/isotope/convert
+$ go run main.go graphviz ../example-topologies/tree-13-services.yaml gen-mesh.dot
+$ dot -Tpng gen-mesh.dot -o gen-mesh.png
+$ ls <span class="hljs-_">-l</span> |grep gen-mesh
+gen-mesh.dot  gen-mesh.png
+</code></pre>
+<p>Generate Kubernetes manifests:</p>
+<pre><code class="lang-bash">$ go run main.go kubernetes ../example-topologies/tree-13-services.yaml
+    --client-image=tahler/fortio:prometheus \
+    --service-image=tahler/isotope-service:1 \
+    --service-node-selector=<span class="hljs-string">&apos;isotope=service-pool&apos;</span> \
+    --client-node-selector=<span class="hljs-string">&apos;isotope=client-pool&apos;</span> \
+    --service-max-idle-connections-per-host=64 &gt; gen-mesh.yaml
+</code></pre>
 
                                 
                                 </section>
@@ -469,7 +538,7 @@ $ kubectl label namespace bookinfo istio-injection=enabled
                 </a>
                 
                 
-                <a href="../integrations/falco.html" class="navigation navigation-next " aria-label="Next page: Falco">
+                <a href="tools.html" class="navigation navigation-next " aria-label="Next page: Tools">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -480,7 +549,7 @@ $ kubectl label namespace bookinfo istio-injection=enabled
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Test applications","level":"3.9","depth":1,"next":{"title":"Falco","level":"4.1","depth":1,"path":"integrations/falco.md","ref":"integrations/falco.md","articles":[]},"previous":{"title":"Falco","level":"3.8","depth":1,"path":"testbed/falco.md","ref":"testbed/falco.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/test-apps.md","mtime":"2020-04-26T18:05:46.385Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-26T18:07:15.682Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Test applications","level":"3.9","depth":1,"next":{"title":"Tools","level":"3.10","depth":1,"path":"testbed/tools.md","ref":"testbed/tools.md","articles":[]},"previous":{"title":"Falco","level":"3.8","depth":1,"path":"testbed/falco.md","ref":"testbed/falco.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/test-apps.md","mtime":"2020-04-27T07:18:21.580Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-27T07:19:39.934Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

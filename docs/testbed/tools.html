@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Kubernetes · GitBook</title>
+        <title>Tools · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -57,10 +57,10 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="nfs.html" />
+    <link rel="next" href="../integrations/falco.html" />
     
     
-    <link rel="prev" href="infra.html" />
+    <link rel="prev" href="test-apps.html" />
     
 
     </head>
@@ -181,7 +181,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="3.2" data-path="kubernetes.html">
+        <li class="chapter " data-level="3.2" data-path="kubernetes.html">
             
                 <a href="kubernetes.html">
             
@@ -285,7 +285,7 @@
             
         </li>
     
-        <li class="chapter " data-level="3.10" data-path="tools.html">
+        <li class="chapter active" data-level="3.10" data-path="tools.html">
             
                 <a href="tools.html">
             
@@ -388,7 +388,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Kubernetes</a>
+        <a href=".." >Tools</a>
     </h1>
 </div>
 
@@ -403,99 +403,16 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="kubernetes">Kubernetes</h1>
-<h3 id="setup-kubespray">Setup Kubespray</h3>
-<p>Clone Kubespray repository:</p>
-<pre><code class="lang-bash">$ git <span class="hljs-built_in">clone</span> https://github.com/kubernetes-sigs/kubespray.git
-$ <span class="hljs-built_in">cd</span> ./kubespray
+                                <h1 id="tools">Tools</h1>
+<h2 id="go">Go</h2>
+<p>Download Go release:</p>
+<pre><code class="lang-bash">$ wget https://dl.google.com/go/go1.14.2.linux-amd64.tar.gz
 </code></pre>
-<p>Checkout:</p>
-<pre><code class="lang-bash">$ git checkout -b v2.12.3 tags/v2.12.3
+<p>Extract the release:</p>
+<pre><code class="lang-bash">$ tar -C /usr/<span class="hljs-built_in">local</span> -xzf go1.14.2.linux-amd64.tar.gz
 </code></pre>
-<p>Create and activate a virtual env:</p>
-<pre><code class="lang-bash">$ virtualenv -p $(<span class="hljs-built_in">which</span> python3) ~/.venvs/kubespray
-$ <span class="hljs-built_in">source</span> ~/.venvs/kubespray/bin/activate
-</code></pre>
-<p>Install dependencies:</p>
-<pre><code class="lang-bash">$ pip install -r requirements.txt
-</code></pre>
-<h3 id="setup-target-hosts">Setup target hosts</h3>
-<p>Copy SSH keys:</p>
-<pre><code class="lang-bash">$ ssh-copy-id root@172.17.66.31
-$ ssh-copy-id root@172.17.66.32
-$ ssh-copy-id root@172.17.66.33
-$ ssh-copy-id root@172.17.66.34
-</code></pre>
-<p>Enable IP forwarding:</p>
-<pre><code class="lang-bash">$ <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;net.ipv4.ip_forward = 1&quot;</span> &gt;&gt; /etc/sysctl.conf
-$ sysctl -p
-</code></pre>
-<p>Disable firewall:</p>
-<pre><code class="lang-bash">$ systemctl stop firewalld
-$ systemctl <span class="hljs-built_in">disable</span> firewalld
-</code></pre>
-<h3 id="prepare-inventory">Prepare inventory</h3>
-<p>Bootstrap base inventory:</p>
-<pre><code class="lang-bash">$ cp -r inventory/sample inventory/orca
-</code></pre>
-<p>Declare target host IPs:</p>
-<pre><code class="lang-bash">$ <span class="hljs-built_in">declare</span> <span class="hljs-_">-a</span> IPS=(172.17.66.31 172.17.66.32 172.17.66.33 172.17.66.34)
-</code></pre>
-<p>Populate inventory:</p>
-<pre><code class="lang-bash">$ CONFIG_FILE=inventory/orca/hosts.yml python3 contrib/inventory_builder/inventory.py <span class="hljs-variable">${IPS[@]}</span>
-</code></pre>
-<p>Update <code>inventory/orca/hosts.yaml</code>:</p>
-<pre><code class="lang-yaml"><span class="hljs-attr">all:</span>
-<span class="hljs-attr">  hosts:</span>
-<span class="hljs-attr">    node1:</span>
-<span class="hljs-attr">      ansible_host:</span> <span class="hljs-number">172.17</span><span class="hljs-number">.66</span><span class="hljs-number">.31</span>
-<span class="hljs-attr">      ip:</span> <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.31</span>
-<span class="hljs-attr">      ansible_user:</span> root
-<span class="hljs-attr">    node2:</span>
-<span class="hljs-attr">      ansible_host:</span> <span class="hljs-number">172.17</span><span class="hljs-number">.66</span><span class="hljs-number">.32</span>
-<span class="hljs-attr">      ip:</span> <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.32</span>
-<span class="hljs-attr">      ansible_user:</span> root
-<span class="hljs-attr">    node3:</span>
-<span class="hljs-attr">      ansible_host:</span> <span class="hljs-number">172.17</span><span class="hljs-number">.66</span><span class="hljs-number">.33</span>
-<span class="hljs-attr">      ip:</span> <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.33</span>
-<span class="hljs-attr">      ansible_user:</span> root
-<span class="hljs-attr">    node4:</span>
-<span class="hljs-attr">      ansible_host:</span> <span class="hljs-number">172.17</span><span class="hljs-number">.66</span><span class="hljs-number">.34</span>
-<span class="hljs-attr">      ip:</span> <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.34</span>
-<span class="hljs-attr">      ansible_user:</span> root
-<span class="hljs-attr">  children:</span>
-<span class="hljs-attr">    kube-master:</span>
-<span class="hljs-attr">      hosts:</span>
-<span class="hljs-attr">        node1:</span>
-<span class="hljs-attr">    kube-node:</span>
-<span class="hljs-attr">      hosts:</span>
-<span class="hljs-attr">        node1:</span>
-<span class="hljs-attr">        node2:</span>
-<span class="hljs-attr">        node3:</span>
-<span class="hljs-attr">        node4:</span>
-<span class="hljs-attr">    etcd:</span>
-<span class="hljs-attr">      hosts:</span>
-<span class="hljs-attr">        node1:</span>
-<span class="hljs-attr">        node2:</span>
-<span class="hljs-attr">        node3:</span>
-<span class="hljs-attr">    k8s-cluster:</span>
-<span class="hljs-attr">      children:</span>
-<span class="hljs-attr">        kube-master:</span>
-<span class="hljs-attr">        kube-node:</span>
-<span class="hljs-attr">    calico-rr:</span>
-<span class="hljs-attr">      hosts:</span> {}
-</code></pre>
-<p>Update <code>inventory/orca/group_vars/k8s-cluster/k8s-cluster.yaml</code>:</p>
-<pre><code class="lang-yaml"><span class="hljs-attr">kube_version:</span> v1<span class="hljs-number">.15</span><span class="hljs-number">.3</span>
-</code></pre>
-<p>Update <code>inventory/orca/group_vars/k8s-cluster/addons.yml</code>:</p>
-<pre><code class="lang-yaml"><span class="hljs-attr">helm_enabled:</span> <span class="hljs-literal">true</span>
-<span class="hljs-attr">registry_enabled:</span> <span class="hljs-literal">true</span>
-<span class="hljs-attr">metrics_server_enabled:</span> <span class="hljs-literal">true</span>
-</code></pre>
-<h3 id="deploy-cluster">Deploy cluster</h3>
-<p>Run Ansible playbook:</p>
-<pre><code class="lang-bash">$ ansible-playbook -i ./inventory/orca/hosts.yml cluster.yml -b -v
+<p>Add Go binary to system path:</p>
+<pre><code class="lang-bash">$ <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;export PATH=\$PATH:/usr/local/go/bin&quot;</span> &gt;&gt; ~/.bash_profile
 </code></pre>
 
                                 
@@ -524,12 +441,12 @@ $ systemctl <span class="hljs-built_in">disable</span> firewalld
 
             
                 
-                <a href="infra.html" class="navigation navigation-prev " aria-label="Previous page: Infrastructure">
+                <a href="test-apps.html" class="navigation navigation-prev " aria-label="Previous page: Test applications">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="nfs.html" class="navigation navigation-next " aria-label="Next page: NFS">
+                <a href="../integrations/falco.html" class="navigation navigation-next " aria-label="Next page: Falco">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -540,7 +457,7 @@ $ systemctl <span class="hljs-built_in">disable</span> firewalld
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Kubernetes","level":"3.2","depth":1,"next":{"title":"NFS","level":"3.3","depth":1,"path":"testbed/nfs.md","ref":"testbed/nfs.md","articles":[]},"previous":{"title":"Infrastructure","level":"3.1","depth":1,"path":"testbed/infra.md","ref":"testbed/infra.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/kubernetes.md","mtime":"2020-04-23T11:55:43.977Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-27T07:19:39.934Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Tools","level":"3.10","depth":1,"next":{"title":"Falco","level":"4.1","depth":1,"path":"integrations/falco.md","ref":"integrations/falco.md","articles":[]},"previous":{"title":"Test applications","level":"3.9","depth":1,"path":"testbed/test-apps.md","ref":"testbed/test-apps.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/tools.md","mtime":"2020-04-27T07:06:59.501Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-27T07:19:39.934Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
