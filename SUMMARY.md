@@ -26,6 +26,10 @@
 
 * [Falco](integrations/falco.md)
 
+## RCA
+
+* [Graph operations](rca/graph-operations.md)
+
 ## Development
 
 * [Graph](development/graph.md)
