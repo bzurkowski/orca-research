@@ -2,6 +2,26 @@
 
 ## Installation
 
+Download Istio release:
+
+```bash
+$ curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.5.2 sh -
+```
+
+Add `istioctl` binary to the system path:
+
+```bash
+$ mv istio-1.5.2/bin/istioctl /usr/local/bin/
+```
+
+Apply manifest for Istio Operator:
+
+```bash
+$ istioctl manifest apply -f $HOME/orca/helm/examples/integrations/istio/orca-values.yaml
+```
+
+## Helm-based installation (deprecated)
+
 Add Istio repository:
 
 ```bash
