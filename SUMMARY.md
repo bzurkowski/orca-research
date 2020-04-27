@@ -20,6 +20,7 @@
 * [Istio](testbed/istio.md)
 * [Falco](testbed/falco.md)
 * [Test applications](testbed/test-apps.md)
+* [OpenRCA](testbed/openrca.md)
 * [Tools](testbed/tools.md)
 
 ## Integrations
