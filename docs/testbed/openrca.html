@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>NFS · GitBook</title>
+        <title>OpenRCA · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -57,10 +57,10 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="prometheus.html" />
+    <link rel="next" href="tools.html" />
     
     
-    <link rel="prev" href="kubernetes.html" />
+    <link rel="prev" href="test-apps.html" />
     
 
     </head>
@@ -194,7 +194,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="3.3" data-path="nfs.html">
+        <li class="chapter " data-level="3.3" data-path="nfs.html">
             
                 <a href="nfs.html">
             
@@ -285,7 +285,7 @@
             
         </li>
     
-        <li class="chapter " data-level="3.10" data-path="openrca.html">
+        <li class="chapter active" data-level="3.10" data-path="openrca.html">
             
                 <a href="openrca.html">
             
@@ -421,7 +421,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >NFS</a>
+        <a href=".." >OpenRCA</a>
     </h1>
 </div>
 
@@ -436,43 +436,22 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="nfs">NFS</h1>
-<h3 id="setup-server">Setup server</h3>
-<p>Install NFS packages on all nodes:</p>
-<pre><code class="lang-bash">$ yum install -y nfs-utils
-</code></pre>
-<p>Start NFS service on master node:</p>
-<pre><code class="lang-bash">$ systemctl start nfs-server
-$ systemctl <span class="hljs-built_in">enable</span> nfs-server
-</code></pre>
-<h3 id="define-shares">Define shares</h3>
-<p>Having <code>nfs</code> mount point already prepared:</p>
-<pre><code class="lang-bash">$ df -h |grep nfs
-/dev/mapper/centos-nfs    40G   33M   40G   1% /nfs
-</code></pre>
-<pre><code class="lang-bash">$ mount |grep nfs
-/dev/mapper/centos-nfs on /nfs <span class="hljs-built_in">type</span> xfs (rw,relatime,seclabel,attr2,inode64,noquota)
-...
-</code></pre>
-<p>Add share to <code>/etc/exports</code>:</p>
-<pre><code class="lang-bash"><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;/nfs    172.17.66.0/24(rw,sync,no_root_squash)&quot;</span> &gt;&gt; /etc/exports
-</code></pre>
-<p>Reload exports:</p>
-<pre><code class="lang-bash">$ exportfs -r
-</code></pre>
-<h3 id="setup-nfs-provisioner">Setup NFS provisioner</h3>
-<p>Install using Helm chart:</p>
-<pre><code class="lang-bash">$ helm install stable/nfs-client-provisioner \
-    --name nfs-provisioner \
-    --namespace kube-system \
-    --set nfs.server=172.17.66.31 \
-    --set nfs.path=/nfs  \
-    --set storageClass.name=nfs-client \
-    --set storageClass.defaultClass=<span class="hljs-literal">true</span> \
-    --set resources.requests.cpu=100m \
-    --set resources.requests.memory=100Mi \
-    --set resources.limits.cpu=500m \
-    --set resources.limits.memory=300Mi
+                                <h1 id="openrca">OpenRCA</h1>
+<p>Install using Helm:</p>
+<pre><code class="lang-bash">helm install ./helm/orca \
+    --name orca \
+    --namespace rca \
+    --set image.pullPolicy=Always \
+    --set probes.prometheus.enabled=<span class="hljs-literal">true</span> \
+    --set probes.prometheus.url=http://prometheus-prometheus-oper-prometheus.monitoring:9090 \
+    --set ingestors.prometheus.enabled=<span class="hljs-literal">true</span> \
+    --set ingestors.falco.enabled=<span class="hljs-literal">true</span> \
+    --set probes.kiali.enabled=<span class="hljs-literal">true</span> \
+    --set probes.kiali.url=http://kiali.istio-system:20001 \
+    --set probes.kiali.username=admin \
+    --set probes.kiali.password=admin \
+    --set nodeSelector.<span class="hljs-string">&quot;kubernetes\.io/hostname&quot;</span>=node2 \
+    --set arangodb.nodeSelector.<span class="hljs-string">&quot;kubernetes\.io/hostname&quot;</span>=node2
 </code></pre>
 
                                 
@@ -501,12 +480,12 @@ $ systemctl <span class="hljs-built_in">enable</span> nfs-server
 
             
                 
-                <a href="kubernetes.html" class="navigation navigation-prev " aria-label="Previous page: Kubernetes">
+                <a href="test-apps.html" class="navigation navigation-prev " aria-label="Previous page: Test applications">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="prometheus.html" class="navigation navigation-next " aria-label="Next page: Prometheus">
+                <a href="tools.html" class="navigation navigation-next " aria-label="Next page: Tools">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -517,7 +496,7 @@ $ systemctl <span class="hljs-built_in">enable</span> nfs-server
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"NFS","level":"3.3","depth":1,"next":{"title":"Prometheus","level":"3.4","depth":1,"path":"testbed/prometheus.md","ref":"testbed/prometheus.md","articles":[]},"previous":{"title":"Kubernetes","level":"3.2","depth":1,"path":"testbed/kubernetes.md","ref":"testbed/kubernetes.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/nfs.md","mtime":"2020-03-01T13:10:37.178Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-27T17:19:22.944Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"OpenRCA","level":"3.10","depth":1,"next":{"title":"Tools","level":"3.11","depth":1,"path":"testbed/tools.md","ref":"testbed/tools.md","articles":[]},"previous":{"title":"Test applications","level":"3.9","depth":1,"path":"testbed/test-apps.md","ref":"testbed/test-apps.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/openrca.md","mtime":"2020-04-27T17:17:54.283Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-27T17:19:22.944Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
