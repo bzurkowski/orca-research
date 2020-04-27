@@ -17,7 +17,9 @@ $ mv istio-1.5.2/bin/istioctl /usr/local/bin/
 Apply manifest for Istio Operator:
 
 ```bash
-$ istioctl manifest apply -f $HOME/orca/helm/examples/integrations/istio/orca-values.yaml
+$ istioctl manifest apply \
+    -f $HOME/orca/helm/examples/integrations/istio/orca-values.yaml \
+    --set values.kiali.prometheusAddr=http://prometheus-prometheus-oper-prometheus.monitoring:9090
 ```
 
 ## Helm-based installation (deprecated)
