@@ -31,3 +31,22 @@ Install `stable/prometheus-operator` chart using Helm with additional flags:
       repeat_interval: 12h
       routes: []
   ```
+
+## Cleanup
+
+Delete Prometheus chart release:
+
+```bash
+$ helm delete --purge prometheus
+```
+
+Remove leftover Prometheus CRDs:
+
+```bash
+kubectl delete crd prometheuses.monitoring.coreos.com
+kubectl delete crd prometheusrules.monitoring.coreos.com
+kubectl delete crd servicemonitors.monitoring.coreos.com
+kubectl delete crd podmonitors.monitoring.coreos.com
+kubectl delete crd alertmanagers.monitoring.coreos.com
+kubectl delete crd thanosrulers.monitoring.coreos.com
+```
