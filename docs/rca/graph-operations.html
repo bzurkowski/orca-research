@@ -441,39 +441,83 @@
 <p>Identify unreachable nodes and emit deduced alerts (<code>PodUnreachable</code>) on connected pods:</p>
 <pre><code>FOR node IN nodes
     FILTER node.kind == &quot;node&quot;
+    FILTER node.deleted_at == null
     LET node_unreachable = FIRST(
         FOR node_alert, link IN 1..1 ANY node links
             FILTER node_alert.kind == &quot;alert&quot;
+            FILTER node_alert.deleted_at == null
             FILTER node_alert.properties.name == &quot;KubeNodeUnreachable&quot;
             RETURN node_alert
         )
     FILTER node_unreachable != null
     FOR pod, link IN 1..1 ANY node links
         FILTER pod.kind == &quot;pod&quot;
+        FILTER pod.deleted_at == null
         INSERT {origin: &quot;openrca&quot;, kind: &quot;alert&quot;, properties: {name: &quot;PodUnreachable&quot;}} INTO nodes
         LET pod_alert = NEW
         INSERT {origin: &quot;openrca&quot;, _from: pod_alert._id, _to: pod._id } INTO links
 </code></pre><p>Identify unreachable pods and emit deduced alerts (<code>ServiceDegraded</code>) on connected services:</p>
-<pre><code>FOR pod IN nodes
-    FILTER pod.kind == &quot;pod&quot;
-    LET pod_unreachable = FIRST(
-        FOR pod_alert, link IN 1..1 ANY pod links
-            FILTER pod_alert.kind == &quot;alert&quot;
-            FILTER pod_alert.properties.name == &quot;PodUnreachable&quot;
-            RETURN pod_alert
-        )
-    FILTER pod_unreachable != null
-    FOR svc, link IN 1..1 ANY pod links
-        FILTER svc.kind == &quot;service&quot;
-        INSERT {origin: &quot;openrca&quot;, kind: &quot;alert&quot;, properties: {name: &quot;ServiceDegraded&quot;}} INTO nodes
-        LET svc_alert = NEW
-        INSERT {origin: &quot;openrca&quot;, _from: svc_alert._id, _to: svc._id } INTO links
+<pre><code>FOR svc IN nodes
+    FILTER svc.kind == &quot;service&quot;
+    FILTER svc.deleted_at == null
+    LET svc_pods = (
+        FOR pod, link IN 1..1 ANY svc links
+            FILTER pod.kind == &quot;pod&quot;
+            FILTER pod.deleted_at == null
+            RETURN pod
+    )
+    LET svc_unreachable_pod = FIRST(
+        FOR pod IN svc_pods
+            FOR pod_alert, link IN 1..1 ANY pod links
+                FILTER pod_alert.kind == &quot;alert&quot;
+                FILTER pod_alert.deleted_at == null
+                FILTER pod_alert.properties.name == &quot;PodUnreachable&quot;
+                RETURN pod_alert
+    )
+    FILTER svc_unreachable_pod != null
+    INSERT {origin: &quot;openrca&quot;, kind: &quot;alert&quot;, properties: {name: &quot;ServiceDegraded&quot;}} INTO nodes
+    LET svc_alert = NEW
+    INSERT {origin: &quot;openrca&quot;, _from: svc_alert._id, _to: svc._id } INTO links
+</code></pre><p>Identify unreachable pods and emit deduced alerts (<code>ReplicaSetDegraded</code>) on connected replica sets:</p>
+<pre><code>FOR rs IN nodes
+    FILTER rs.kind == &quot;replica_set&quot;
+    FILTER rs.deleted_at == null
+    LET rs_pods = (
+        FOR pod, link IN 1..1 ANY rs links
+            FILTER pod.kind == &quot;pod&quot;
+            FILTER pod.deleted_at == null
+            RETURN pod
+    )
+    LET rs_unreachable_pod = FIRST(
+        FOR pod IN rs_pods
+            FOR pod_alert, link IN 1..1 ANY pod links
+                FILTER pod_alert.kind == &quot;alert&quot;
+                FILTER pod_alert.deleted_at == null
+                FILTER pod_alert.properties.name == &quot;PodUnreachable&quot;
+                RETURN pod_alert
+    )
+    FILTER rs_unreachable_pod != null
+    INSERT {origin: &quot;openrca&quot;, kind: &quot;alert&quot;, properties: {name: &quot;ReplicaSetDegraded&quot;}} INTO nodes
+    LET rs_alert = NEW
+    INSERT {origin: &quot;openrca&quot;, _from: rs_alert._id, _to: rs._id } INTO links
 </code></pre><p>Construct alerts graph:</p>
 <pre><code>FOR link IN links
     LET source = DOCUMENT(link._from)
     LET target = DOCUMENT(link._to)
-    LET source_alert = FIRST(FOR n, l IN 1..1 ANY source links FILTER n.kind == &quot;alert&quot; RETURN n)
-    LET target_alert = FIRST(FOR n, l IN 1..1 ANY target links FILTER n.kind == &quot;alert&quot; RETURN n)
+    FILTER source.deleted_at == null
+    FILTER target.deleted_at == null
+    LET source_alert = FIRST(
+        FOR n, l IN 1..1 ANY source links
+            FILTER n.deleted_at == null
+            FILTER n.kind == &quot;alert&quot;
+            RETURN n
+    )
+    LET target_alert = FIRST(
+        FOR n, l IN 1..1 ANY target links
+            FILTER n.deleted_at == null
+            FILTER n.kind == &quot;alert&quot;
+            RETURN n
+    )
     FILTER source_alert != null AND target_alert != null
     INSERT {origin: &quot;openrca&quot;, _from: source_alert._id, _to: target_alert._id} INTO links
 </code></pre><p>Traverse alerts graph:</p>
@@ -532,7 +576,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Graph operations","level":"5.1","depth":1,"next":{"title":"Graph","level":"6.1","depth":1,"path":"development/graph.md","ref":"development/graph.md","articles":[]},"previous":{"title":"Falco","level":"4.1","depth":1,"path":"integrations/falco.md","ref":"integrations/falco.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"rca/graph-operations.md","mtime":"2020-04-27T17:16:26.570Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-27T17:19:22.944Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Graph operations","level":"5.1","depth":1,"next":{"title":"Graph","level":"6.1","depth":1,"path":"development/graph.md","ref":"development/graph.md","articles":[]},"previous":{"title":"Falco","level":"4.1","depth":1,"path":"integrations/falco.md","ref":"integrations/falco.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"rca/graph-operations.md","mtime":"2020-04-29T11:13:20.671Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-29T11:13:56.324Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
