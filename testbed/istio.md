@@ -22,6 +22,14 @@ $ istioctl manifest apply \
     --set values.kiali.prometheusAddr=http://prometheus-prometheus-oper-prometheus.monitoring:9090
 ```
 
+## Cleanup
+
+Delete Istio deployment:
+
+```bash
+$ istioctl manifest generate -f $HOME/orca/helm/examples/integrations/istio/orca-values.yaml | kubectl delete -f -
+```
+
 ## Helm-based installation (deprecated)
 
 Add Istio repository:
