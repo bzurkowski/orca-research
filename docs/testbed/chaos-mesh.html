@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Graph · GitBook</title>
+        <title>Chaos Mesh · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -57,10 +57,10 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="../misc/conferences.html" />
+    <link rel="next" href="tools.html" />
     
     
-    <link rel="prev" href="../rca/graph-operations.html" />
+    <link rel="prev" href="openrca.html" />
     
 
     </head>
@@ -168,9 +168,9 @@
         
         
     
-        <li class="chapter " data-level="3.1" data-path="../testbed/infra.html">
+        <li class="chapter " data-level="3.1" data-path="infra.html">
             
-                <a href="../testbed/infra.html">
+                <a href="infra.html">
             
                     
                     Infrastructure
@@ -181,9 +181,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.2" data-path="../testbed/kubernetes.html">
+        <li class="chapter " data-level="3.2" data-path="kubernetes.html">
             
-                <a href="../testbed/kubernetes.html">
+                <a href="kubernetes.html">
             
                     
                     Kubernetes
@@ -194,9 +194,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.3" data-path="../testbed/nfs.html">
+        <li class="chapter " data-level="3.3" data-path="nfs.html">
             
-                <a href="../testbed/nfs.html">
+                <a href="nfs.html">
             
                     
                     NFS
@@ -207,9 +207,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.4" data-path="../testbed/prometheus.html">
+        <li class="chapter " data-level="3.4" data-path="prometheus.html">
             
-                <a href="../testbed/prometheus.html">
+                <a href="prometheus.html">
             
                     
                     Prometheus
@@ -220,9 +220,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.5" data-path="../testbed/efk.html">
+        <li class="chapter " data-level="3.5" data-path="efk.html">
             
-                <a href="../testbed/efk.html">
+                <a href="efk.html">
             
                     
                     EFK
@@ -233,9 +233,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.6" data-path="../testbed/elastalert.html">
+        <li class="chapter " data-level="3.6" data-path="elastalert.html">
             
-                <a href="../testbed/elastalert.html">
+                <a href="elastalert.html">
             
                     
                     Elastalert
@@ -246,9 +246,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.7" data-path="../testbed/istio.html">
+        <li class="chapter " data-level="3.7" data-path="istio.html">
             
-                <a href="../testbed/istio.html">
+                <a href="istio.html">
             
                     
                     Istio
@@ -259,9 +259,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.8" data-path="../testbed/falco.html">
+        <li class="chapter " data-level="3.8" data-path="falco.html">
             
-                <a href="../testbed/falco.html">
+                <a href="falco.html">
             
                     
                     Falco
@@ -272,9 +272,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.9" data-path="../testbed/test-apps.html">
+        <li class="chapter " data-level="3.9" data-path="test-apps.html">
             
-                <a href="../testbed/test-apps.html">
+                <a href="test-apps.html">
             
                     
                     Test applications
@@ -285,9 +285,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.10" data-path="../testbed/openrca.html">
+        <li class="chapter " data-level="3.10" data-path="openrca.html">
             
-                <a href="../testbed/openrca.html">
+                <a href="openrca.html">
             
                     
                     OpenRCA
@@ -298,9 +298,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.11" data-path="../testbed/chaos-mesh.html">
+        <li class="chapter active" data-level="3.11" data-path="chaos-mesh.html">
             
-                <a href="../testbed/chaos-mesh.html">
+                <a href="chaos-mesh.html">
             
                     
                     Chaos Mesh
@@ -311,9 +311,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.12" data-path="../testbed/tools.html">
+        <li class="chapter " data-level="3.12" data-path="tools.html">
             
-                <a href="../testbed/tools.html">
+                <a href="tools.html">
             
                     
                     Tools
@@ -371,9 +371,9 @@
         
         
     
-        <li class="chapter active" data-level="6.1" data-path="graph.html">
+        <li class="chapter " data-level="6.1" data-path="../development/graph.html">
             
-                <a href="graph.html">
+                <a href="../development/graph.html">
             
                     
                     Graph
@@ -434,7 +434,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Graph</a>
+        <a href=".." >Chaos Mesh</a>
     </h1>
 </div>
 
@@ -449,21 +449,22 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="graph">Graph</h1>
-<pre><code class="lang-python"><span class="hljs-keyword">from</span> orca.graph.drivers <span class="hljs-keyword">import</span> neo4j
-<span class="hljs-keyword">from</span> orca.graph <span class="hljs-keyword">import</span> graph
-
-host = <span class="hljs-string">&quot;localhost&quot;</span>
-port = <span class="hljs-number">7687</span>
-user = <span class="hljs-string">&quot;neo4j&quot;</span>
-password = <span class="hljs-string">&quot;admin&quot;</span>
-
-driver = neo4j.Neo4jDriver(
-    host=host, port=port, user=user, password=password)
-
-g = graph.Graph(driver)
-
-g.get_nodes(kind=<span class="hljs-string">&apos;falco_alert&apos;</span>)
+                                <h1 id="chaos-mesh">Chaos Mesh</h1>
+<h2 id="installation">Installation</h2>
+<p>Setup Helm repository:</p>
+<pre><code class="lang-bash">$ helm repo add chaos-mesh https://charts.chaos-mesh.org
+</code></pre>
+<p>Create custom resource type:</p>
+<pre><code class="lang-bash">$ curl <span class="hljs-_">-s</span>SL https://mirrors.chaos-mesh.org/v0.9.1/crd.yaml | kubectl apply <span class="hljs-_">-f</span> -
+</code></pre>
+<p>Install <code>chaos-mesh/chaos-mesh</code> chart using Helm:</p>
+<pre><code class="lang-bash">$ helm install chaos-mesh/chaos-mesh \
+    --name=chaos-mesh \
+    --namespace=chaos-testing \
+    --set dashboard.create=<span class="hljs-literal">true</span>
+</code></pre>
+<h2 id="cleanup">Cleanup</h2>
+<pre><code class="lang-bash">$ helm delete --purge chaos-mesh
 </code></pre>
 
                                 
@@ -492,12 +493,12 @@ g.get_nodes(kind=<span class="hljs-string">&apos;falco_alert&apos;</span>)
 
             
                 
-                <a href="../rca/graph-operations.html" class="navigation navigation-prev " aria-label="Previous page: Graph operations">
+                <a href="openrca.html" class="navigation navigation-prev " aria-label="Previous page: OpenRCA">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="../misc/conferences.html" class="navigation navigation-next " aria-label="Next page: Conferences">
+                <a href="tools.html" class="navigation navigation-next " aria-label="Next page: Tools">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -508,7 +509,7 @@ g.get_nodes(kind=<span class="hljs-string">&apos;falco_alert&apos;</span>)
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Graph","level":"6.1","depth":1,"next":{"title":"Conferences","level":"7.1","depth":1,"path":"misc/conferences.md","ref":"misc/conferences.md","articles":[]},"previous":{"title":"Graph operations","level":"5.1","depth":1,"path":"rca/graph-operations.md","ref":"rca/graph-operations.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"development/graph.md","mtime":"2020-02-10T20:41:41.603Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-14T20:44:13.237Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Chaos Mesh","level":"3.11","depth":1,"next":{"title":"Tools","level":"3.12","depth":1,"path":"testbed/tools.md","ref":"testbed/tools.md","articles":[]},"previous":{"title":"OpenRCA","level":"3.10","depth":1,"path":"testbed/openrca.md","ref":"testbed/openrca.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/chaos-mesh.md","mtime":"2020-09-14T15:59:40.977Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-14T20:44:13.237Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
