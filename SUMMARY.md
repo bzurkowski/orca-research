@@ -21,6 +21,7 @@
 * [Falco](testbed/falco.md)
 * [Test applications](testbed/test-apps.md)
 * [OpenRCA](testbed/openrca.md)
+* [Chaos Mesh](testbed/chaos-mesh.md)
 * [Tools](testbed/tools.md)
 
 ## Integrations
