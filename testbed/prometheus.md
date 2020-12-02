@@ -2,6 +2,8 @@
 
 ## Installation
 
+> :warning: Helm v3 required!
+
 Setup Helm repository:
 
 ```bash
@@ -12,8 +14,7 @@ $ helm repo update
 Deploy Prometheus chart:
 
 ```bash
-$ helm install prometheus-community/kube-prometheus-stack \
-    --name prometheus \
+$ helm install prometheus prometheus-community/kube-prometheus-stack \
     --namespace monitoring \
     --values $HOME/orca/helm/examples/integrations/prometheus/orca-values.yaml
 ```
