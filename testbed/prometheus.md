@@ -14,7 +14,7 @@ $ helm repo update
 Deploy Prometheus chart:
 
 ```bash
-$ helm install prometheus prometheus-community/kube-prometheus-stack \
+$ helm3 install prometheus prometheus-community/kube-prometheus-stack \
     --namespace monitoring \
     --values $HOME/orca/helm/examples/integrations/prometheus/orca-values.yaml
 ```
