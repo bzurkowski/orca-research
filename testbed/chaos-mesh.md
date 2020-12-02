@@ -20,7 +20,7 @@ Deploy Chaos Mesh chart:
 ```bash
 $ helm install chaos-mesh/chaos-mesh \
     --name=chaos-mesh \
-    --namespace=chaos-testing \
+    --namespace=chaos \
     --set dashboard.create=true
 ```
 
