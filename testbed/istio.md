@@ -19,7 +19,7 @@ Apply manifest for Istio Operator:
 ```bash
 $ istioctl manifest apply \
     -f $HOME/orca/helm/examples/integrations/istio/orca-values.yaml \
-    --set values.kiali.prometheusAddr=http://prometheus-prometheus-oper-prometheus.monitoring:9090
+    --set values.kiali.prometheusAddr=http://prometheus-kube-prometheus-prometheus.monitoring:9090
 ```
 
 ## Cleanup
