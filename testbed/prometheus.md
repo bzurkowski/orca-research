@@ -7,8 +7,8 @@
 Setup Helm repository:
 
 ```bash
-$ helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-$ helm repo update
+$ helm3 repo add prometheus-community https://prometheus-community.github.io/helm-charts
+$ helm3 repo update
 ```
 
 Deploy Prometheus chart:
