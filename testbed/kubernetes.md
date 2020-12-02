@@ -73,7 +73,7 @@ Populate inventory:
 $ CONFIG_FILE=inventory/orca/hosts.yml python3 contrib/inventory_builder/inventory.py ${IPS[@]}
 ```
 
-Update `inventory/orca/hosts.yaml`:
+Update `inventory/orca/hosts.yml`:
 
 ```yaml
 all:
@@ -117,10 +117,10 @@ all:
       hosts: {}
 ```
 
-Update `inventory/orca/group_vars/k8s-cluster/k8s-cluster.yaml`:
+Update `inventory/orca/group_vars/k8s-cluster/k8s-cluster.yml`:
 
 ```yaml
-kube_version: v1.15.3
+kube_version: v1.16.7
 ```
 
 Update `inventory/orca/group_vars/k8s-cluster/addons.yml`:
