@@ -5,13 +5,13 @@
 Download Istio release:
 
 ```bash
-$ curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.5.2 sh -
+$ curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.8.0 sh -
 ```
 
 Add `istioctl` binary to the system path:
 
 ```bash
-$ mv istio-1.5.2/bin/istioctl /usr/local/bin/
+$ mv istio-1.8.0/bin/istioctl /usr/local/bin/
 ```
 
 Apply manifest for Istio Operator:
