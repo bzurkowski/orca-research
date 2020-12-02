@@ -450,6 +450,21 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="tools">Tools</h1>
+<h2 id="helm">Helm</h2>
+<p>Installation of both Helm versions (v2 and v3) based on <a href="https://joachim8675309.medium.com/install-helm3-helm2-on-macos-d65f61509799" target="_blank">this</a> article.</p>
+<p>Install Helm 2:</p>
+<pre><code class="lang-bash">$ brew install helm@2
+</code></pre>
+<p>Install Helm 3:</p>
+<pre><code class="lang-bash">$ brew install helm
+</code></pre>
+<p>Link binaries:</p>
+<pre><code class="lang-bash">$ <span class="hljs-built_in">cd</span> /usr/<span class="hljs-built_in">local</span>/bin
+mv helm helm3
+ln <span class="hljs-_">-s</span> /usr/<span class="hljs-built_in">local</span>/opt/helm@2/bin/tiller tiller
+ln <span class="hljs-_">-s</span> /usr/<span class="hljs-built_in">local</span>/opt/helm@2/bin/helm helm2
+</code></pre>
+<p>Now, Helm 2 is accessible via <code>helm</code> command, whereas Helm 3 is using <code>helm3</code>.</p>
 <h2 id="go">Go</h2>
 <p>Download Go release:</p>
 <pre><code class="lang-bash">$ wget https://dl.google.com/go/go1.14.2.linux-amd64.tar.gz
@@ -503,7 +518,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Tools","level":"3.12","depth":1,"next":{"title":"Falco","level":"4.1","depth":1,"path":"integrations/falco.md","ref":"integrations/falco.md","articles":[]},"previous":{"title":"Chaos Mesh","level":"3.11","depth":1,"path":"testbed/chaos-mesh.md","ref":"testbed/chaos-mesh.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/tools.md","mtime":"2020-04-27T07:06:59.501Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-12-02T14:58:42.090Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Tools","level":"3.12","depth":1,"next":{"title":"Falco","level":"4.1","depth":1,"path":"integrations/falco.md","ref":"integrations/falco.md","articles":[]},"previous":{"title":"Chaos Mesh","level":"3.11","depth":1,"path":"testbed/chaos-mesh.md","ref":"testbed/chaos-mesh.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/tools.md","mtime":"2020-12-02T15:44:57.057Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-12-02T15:45:30.468Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
