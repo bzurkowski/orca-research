@@ -57,7 +57,7 @@ $ kubectl -n monitoring port-forward svc/prometheus-kube-prometheus-prometheus 9
 Delete Prometheus chart release:
 
 ```bash
-$ helm delete --purge prometheus
+$ helm3 -n monitoring uninstall prometheus
 ```
 
 Remove leftover Prometheus CRDs:
