@@ -2,7 +2,7 @@
 
 ## Installation
 
-> :warning: Helm v3 required!
+> **Warning:** Helm v3 required!
 
 Setup Helm repository:
 
