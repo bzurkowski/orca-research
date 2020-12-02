@@ -139,3 +139,10 @@ Run Ansible playbook:
 $ ansible-playbook -i ./inventory/orca/hosts.yml cluster.yml -b -v
 ```
 
+## Upgrade
+
+In order to upgrade the cluster run:
+
+```bash
+$ ansible-playbook upgrade-cluster.yml -b -i ./inventory/orca/hosts.yml -e kube_version=v1.16.7
+```
