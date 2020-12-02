@@ -2,7 +2,7 @@
 
 ## Installation
 
-Install `stable/prometheus-operator` chart using Helm with additional flags:
+Deploy Prometheus chart:
 
 ```bash
 $ helm install stable/prometheus-operator \

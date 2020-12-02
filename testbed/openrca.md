@@ -1,6 +1,8 @@
 # OpenRCA
 
-Install using Helm:
+## Installation
+
+Deploy OpenRCA chart:
 
 ```bash
 $ helm install ./helm/orca \
@@ -17,4 +19,12 @@ $ helm install ./helm/orca \
     --set probes.kiali.password=admin \
     --set nodeSelector."kubernetes\.io/hostname"=node2 \
     --set arangodb.nodeSelector."kubernetes\.io/hostname"=node2
+```
+
+## Cleanup
+
+Delete OpenRCA chart release:
+
+```bash
+$ helm delete --purge orca
 ```
