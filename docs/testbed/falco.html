@@ -451,52 +451,44 @@
                                 
                                 <h1 id="falco">Falco</h1>
 <h2 id="installation">Installation</h2>
-<h5 id="enable-dynamic-audit-log-backend">Enable dynamic audit log backend</h5>
 <p>Add required flags to the API Server manifest:</p>
-<pre><code class="lang-bash">  <span class="hljs-comment"># /etc/kubernetes/manifests/kube-apiserver.yaml</span>
-  ...
-  --audit-dynamic-configuration
-  --feature-gates=DynamicAuditing=<span class="hljs-literal">true</span>
-  --runtime-config=auditregistration.k8s.io/v1alpha1=<span class="hljs-literal">true</span>
+<pre><code class="lang-bash"><span class="hljs-comment"># /etc/kubernetes/manifests/kube-apiserver.yaml</span>
+...
+--audit-dynamic-configuration
+--feature-gates=DynamicAuditing=<span class="hljs-literal">true</span>
+--runtime-config=auditregistration.k8s.io/v1alpha1=<span class="hljs-literal">true</span>
 </code></pre>
 <p>After saving the file, the API server should be restarted automatically with audit log enabled.</p>
-<ul>
-<li><a href="https://kubernetes.io/docs/tasks/debug-application-cluster/audit/#dynamic-backend" target="_blank">https://kubernetes.io/docs/tasks/debug-application-cluster/audit/#dynamic-backend</a></li>
-<li><a href="https://github.com/falcosecurity/falco/blob/dev/examples/k8s_audit_config/enable-k8s-audit.sh" target="_blank">https://github.com/falcosecurity/falco/blob/dev/examples/k8s_audit_config/enable-k8s-audit.sh</a></li>
-<li><a href="https://github.com/falcosecurity/falco/tree/dev/examples/k8s_audit_config#instructions-for-kubernetes-113" target="_blank">https://github.com/falcosecurity/falco/tree/dev/examples/k8s_audit_config#instructions-for-kubernetes-113</a></li>
-</ul>
-<h5 id="deploy-helm-chart">Deploy Helm chart</h5>
-<p>Install <code>stable/falco</code> chart using Helm with additional flags:</p>
-<pre><code class="lang-bash">  $ helm install stable/falco \
-      --name falco \
-      --namespace falco \
-      --values <span class="hljs-variable">$HOME</span>/orca/helm/examples/integrations/falco/orca-values.yaml
+<p>Deploy Falco chart:</p>
+<pre><code class="lang-bash">$ helm install stable/falco \
+    --name falco \
+    --namespace falco \
+    --values <span class="hljs-variable">$HOME</span>/orca/helm/examples/integrations/falco/orca-values.yaml
 </code></pre>
-<h5 id="fix-webhook-backend-reference-in-audit-sink-policy">Fix webhook backend reference in Audit Sink policy</h5>
-<p>By default, Falco chart creates an audit sink policy with <code>service</code> webhook reference instead of <code>url</code> reference. It is correct for in-cluster webhook setup, however, for some reason, when using <code>service</code> reference, the specified webhook port is not respected by the API server - it attempts to communicate with the webhook service using HTTPS on port 443. To fix the issue, the created audit sink must be modified to use <code>url</code> reference for which the port is respected.</p>
-<pre><code class="lang-bash">  $ kubectl edit auditsink falco
+<p>By default, Falco chart creates an audit sink policy with <code>service</code> webhook reference instead of <code>url</code> reference. It is correct for in-cluster webhook setup, however, for some reason, when using <code>service</code> reference, the specified webhook port is not respected by the API server - it attempts to communicate with the webhook service using HTTPS on port 443. To fix the issue, the created audit sink must be modified to use <code>url</code> reference for which the port is respected:</p>
+<pre><code class="lang-bash">$ kubectl edit auditsink falco
 </code></pre>
-<pre><code class="lang-yaml"><span class="hljs-attr">  apiVersion:</span> auditregistration.k8s.io/v1alpha1
-<span class="hljs-attr">  kind:</span> AuditSink
-<span class="hljs-attr">  metadata:</span>
-<span class="hljs-attr">    creationTimestamp:</span> <span class="hljs-string">&quot;2020-01-24T15:50:01Z&quot;</span>
-<span class="hljs-attr">    generation:</span> <span class="hljs-number">3</span>
-<span class="hljs-attr">    name:</span> falco
-<span class="hljs-attr">    resourceVersion:</span> <span class="hljs-string">&quot;13417243&quot;</span>
-<span class="hljs-attr">    selfLink:</span> /apis/auditregistration.k8s.io/v1alpha1/auditsinks/falco
-<span class="hljs-attr">    uid:</span> <span class="hljs-number">0741</span>fd30<span class="hljs-bullet">-4</span>bd6<span class="hljs-bullet">-4</span>da6<span class="hljs-bullet">-8490</span><span class="hljs-bullet">-24717670</span>a083
-<span class="hljs-attr">  spec:</span>
-<span class="hljs-attr">    policy:</span>
-<span class="hljs-attr">      level:</span> RequestResponse
-<span class="hljs-attr">      stages:</span>
-<span class="hljs-bullet">      -</span> ResponseComplete
-<span class="hljs-bullet">      -</span> ResponseStarted
-<span class="hljs-attr">    webhook:</span>
-<span class="hljs-attr">      clientConfig:</span>
-<span class="hljs-attr">        url:</span> http://&lt;falco-svc-cluster-ip&gt;:<span class="hljs-number">8765</span>/k8s-audit
-<span class="hljs-attr">      throttle:</span>
-<span class="hljs-attr">        burst:</span> <span class="hljs-number">15</span>
-<span class="hljs-attr">        qps:</span> <span class="hljs-number">10</span>
+<pre><code class="lang-yaml"><span class="hljs-attr">apiVersion:</span> auditregistration.k8s.io/v1alpha1
+<span class="hljs-attr">kind:</span> AuditSink
+<span class="hljs-attr">metadata:</span>
+<span class="hljs-attr">  creationTimestamp:</span> <span class="hljs-string">&quot;2020-01-24T15:50:01Z&quot;</span>
+<span class="hljs-attr">  generation:</span> <span class="hljs-number">3</span>
+<span class="hljs-attr">  name:</span> falco
+<span class="hljs-attr">  resourceVersion:</span> <span class="hljs-string">&quot;13417243&quot;</span>
+<span class="hljs-attr">  selfLink:</span> /apis/auditregistration.k8s.io/v1alpha1/auditsinks/falco
+<span class="hljs-attr">  uid:</span> <span class="hljs-number">0741</span>fd30<span class="hljs-bullet">-4</span>bd6<span class="hljs-bullet">-4</span>da6<span class="hljs-bullet">-8490</span><span class="hljs-bullet">-24717670</span>a083
+<span class="hljs-attr">spec:</span>
+<span class="hljs-attr">  policy:</span>
+<span class="hljs-attr">    level:</span> RequestResponse
+<span class="hljs-attr">    stages:</span>
+<span class="hljs-bullet">    -</span> ResponseComplete
+<span class="hljs-bullet">    -</span> ResponseStarted
+<span class="hljs-attr">  webhook:</span>
+<span class="hljs-attr">    clientConfig:</span>
+<span class="hljs-attr">      url:</span> http://&lt;falco-svc-cluster-ip&gt;:<span class="hljs-number">8765</span>/k8s-audit
+<span class="hljs-attr">    throttle:</span>
+<span class="hljs-attr">      burst:</span> <span class="hljs-number">15</span>
+<span class="hljs-attr">      qps:</span> <span class="hljs-number">10</span>
 </code></pre>
 
                                 
@@ -541,7 +533,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Falco","level":"3.8","depth":1,"next":{"title":"Test applications","level":"3.9","depth":1,"path":"testbed/test-apps.md","ref":"testbed/test-apps.md","articles":[]},"previous":{"title":"Istio","level":"3.7","depth":1,"path":"testbed/istio.md","ref":"testbed/istio.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/falco.md","mtime":"2020-03-01T13:17:47.441Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-09-14T20:44:13.237Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Falco","level":"3.8","depth":1,"next":{"title":"Test applications","level":"3.9","depth":1,"path":"testbed/test-apps.md","ref":"testbed/test-apps.md","articles":[]},"previous":{"title":"Istio","level":"3.7","depth":1,"path":"testbed/istio.md","ref":"testbed/istio.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/falco.md","mtime":"2020-12-02T12:35:33.071Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-12-02T12:39:07.550Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
