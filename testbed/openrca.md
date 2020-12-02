@@ -3,7 +3,7 @@
 Install using Helm:
 
 ```bash
-helm install ./helm/orca \
+$ helm install ./helm/orca \
     --name orca \
     --namespace rca \
     --set image.pullPolicy=Always \

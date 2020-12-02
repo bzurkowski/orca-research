@@ -14,7 +14,7 @@ Create custom resource type:
 $ curl -sSL https://mirrors.chaos-mesh.org/v0.9.1/crd.yaml | kubectl apply -f -
 ```
 
-Install `chaos-mesh/chaos-mesh` chart using Helm:
+Deploy Chaos Mesh chart:
 
 ```bash
 $ helm install chaos-mesh/chaos-mesh \
@@ -24,6 +24,8 @@ $ helm install chaos-mesh/chaos-mesh \
 ```
 
 ## Cleanup
+
+Delete Chaos Mesh chart release:
 
 ```bash
 $ helm delete --purge chaos-mesh
