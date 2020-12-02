@@ -6,6 +6,7 @@ Setup Helm repository:
 
 ```bash
 $ helm repo add chaos-mesh https://charts.chaos-mesh.org
+$ helm repo update
 ```
 
 Create custom resource type:
