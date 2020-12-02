@@ -5,19 +5,19 @@
 Download Istio release:
 
 ```bash
-$ curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.8.0 sh -
+$ curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.6.14 sh -
 ```
 
 Add `istioctl` binary to the system path:
 
 ```bash
-$ mv istio-1.8.0/bin/istioctl /usr/local/bin/
+$ mv istio-1.6.14/bin/istioctl /usr/local/bin/
 ```
 
-Apply manifest for Istio Operator:
+Deploy Istio control plane:
 
 ```bash
-$ istioctl manifest apply \
+$ istioctl install \
     -f $HOME/orca/helm/examples/integrations/istio/orca-values.yaml \
     --set values.kiali.prometheusAddr=http://prometheus-kube-prometheus-prometheus.monitoring:9090
 ```

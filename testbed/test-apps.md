@@ -34,7 +34,7 @@ Clone Istio repository:
 ```bash
 $ git clone https://github.com/istio/istio.git
 $ cd ./istio
-$ git checkout -b v1.4.5 tags/1.4.5
+$ git checkout -b v1.6.14 tags/1.6.14
 ```
 
 Create namespace:
