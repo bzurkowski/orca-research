@@ -490,7 +490,7 @@ $ systemctl <span class="hljs-built_in">disable</span> firewalld
 <p>Populate inventory:</p>
 <pre><code class="lang-bash">$ CONFIG_FILE=inventory/orca/hosts.yml python3 contrib/inventory_builder/inventory.py <span class="hljs-variable">${IPS[@]}</span>
 </code></pre>
-<p>Update <code>inventory/orca/hosts.yaml</code>:</p>
+<p>Update <code>inventory/orca/hosts.yml</code>:</p>
 <pre><code class="lang-yaml"><span class="hljs-attr">all:</span>
 <span class="hljs-attr">  hosts:</span>
 <span class="hljs-attr">    node1:</span>
@@ -531,8 +531,8 @@ $ systemctl <span class="hljs-built_in">disable</span> firewalld
 <span class="hljs-attr">    calico-rr:</span>
 <span class="hljs-attr">      hosts:</span> {}
 </code></pre>
-<p>Update <code>inventory/orca/group_vars/k8s-cluster/k8s-cluster.yaml</code>:</p>
-<pre><code class="lang-yaml"><span class="hljs-attr">kube_version:</span> v1<span class="hljs-number">.15</span><span class="hljs-number">.3</span>
+<p>Update <code>inventory/orca/group_vars/k8s-cluster/k8s-cluster.yml</code>:</p>
+<pre><code class="lang-yaml"><span class="hljs-attr">kube_version:</span> v1<span class="hljs-number">.16</span><span class="hljs-number">.7</span>
 </code></pre>
 <p>Update <code>inventory/orca/group_vars/k8s-cluster/addons.yml</code>:</p>
 <pre><code class="lang-yaml"><span class="hljs-attr">helm_enabled:</span> <span class="hljs-literal">true</span>
@@ -542,6 +542,10 @@ $ systemctl <span class="hljs-built_in">disable</span> firewalld
 <h3 id="deploy-cluster">Deploy cluster</h3>
 <p>Run Ansible playbook:</p>
 <pre><code class="lang-bash">$ ansible-playbook -i ./inventory/orca/hosts.yml cluster.yml -b -v
+</code></pre>
+<h2 id="upgrade">Upgrade</h2>
+<p>In order to upgrade the cluster run:</p>
+<pre><code class="lang-bash">$ ansible-playbook upgrade-cluster.yml -b -i ./inventory/orca/hosts.yml <span class="hljs-_">-e</span> kube_version=v1.16.7
 </code></pre>
 
                                 
@@ -586,7 +590,7 @@ $ systemctl <span class="hljs-built_in">disable</span> firewalld
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Kubernetes","level":"3.2","depth":1,"next":{"title":"NFS","level":"3.3","depth":1,"path":"testbed/nfs.md","ref":"testbed/nfs.md","articles":[]},"previous":{"title":"Infrastructure","level":"3.1","depth":1,"path":"testbed/infra.md","ref":"testbed/infra.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/kubernetes.md","mtime":"2020-04-23T11:55:43.977Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-12-02T12:45:12.842Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Kubernetes","level":"3.2","depth":1,"next":{"title":"NFS","level":"3.3","depth":1,"path":"testbed/nfs.md","ref":"testbed/nfs.md","articles":[]},"previous":{"title":"Infrastructure","level":"3.1","depth":1,"path":"testbed/infra.md","ref":"testbed/infra.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/kubernetes.md","mtime":"2020-12-02T13:36:19.251Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-12-02T13:50:56.543Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
