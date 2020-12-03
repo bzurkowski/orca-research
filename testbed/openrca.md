@@ -9,6 +9,9 @@ $ helm install ./helm/orca \
     --name orca \
     --namespace rca \
     --set image.pullPolicy=Always \
+    --set image.tag=latest \
+    --set ui.image.pullPolicy=Always \
+    --set ui.image.tag=latest \
     --set probes.prometheus.enabled=true \
     --set probes.prometheus.url=http://prometheus-kube-prometheus-prometheus.monitoring:9090 \
     --set probes.kiali.enabled=true \
