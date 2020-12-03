@@ -25,14 +25,6 @@ $ helm install ./helm/orca \
     --set arangodb.nodeSelector."kubernetes\.io/hostname"=node2
 ```
 
-## Dashboard access
-
-OpenRCA dashboard:
-
-```bash
-$ kubectl -n rca port-forward svc/orca-ui 8080
-```
-
 ## Cleanup
 
 Delete OpenRCA chart release:

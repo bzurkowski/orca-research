@@ -41,20 +41,6 @@ config:
     routes: []
 ```
 
-## Dashboard access
-
-Grafana:
-
-```bash
-$ kubectl -n monitoring port-forward svc/prometheus-grafana 3000:80
-```
-
-Prometheus:
-
-```bash
-$ kubectl -n monitoring port-forward svc/prometheus-kube-prometheus-prometheus 9090
-```
-
 ## Cleanup
 
 Delete Prometheus chart release:

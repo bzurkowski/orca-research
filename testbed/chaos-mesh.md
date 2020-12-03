@@ -26,14 +26,6 @@ $ helm install chaos-mesh/chaos-mesh \
     --set dashboard.nodeSelector."kubernetes\.io/hostname"=node2
 ```
 
-## Dashboard access
-
-Chaos Mesh:
-
-```bash
-$ kubectl -n chaos port-forward svc/chaos-dashboard 2333
-```
-
 ## Cleanup
 
 Delete Chaos Mesh chart release:
