@@ -18,6 +18,7 @@ $ helm install ./helm/orca \
     --set ingestors.prometheus.enabled=true \
     --set ingestors.falco.enabled=true \
     --set nodeSelector."kubernetes\.io/hostname"=node2 \
+    --set ui.nodeSelector."kubernetes\.io/hostname"=node2 \
     --set arangodb.nodeSelector."kubernetes\.io/hostname"=node2
 ```
 

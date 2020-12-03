@@ -2,8 +2,6 @@
 
 ## Installation
 
-> **Warning:** Helm v3 required!
-
 Setup Helm repository:
 
 ```bash
@@ -16,7 +14,12 @@ Deploy Prometheus chart:
 ```bash
 $ helm3 install prometheus prometheus-community/kube-prometheus-stack \
     --namespace monitoring \
-    --values $HOME/orca/helm/examples/integrations/prometheus/orca-values.yaml
+    --values $HOME/orca/helm/examples/integrations/prometheus/orca-values.yaml \
+    --set prometheusOperator.nodeSelector."kubernetes\.io/hostname"=node2 \
+    --set prometheus.prometheusSpec.nodeSelector."kubernetes\.io/hostname"=node2 \
+    --set alertmanager.alertmanagerSpec.nodeSelector."kubernetes\.io/hostname"=node2 \
+    --set grafana.nodeSelector."kubernetes\.io/hostname"=node2 \
+    --set kube-state-metrics.nodeSelector."kubernetes\.io/hostname"=node2
 ```
 
 ```yaml

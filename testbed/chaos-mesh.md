@@ -21,7 +21,9 @@ Deploy Chaos Mesh chart:
 $ helm install chaos-mesh/chaos-mesh \
     --name=chaos-mesh \
     --namespace=chaos \
-    --set dashboard.create=true
+    --set dashboard.create=true \
+    --set controllerManager.nodeSelector."kubernetes\.io/hostname"=node2 \
+    --set dashboard.nodeSelector."kubernetes\.io/hostname"=node2
 ```
 
 ## Dashboard access

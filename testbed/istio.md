@@ -19,7 +19,11 @@ Deploy Istio control plane:
 ```bash
 $ istioctl install \
     -f $HOME/orca/helm/examples/integrations/istio/orca-values.yaml \
-    --set values.kiali.prometheusAddr=http://prometheus-kube-prometheus-prometheus.monitoring:9090
+    --set values.kiali.prometheusAddr=http://prometheus-kube-prometheus-prometheus.monitoring:9090 \
+    --set values.pilot.nodeSelector."kubernetes\.io/hostname"=node2 \
+    --set values.mixer.telemetry.nodeSelector."kubernetes\.io/hostname"=node2 \
+    --set values.kiali.nodeSelector."kubernetes\.io/hostname"=node2 \
+    --set values.gateways.istio-ingressgateway.nodeSelector."kubernetes\.io/hostname"=node2
 ```
 
 ## Cleanup
