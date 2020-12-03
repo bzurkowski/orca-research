@@ -6,7 +6,7 @@
 $ kubectl -n rca port-forward svc/orca-ui 8080
 ```
 
-[Grafana](http://localhost:3000):
+[Grafana](http://localhost:3000) (user: `admin`, pass: `prom-operator`):
 
 ```bash
 $ kubectl -n monitoring port-forward svc/prometheus-grafana 3000:80
@@ -18,7 +18,7 @@ $ kubectl -n monitoring port-forward svc/prometheus-grafana 3000:80
 $ kubectl -n monitoring port-forward svc/prometheus-kube-prometheus-prometheus 9090
 ```
 
-[Kiali](http://localhost:20001):
+[Kiali](http://localhost:20001) (user: `admin`, pass: `admin`):
 
 ```bash
 $ kubectl -n istio-system port-forward svc/kiali 2001
