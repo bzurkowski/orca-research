@@ -14,6 +14,7 @@ Deploy Prometheus chart:
 ```bash
 $ helm3 install prometheus prometheus-community/kube-prometheus-stack \
     --namespace monitoring \
+    --create-namespace \
     --values $HOME/orca/helm/examples/integrations/prometheus/orca-values.yaml \
     --set prometheusOperator.nodeSelector."kubernetes\.io/hostname"=node2 \
     --set prometheus.prometheusSpec.nodeSelector."kubernetes\.io/hostname"=node2 \
