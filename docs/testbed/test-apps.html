@@ -464,6 +464,7 @@
                                 
                                 <h1 id="test-applications">Test Applications</h1>
 <h2 id="hipster-shop">Hipster Shop</h2>
+<h3 id="installation">Installation</h3>
 <p>Clone app repository:</p>
 <pre><code class="lang-bash">$ git <span class="hljs-built_in">clone</span> https://github.com/GoogleCloudPlatform/microservices-demo.git
 </code></pre>
@@ -476,6 +477,12 @@ $ kubectl label namespace hipster-shop istio-injection=enabled
 </code></pre>
 <p>Apply Istio manifests:</p>
 <pre><code class="lang-bash">$ kubectl -n hipster-shop apply <span class="hljs-_">-f</span> ./release/istio-manifests.yaml
+</code></pre>
+<h3 id="cleanup">Cleanup</h3>
+<p>Delete Kubernetes, CRs and namespace:</p>
+<pre><code class="lang-bash">$ kubectl -n hipster-shop delete <span class="hljs-_">-f</span> ./release/kubernetes-manifests.yaml
+$ kubectl -n hipster-shop delete <span class="hljs-_">-f</span> ./release/istio-manifests.yaml
+$ kubectl delete ns hipster-shop
 </code></pre>
 <h2 id="bookinfo">Bookinfo</h2>
 <p>Clone Istio repository:</p>
@@ -504,6 +511,7 @@ $ kubectl label namespace bookinfo istio-injection=enabled
 </code></pre>
 <p>Apply initial routing rules:</p>
 <pre><code class="lang-bash">$ kubectl -n bookinfo apply <span class="hljs-_">-f</span> samples/bookinfo/networking/virtual-service-all-v1.yaml
+$ kubectl -n bookinfo apply <span class="hljs-_">-f</span> samples/bookinfo/networking/virtual-service-reviews-v3.yaml
 </code></pre>
 <p>Generate load via the Ingress Gateway:</p>
 <pre><code class="lang-bash">ingress_host=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath=<span class="hljs-string">&apos;{.spec.clusterIP}&apos;</span>)
@@ -610,7 +618,7 @@ gen-mesh.dot  gen-mesh.png
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Test applications","level":"3.9","depth":1,"next":{"title":"OpenRCA","level":"3.10","depth":1,"path":"testbed/openrca.md","ref":"testbed/openrca.md","articles":[]},"previous":{"title":"Falco","level":"3.8","depth":1,"path":"testbed/falco.md","ref":"testbed/falco.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/test-apps.md","mtime":"2020-12-02T17:52:44.475Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-12-03T16:24:44.977Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Test applications","level":"3.9","depth":1,"next":{"title":"OpenRCA","level":"3.10","depth":1,"path":"testbed/openrca.md","ref":"testbed/openrca.md","articles":[]},"previous":{"title":"Falco","level":"3.8","depth":1,"path":"testbed/falco.md","ref":"testbed/falco.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/test-apps.md","mtime":"2020-12-05T21:01:26.988Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-12-05T21:27:19.532Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

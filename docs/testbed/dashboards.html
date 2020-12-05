@@ -466,14 +466,14 @@
 <p><a href="http://localhost:8080" target="_blank">OpenRCA</a>:</p>
 <pre><code class="lang-bash">$ kubectl -n rca port-forward svc/orca-ui 8080
 </code></pre>
-<p><a href="http://localhost:3000" target="_blank">Grafana</a>:</p>
+<p><a href="http://localhost:3000" target="_blank">Grafana</a> (user: <code>admin</code>, pass: <code>prom-operator</code>):</p>
 <pre><code class="lang-bash">$ kubectl -n monitoring port-forward svc/prometheus-grafana 3000:80
 </code></pre>
 <p><a href="http://localhost:9090" target="_blank">Prometheus</a>:</p>
 <pre><code class="lang-bash">$ kubectl -n monitoring port-forward svc/prometheus-kube-prometheus-prometheus 9090
 </code></pre>
-<p><a href="http://localhost:20001" target="_blank">Kiali</a>:</p>
-<pre><code class="lang-bash">$ kubectl -n istio-system port-forward svc/kiali 2001
+<p><a href="http://localhost:20001" target="_blank">Kiali</a> (user: <code>admin</code>, pass: <code>admin</code>):</p>
+<pre><code class="lang-bash">$ kubectl -n istio-system port-forward svc/kiali 20001
 </code></pre>
 <p><a href="http://localhost:2333" target="_blank">Chaos Mesh</a>:</p>
 <pre><code class="lang-bash">$ kubectl -n chaos port-forward svc/chaos-dashboard 2333
@@ -521,7 +521,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Dashboards","level":"3.12","depth":1,"next":{"title":"Tools","level":"3.13","depth":1,"path":"testbed/tools.md","ref":"testbed/tools.md","articles":[]},"previous":{"title":"Chaos Mesh","level":"3.11","depth":1,"path":"testbed/chaos-mesh.md","ref":"testbed/chaos-mesh.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/dashboards.md","mtime":"2020-12-03T16:24:27.737Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-12-03T16:24:44.977Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Dashboards","level":"3.12","depth":1,"next":{"title":"Tools","level":"3.13","depth":1,"path":"testbed/tools.md","ref":"testbed/tools.md","articles":[]},"previous":{"title":"Chaos Mesh","level":"3.11","depth":1,"path":"testbed/chaos-mesh.md","ref":"testbed/chaos-mesh.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/dashboards.md","mtime":"2020-12-03T16:46:59.737Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-12-05T21:27:19.532Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
