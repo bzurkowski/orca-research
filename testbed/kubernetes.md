@@ -53,6 +53,14 @@ $ systemctl stop firewalld
 $ systemctl disable firewalld
 ```
 
+Install NTP:
+
+```bash
+$ yum install -y ntp
+$ systemctl start ntpd
+$ systemctl enable ntpd
+```
+
 ### Prepare inventory
 
 Bootstrap base inventory:
