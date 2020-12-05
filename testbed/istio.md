@@ -26,6 +26,27 @@ $ istioctl install \
     --set values.gateways.istio-ingressgateway.nodeSelector."kubernetes\.io/hostname"=node2
 ```
 
+Setup [Grafana dashboards](https://grafana.com/orgs/istio/dashboards) for Istio:
+
+* Istio Control Plane Dashboard
+
+    ```
+    https://grafana.com/api/dashboards/7645/revisions/45/download
+    ```
+
+* Istio Mesh Dashboard
+
+    ```
+    https://grafana.com/api/dashboards/7639/revisions/45/download
+    ```
+
+* Istio Service Dashboard
+
+    ```
+    https://grafana.com/api/dashboards/7636/revisions/45/download
+    ```
+
+
 ## Cleanup
 
 Delete Istio deployment:
