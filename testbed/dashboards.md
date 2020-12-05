@@ -21,7 +21,7 @@ $ kubectl -n monitoring port-forward svc/prometheus-kube-prometheus-prometheus 9
 [Kiali](http://localhost:20001) (user: `admin`, pass: `admin`):
 
 ```bash
-$ kubectl -n istio-system port-forward svc/kiali 2001
+$ kubectl -n istio-system port-forward svc/kiali 20001
 ```
 
 [Chaos Mesh](http://localhost:2333):
