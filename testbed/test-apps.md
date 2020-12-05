@@ -2,6 +2,8 @@
 
 ## Hipster Shop
 
+### Installation
+
 Clone app repository:
 
 ```bash
@@ -25,6 +27,16 @@ Apply Istio manifests:
 
 ```bash
 $ kubectl -n hipster-shop apply -f ./release/istio-manifests.yaml
+```
+
+### Cleanup
+
+Delete Kubernetes, CRs and namespace:
+
+```bash
+$ kubectl -n hipster-shop delete -f ./release/kubernetes-manifests.yaml
+$ kubectl -n hipster-shop delete -f ./release/istio-manifests.yaml
+$ kubectl delete ns hipster-shop
 ```
 
 ## Bookinfo
@@ -75,6 +87,7 @@ Apply initial routing rules:
 
 ```bash
 $ kubectl -n bookinfo apply -f samples/bookinfo/networking/virtual-service-all-v1.yaml
+$ kubectl -n bookinfo apply -f samples/bookinfo/networking/virtual-service-reviews-v3.yaml
 ```
 
 Generate load via the Ingress Gateway:
