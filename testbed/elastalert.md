@@ -8,7 +8,7 @@ Deploy Elastalert chart:
 $ helm install stable/elastalert \
     --name elastalert \
     --namespace logging \
-    --values $HOME/orca/helm/examples/integrations/elastalert/orca-values.yaml
+    --values $HOME/Workspace/orca/orca/helm/examples/integrations/elastalert/orca-values.yaml
 ```
 
 ## Cleanup

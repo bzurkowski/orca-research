@@ -18,7 +18,7 @@ Deploy Istio control plane:
 
 ```bash
 $ istioctl install \
-    -f $HOME/orca/helm/examples/integrations/istio/orca-values.yaml \
+    -f $HOME/Workspace/orca/orca/helm/examples/integrations/istio/orca-values.yaml \
     --set values.kiali.prometheusAddr=http://prometheus-kube-prometheus-prometheus.monitoring:9090 \
     --set values.pilot.nodeSelector."kubernetes\.io/hostname"=node2 \
     --set values.mixer.telemetry.nodeSelector."kubernetes\.io/hostname"=node2 \
@@ -52,7 +52,7 @@ Setup [Grafana dashboards](https://grafana.com/orgs/istio/dashboards) for Istio:
 Delete Istio deployment:
 
 ```bash
-$ istioctl manifest generate -f $HOME/orca/helm/examples/integrations/istio/orca-values.yaml | kubectl delete -f -
+$ istioctl manifest generate -f $HOME/Workspace/orca/orca/helm/examples/integrations/istio/orca-values.yaml | kubectl delete -f -
 ```
 
 ## Helm-based installation (deprecated)
