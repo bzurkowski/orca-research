@@ -18,6 +18,7 @@ $ helm3 install prometheus prometheus-community/kube-prometheus-stack \
     --create-namespace \
     --values $HOME/orca/helm/examples/integrations/prometheus/orca-values.yaml \
     --set prometheusOperator.nodeSelector."kubernetes\.io/hostname"=node2 \
+    --set prometheus.prometheusSpec.scrapeInterval=15s \
     --set prometheus.prometheusSpec.nodeSelector."kubernetes\.io/hostname"=node2 \
     --set alertmanager.alertmanagerSpec.nodeSelector."kubernetes\.io/hostname"=node2 \
     --set grafana.nodeSelector."kubernetes\.io/hostname"=node2 \
