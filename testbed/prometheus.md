@@ -13,6 +13,7 @@ Deploy Prometheus chart:
 
 ```bash
 $ helm3 install prometheus prometheus-community/kube-prometheus-stack \
+    --version 12.7.0 \
     --namespace monitoring \
     --create-namespace \
     --values $HOME/orca/helm/examples/integrations/prometheus/orca-values.yaml \
