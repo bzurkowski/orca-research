@@ -5,7 +5,7 @@
 Deploy OpenRCA chart:
 
 ```bash
-$ helm install ./helm/orca \
+$ helm install $HOME/Workspace/orca/orca/helm/orca \
     --name orca \
     --namespace rca \
     --set image.pullPolicy=Always \
