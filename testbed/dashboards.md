@@ -30,8 +30,8 @@ $ while true; do kubectl -n istio-system port-forward svc/kiali 20001; sleep 0.1
 $ while true; do kubectl -n chaos port-forward svc/chaos-dashboard 2333; sleep 0.1; done
 ```
 
-[Fortio](http://localhost:8080/fortio):
+[Fortio](http://localhost:8081/fortio):
 
 ```bash
-$ while true; do kubectl -n default port-forward svc/client 8080; sleep 0.1; done
+$ while true; do kubectl -n default port-forward svc/client 8081:8080; sleep 0.1; done
 ```
