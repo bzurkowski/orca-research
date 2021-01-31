@@ -29,3 +29,9 @@ $ kubectl -n istio-system port-forward svc/kiali 20001
 ```bash
 $ kubectl -n chaos port-forward svc/chaos-dashboard 2333
 ```
+
+[Fortio](http://localhost:8080/fortio):
+
+```bash
+$ kubectl -n default port-forward svc/client 8080
+```
