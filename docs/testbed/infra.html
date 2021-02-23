@@ -463,73 +463,118 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="infrastructure-setup">Infrastructure Setup</h1>
-<h3 id="provision-vms">Provision VMs</h3>
-<p>Name: orca{i}</p>
-<p>OS: CentOS 7
-<a href="http://ftp.ps.pl/pub/Linux/CentOS/7.7.1908/isos/x86_64/CentOS-7-x86_64-Minimal-1908.iso" target="_blank">http://ftp.ps.pl/pub/Linux/CentOS/7.7.1908/isos/x86_64/CentOS-7-x86_64-Minimal-1908.iso</a></p>
-<p>CPU:</p>
-<pre><code>* Current allocation: 8
-* Maximum allocation: 8
-* Model: host-passthrough
-</code></pre><p>Memory:</p>
-<pre><code>* Current allocation: 40960 MiB
-* Maximum allocation: 61449 MiB
-</code></pre><p>Disk:</p>
-<pre><code>* Device type: VirtIO Disk
-* Storage size: 50 GiB
-* Storage format: raw
-* Cache mode: none
-* IO mode: native
-</code></pre><p>NIC 1 (external network):</p>
-<pre><code>* Network source: Bridge br0 Host device eth0
-* Device model: virtio
-</code></pre><p>NIC 2 (internal network):</p>
-<pre><code>* Network source: Bridge br1 Host device eth1
-* Device model: virtio
-</code></pre><h3 id="configure-network-interfaces">Configure network interfaces</h3>
-<pre><code>$ cat /etc/sysconfig/network-scripts/ifcfg-eth0
-TYPE=&quot;Ethernet&quot;
+<h2 id="host-machine-preparation">Host machine preparation</h2>
+<h3 id="initial-setup">Initial setup</h3>
+<p>Set hostname:</p>
+<pre><code>$ hostnamectl set-hostname phd1
+</code></pre><p>Fix locale:</p>
+<pre><code>$ vi /etc/environment
+LANG=en_US.utf-8
+LC_ALL=en_US.utf-8
+</code></pre><p>Setup basic packages:</p>
+<pre><code class="lang-bash">$ yum install -y wget vim git htop curl
+</code></pre>
+<h3 id="network-interfaces">Network interfaces</h3>
+<p>Setup network bridge for external interface (<code>enp6s0</code>):</p>
+<pre><code>TYPE=&quot;Ethernet&quot;
 PROXY_METHOD=&quot;none&quot;
 BROWSER_ONLY=&quot;no&quot;
 BOOTPROTO=&quot;none&quot;
-DEFROUTE=&quot;yes&quot;
 IPV4_FAILURE_FATAL=&quot;no&quot;
 IPV6INIT=&quot;yes&quot;
 IPV6_AUTOCONF=&quot;yes&quot;
 IPV6_DEFROUTE=&quot;yes&quot;
 IPV6_FAILURE_FATAL=&quot;no&quot;
 IPV6_ADDR_GEN_MODE=&quot;stable-privacy&quot;
-NAME=&quot;eth0&quot;
-UUID=&quot;d0fece49-7eac-4374-a471-8e51d6e3dd9c&quot;
-DEVICE=&quot;eth0&quot;
+NAME=&quot;enp6s0&quot;
+UUID=&quot;5e5822dd-dc88-42dd-98cd-31628d4404bf&quot;
+DEVICE=&quot;enp6s0&quot;
 ONBOOT=&quot;yes&quot;
-IPADDR=&quot;172.17.66.31&quot;
+BRIDGE=&quot;br0&quot;
+
+DEVICE=&quot;br0&quot;
+BOOTPROTO=&quot;static&quot;
+ONBOOT=&quot;yes&quot;
+TYPE=&quot;Bridge&quot;
+IPADDR=&quot;172.17.80.25&quot;
 PREFIX=&quot;24&quot;
-GATEWAY=&quot;172.17.66.254&quot;
-DNS1=&quot;8.8.8.8&quot;
-DNS2=&quot;172.29.128.101&quot;
-IPV6_PRIVACY=&quot;no&quot;
-</code></pre><pre><code>$ cat /etc/sysconfig/network-scripts/ifcfg-eth1
-TYPE=Ethernet
-PROXY_METHOD=none
-BROWSER_ONLY=no
-BOOTPROTO=none
-IPV4_FAILURE_FATAL=no
-IPV6INIT=yes
-IPV6_AUTOCONF=yes
-IPV6_DEFROUTE=yes
-IPV6_FAILURE_FATAL=no
-IPV6_ADDR_GEN_MODE=stable-privacy
-NAME=eth1
-UUID=5d217922-5ddf-4893-a476-1d492ba7d8e3
-DEVICE=eth1
-ONBOOT=yes
-IPADDR=10.10.10.34
-PREFIX=24
-GATEWAY=10.10.10.1
-DNS1=8.8.8.8
-IPV6_PRIVACY=no
+GATEWAY=&quot;172.17.80.254&quot;
+DNS1=&quot;172.29.128.101&quot;
+</code></pre><p>Setup network bridge for internal interface (<code>enp7s0</code>):</p>
+<pre><code>TYPE=&quot;Ethernet&quot;
+PROXY_METHOD=&quot;none&quot;
+BROWSER_ONLY=&quot;no&quot;
+IPV4_FAILURE_FATAL=&quot;no&quot;
+IPV6INIT=&quot;yes&quot;
+IPV6_AUTOCONF=&quot;yes&quot;
+IPV6_DEFROUTE=&quot;yes&quot;
+IPV6_FAILURE_FATAL=&quot;no&quot;
+IPV6_ADDR_GEN_MODE=&quot;stable-privacy&quot;
+NAME=&quot;enp7s0&quot;
+UUID=&quot;0674f835-ed1d-479f-8ad8-9ed253588189&quot;
+DEVICE=&quot;enp7s0&quot;
+ONBOOT=&quot;yes&quot;
+BRIDGE=&quot;br1&quot;
+
+DEVICE=&quot;br1&quot;
+BOOTPROTO=&quot;static&quot;
+ONBOOT=&quot;yes&quot;
+TYPE=&quot;Bridge&quot;
+IPADDR=&quot;10.10.10.25&quot;
+PREFIX=&quot;24&quot;
+</code></pre><h2 id="setup-kvm">Setup KVM</h2>
+<p>Enable nested virtualization:</p>
+<pre><code class="lang-bash">$ cat /sys/module/kvm_intel/parameters/nested
+N
 </code></pre>
+<pre><code class="lang-bash">$ vi /etc/modprobe.d/kvm-nested.conf
+options kvm-intel nested=1
+options kvm-intel <span class="hljs-built_in">enable</span>_shadow_vmcs=1
+options kvm-intel <span class="hljs-built_in">enable</span>_apicv=1
+options kvm-intel ept=1
+</code></pre>
+<pre><code class="lang-bash">$ modprobe -r kvm_intel
+$ modprobe <span class="hljs-_">-a</span> kvm_intel
+</code></pre>
+<pre><code class="lang-bash">$ cat /sys/module/kvm_intel/parameters/nested
+Y
+</code></pre>
+<p>Install KVM:</p>
+<pre><code class="lang-bash">$ yum -y install qemu-kvm libvirt libvirt-python libguestfs-tools virt-install
+</code></pre>
+<p>Enable Libvirt daemon:</p>
+<pre><code class="lang-bash">$ systemctl <span class="hljs-built_in">enable</span> libvirtd
+$ systemctl start libvirtd
+</code></pre>
+<p>Ensure the KVM module is loaded into Kernel:</p>
+<pre><code class="lang-bash">$ lsmod | grep -i kvm
+kvm_intel             183621  0
+kvm                   586948  1 kvm_intel
+</code></pre>
+<h2 id="vm-provisioning">VM provisioning</h2>
+<p>Provision VM instance:</p>
+<pre><code class="lang-bash">virt-install \
+    --virt-type=kvm \
+    --name orca1 \
+    --ram 4096 \
+    --vcpus=2 \
+    --cpu host \
+    --os-type=linux \
+    --os-variant=centos7.0 \
+    --cdrom=/home/libvirt/images/CentOS-7-x86_64-Minimal-2009.iso \
+    --network=bridge=br0,model=virtio \
+    --network=bridge=br1,model=virtio \
+    --graphics vnc \
+    --disk path=/home/libvirt/images/orca1.raw,size=10,bus=virtio,format=raw
+</code></pre>
+<p>Find VNC port:</p>
+<pre><code class="lang-bash">$ virsh dumpxml centos7 | grep vnc
+&lt;graphics <span class="hljs-built_in">type</span>=<span class="hljs-string">&apos;vnc&apos;</span> port=<span class="hljs-string">&apos;5901&apos;</span> autoport=<span class="hljs-string">&apos;yes&apos;</span> listen=<span class="hljs-string">&apos;127.0.0.1&apos;</span>&gt;
+</code></pre>
+<p>Port-forward the VNC port:</p>
+<pre><code>$ ssh root@172.17.80.22 -L 5900:127.0.0.1:5900
+</code></pre><p>Access the OS installation via VNC Viewer.</p>
+
                                 
                                 </section>
                             
@@ -572,7 +617,7 @@ IPV6_PRIVACY=no
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Infrastructure","level":"3.1","depth":1,"next":{"title":"Kubernetes","level":"3.2","depth":1,"path":"testbed/kubernetes.md","ref":"testbed/kubernetes.md","articles":[]},"previous":{"title":"Stream processing","level":"2.4","depth":1,"path":"research/stream_processing.md","ref":"research/stream_processing.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/infra.md","mtime":"2020-03-01T13:16:40.185Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-01-31T13:48:20.486Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Infrastructure","level":"3.1","depth":1,"next":{"title":"Kubernetes","level":"3.2","depth":1,"path":"testbed/kubernetes.md","ref":"testbed/kubernetes.md","articles":[]},"previous":{"title":"Stream processing","level":"2.4","depth":1,"path":"research/stream_processing.md","ref":"research/stream_processing.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/infra.md","mtime":"2021-02-23T22:25:01.001Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-02-23T22:25:33.255Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
