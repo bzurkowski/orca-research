@@ -143,8 +143,6 @@ kvm_intel             183621  0
 kvm                   586948  1 kvm_intel
 ```
 
-
-
 ## VM provisioning
 
 Provision VM instance:
@@ -179,3 +177,8 @@ $ ssh root@172.17.80.22 -L 5900:127.0.0.1:5900
 ```
 
 Access the OS installation via VNC Viewer.
+
+#### Links
+
+* https://www.cyberciti.biz/faq/how-to-install-kvm-on-centos-7-rhel-7-headless-server/
+* https://www.cyberciti.biz/faq/kvm-install-centos-redhat-using-kickstart-ks-cfg/
