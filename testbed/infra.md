@@ -1,88 +1,167 @@
 # Infrastructure Setup
 
-### Provision VMs
+## Host machine preparation
 
-Name: orca{i}
+### Initial setup
 
-OS: CentOS 7
-http://ftp.ps.pl/pub/Linux/CentOS/7.7.1908/isos/x86_64/CentOS-7-x86_64-Minimal-1908.iso
-
-CPU:
-
-    * Current allocation: 8
-    * Maximum allocation: 8
-    * Model: host-passthrough
-
-
-Memory:
-
-    * Current allocation: 40960 MiB
-    * Maximum allocation: 61449 MiB
-
-Disk:
-
-    * Device type: VirtIO Disk
-    * Storage size: 50 GiB
-    * Storage format: raw
-    * Cache mode: none
-    * IO mode: native
-
-NIC 1 (external network):
-
-    * Network source: Bridge br0 Host device eth0
-    * Device model: virtio
-
-NIC 2 (internal network):
-
-    * Network source: Bridge br1 Host device eth1
-    * Device model: virtio
-
-### Configure network interfaces
+Set hostname:
 
 ```
-$ cat /etc/sysconfig/network-scripts/ifcfg-eth0
+$ hostnamectl set-hostname phd1
+```
+
+Fix locale:
+
+```
+$ vi /etc/environment
+LANG=en_US.utf-8
+LC_ALL=en_US.utf-8
+```
+
+Setup basic packages:
+
+```bash
+$ yum install -y wget vim git htop curl
+```
+
+### Network interfaces
+
+Setup network bridge for external interface (`enp6s0`):
+
+```
 TYPE="Ethernet"
 PROXY_METHOD="none"
 BROWSER_ONLY="no"
 BOOTPROTO="none"
-DEFROUTE="yes"
 IPV4_FAILURE_FATAL="no"
 IPV6INIT="yes"
 IPV6_AUTOCONF="yes"
 IPV6_DEFROUTE="yes"
 IPV6_FAILURE_FATAL="no"
 IPV6_ADDR_GEN_MODE="stable-privacy"
-NAME="eth0"
-UUID="d0fece49-7eac-4374-a471-8e51d6e3dd9c"
-DEVICE="eth0"
+NAME="enp6s0"
+UUID="5e5822dd-dc88-42dd-98cd-31628d4404bf"
+DEVICE="enp6s0"
 ONBOOT="yes"
-IPADDR="172.17.66.31"
+BRIDGE="br0"
+
+DEVICE="br0"
+BOOTPROTO="static"
+ONBOOT="yes"
+TYPE="Bridge"
+IPADDR="172.17.80.25"
 PREFIX="24"
-GATEWAY="172.17.66.254"
-DNS1="8.8.8.8"
-DNS2="172.29.128.101"
-IPV6_PRIVACY="no"
+GATEWAY="172.17.80.254"
+DNS1="172.29.128.101"
 ```
 
+Setup network bridge for internal interface (`enp7s0`):
+
 ```
-$ cat /etc/sysconfig/network-scripts/ifcfg-eth1
-TYPE=Ethernet
-PROXY_METHOD=none
-BROWSER_ONLY=no
-BOOTPROTO=none
-IPV4_FAILURE_FATAL=no
-IPV6INIT=yes
-IPV6_AUTOCONF=yes
-IPV6_DEFROUTE=yes
-IPV6_FAILURE_FATAL=no
-IPV6_ADDR_GEN_MODE=stable-privacy
-NAME=eth1
-UUID=5d217922-5ddf-4893-a476-1d492ba7d8e3
-DEVICE=eth1
-ONBOOT=yes
-IPADDR=10.10.10.34
-PREFIX=24
-GATEWAY=10.10.10.1
-DNS1=8.8.8.8
-IPV6_PRIVACY=no
+TYPE="Ethernet"
+PROXY_METHOD="none"
+BROWSER_ONLY="no"
+IPV4_FAILURE_FATAL="no"
+IPV6INIT="yes"
+IPV6_AUTOCONF="yes"
+IPV6_DEFROUTE="yes"
+IPV6_FAILURE_FATAL="no"
+IPV6_ADDR_GEN_MODE="stable-privacy"
+NAME="enp7s0"
+UUID="0674f835-ed1d-479f-8ad8-9ed253588189"
+DEVICE="enp7s0"
+ONBOOT="yes"
+BRIDGE="br1"
+
+DEVICE="br1"
+BOOTPROTO="static"
+ONBOOT="yes"
+TYPE="Bridge"
+IPADDR="10.10.10.25"
+PREFIX="24"
 ```
+
+## Setup KVM
+
+Enable nested virtualization:
+
+```bash
+$ cat /sys/module/kvm_intel/parameters/nested
+N
+```
+
+```bash
+$ vi /etc/modprobe.d/kvm-nested.conf
+options kvm-intel nested=1
+options kvm-intel enable_shadow_vmcs=1
+options kvm-intel enable_apicv=1
+options kvm-intel ept=1
+```
+
+```bash
+$ modprobe -r kvm_intel
+$ modprobe -a kvm_intel
+```
+
+```bash
+$ cat /sys/module/kvm_intel/parameters/nested
+Y
+```
+
+Install KVM:
+
+```bash
+$ yum -y install qemu-kvm libvirt libvirt-python libguestfs-tools virt-install
+```
+
+Enable Libvirt daemon:
+
+```bash
+$ systemctl enable libvirtd
+$ systemctl start libvirtd
+```
+
+Ensure the KVM module is loaded into Kernel:
+
+```bash
+$ lsmod | grep -i kvm
+kvm_intel             183621  0
+kvm                   586948  1 kvm_intel
+```
+
+
+
+## VM provisioning
+
+Provision VM instance:
+
+```bash
+virt-install \
+    --virt-type=kvm \
+    --name orca1 \
+    --ram 4096 \
+    --vcpus=2 \
+    --cpu host \
+    --os-type=linux \
+    --os-variant=centos7.0 \
+    --cdrom=/home/libvirt/images/CentOS-7-x86_64-Minimal-2009.iso \
+    --network=bridge=br0,model=virtio \
+    --network=bridge=br1,model=virtio \
+    --graphics vnc \
+    --disk path=/home/libvirt/images/orca1.raw,size=10,bus=virtio,format=raw
+```
+
+Find VNC port:
+
+```bash
+$ virsh dumpxml centos7 | grep vnc
+<graphics type='vnc' port='5901' autoport='yes' listen='127.0.0.1'>
+```
+
+Port-forward the VNC port:
+
+```
+$ ssh root@172.17.80.22 -L 5900:127.0.0.1:5900
+```
+
+Access the OS installation via VNC Viewer.
