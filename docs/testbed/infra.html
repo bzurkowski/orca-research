@@ -476,53 +476,61 @@ LC_ALL=en_US.utf-8
 </code></pre>
 <h3 id="network-interfaces">Network interfaces</h3>
 <p>Setup network bridge for external interface (<code>enp6s0</code>):</p>
-<pre><code>TYPE=&quot;Ethernet&quot;
-PROXY_METHOD=&quot;none&quot;
-BROWSER_ONLY=&quot;no&quot;
-BOOTPROTO=&quot;none&quot;
-IPV4_FAILURE_FATAL=&quot;no&quot;
-IPV6INIT=&quot;yes&quot;
-IPV6_AUTOCONF=&quot;yes&quot;
-IPV6_DEFROUTE=&quot;yes&quot;
-IPV6_FAILURE_FATAL=&quot;no&quot;
-IPV6_ADDR_GEN_MODE=&quot;stable-privacy&quot;
-NAME=&quot;enp6s0&quot;
-UUID=&quot;5e5822dd-dc88-42dd-98cd-31628d4404bf&quot;
-DEVICE=&quot;enp6s0&quot;
-ONBOOT=&quot;yes&quot;
-BRIDGE=&quot;br0&quot;
-
-DEVICE=&quot;br0&quot;
-BOOTPROTO=&quot;static&quot;
-ONBOOT=&quot;yes&quot;
-TYPE=&quot;Bridge&quot;
-IPADDR=&quot;172.17.80.25&quot;
-PREFIX=&quot;24&quot;
-GATEWAY=&quot;172.17.80.254&quot;
-DNS1=&quot;172.29.128.101&quot;
-</code></pre><p>Setup network bridge for internal interface (<code>enp7s0</code>):</p>
-<pre><code>TYPE=&quot;Ethernet&quot;
-PROXY_METHOD=&quot;none&quot;
-BROWSER_ONLY=&quot;no&quot;
-IPV4_FAILURE_FATAL=&quot;no&quot;
-IPV6INIT=&quot;yes&quot;
-IPV6_AUTOCONF=&quot;yes&quot;
-IPV6_DEFROUTE=&quot;yes&quot;
-IPV6_FAILURE_FATAL=&quot;no&quot;
-IPV6_ADDR_GEN_MODE=&quot;stable-privacy&quot;
-NAME=&quot;enp7s0&quot;
-UUID=&quot;0674f835-ed1d-479f-8ad8-9ed253588189&quot;
-DEVICE=&quot;enp7s0&quot;
-ONBOOT=&quot;yes&quot;
-BRIDGE=&quot;br1&quot;
-
-DEVICE=&quot;br1&quot;
-BOOTPROTO=&quot;static&quot;
-ONBOOT=&quot;yes&quot;
-TYPE=&quot;Bridge&quot;
-IPADDR=&quot;10.10.10.25&quot;
-PREFIX=&quot;24&quot;
-</code></pre><h2 id="setup-kvm">Setup KVM</h2>
+<pre><code class="lang-bash">$ vi /etc/sysconfig/network-scripts/ifcfg-enp6s0
+TYPE=<span class="hljs-string">&quot;Ethernet&quot;</span>
+PROXY_METHOD=<span class="hljs-string">&quot;none&quot;</span>
+BROWSER_ONLY=<span class="hljs-string">&quot;no&quot;</span>
+BOOTPROTO=<span class="hljs-string">&quot;none&quot;</span>
+IPV4_FAILURE_FATAL=<span class="hljs-string">&quot;no&quot;</span>
+IPV6INIT=<span class="hljs-string">&quot;yes&quot;</span>
+IPV6_AUTOCONF=<span class="hljs-string">&quot;yes&quot;</span>
+IPV6_DEFROUTE=<span class="hljs-string">&quot;yes&quot;</span>
+IPV6_FAILURE_FATAL=<span class="hljs-string">&quot;no&quot;</span>
+IPV6_ADDR_GEN_MODE=<span class="hljs-string">&quot;stable-privacy&quot;</span>
+NAME=<span class="hljs-string">&quot;enp6s0&quot;</span>
+UUID=<span class="hljs-string">&quot;5e5822dd-dc88-42dd-98cd-31628d4404bf&quot;</span>
+DEVICE=<span class="hljs-string">&quot;enp6s0&quot;</span>
+ONBOOT=<span class="hljs-string">&quot;yes&quot;</span>
+BRIDGE=<span class="hljs-string">&quot;br0&quot;</span>
+</code></pre>
+<pre><code class="lang-bash">$ vi /etc/sysconfig/network-scripts/ifcfg-br0
+DEVICE=<span class="hljs-string">&quot;br0&quot;</span>
+BOOTPROTO=<span class="hljs-string">&quot;static&quot;</span>
+ONBOOT=<span class="hljs-string">&quot;yes&quot;</span>
+TYPE=<span class="hljs-string">&quot;Bridge&quot;</span>
+IPADDR=<span class="hljs-string">&quot;172.17.80.25&quot;</span>
+PREFIX=<span class="hljs-string">&quot;24&quot;</span>
+GATEWAY=<span class="hljs-string">&quot;172.17.80.254&quot;</span>
+DNS1=<span class="hljs-string">&quot;172.29.128.101&quot;</span>
+</code></pre>
+<p>Setup network bridge for internal interface (<code>enp7s0</code>):</p>
+<pre><code class="lang-bash">$ vi /etc/sysconfig/network-scripts/ifcfg-enp7s0
+TYPE=<span class="hljs-string">&quot;Ethernet&quot;</span>
+PROXY_METHOD=<span class="hljs-string">&quot;none&quot;</span>
+BROWSER_ONLY=<span class="hljs-string">&quot;no&quot;</span>
+IPV4_FAILURE_FATAL=<span class="hljs-string">&quot;no&quot;</span>
+IPV6INIT=<span class="hljs-string">&quot;yes&quot;</span>
+IPV6_AUTOCONF=<span class="hljs-string">&quot;yes&quot;</span>
+IPV6_DEFROUTE=<span class="hljs-string">&quot;yes&quot;</span>
+IPV6_FAILURE_FATAL=<span class="hljs-string">&quot;no&quot;</span>
+IPV6_ADDR_GEN_MODE=<span class="hljs-string">&quot;stable-privacy&quot;</span>
+NAME=<span class="hljs-string">&quot;enp7s0&quot;</span>
+UUID=<span class="hljs-string">&quot;0674f835-ed1d-479f-8ad8-9ed253588189&quot;</span>
+DEVICE=<span class="hljs-string">&quot;enp7s0&quot;</span>
+ONBOOT=<span class="hljs-string">&quot;yes&quot;</span>
+BRIDGE=<span class="hljs-string">&quot;br1&quot;</span>
+</code></pre>
+<pre><code class="lang-bash">$ vi /etc/sysconfig/network-scripts/ifcfg-br1
+DEVICE=<span class="hljs-string">&quot;br1&quot;</span>
+BOOTPROTO=<span class="hljs-string">&quot;static&quot;</span>
+ONBOOT=<span class="hljs-string">&quot;yes&quot;</span>
+TYPE=<span class="hljs-string">&quot;Bridge&quot;</span>
+IPADDR=<span class="hljs-string">&quot;10.10.10.25&quot;</span>
+PREFIX=<span class="hljs-string">&quot;24&quot;</span>
+</code></pre>
+<p>Reboot the OS:</p>
+<pre><code>$ reboot
+</code></pre><h3 id="setup-kvm">Setup KVM</h3>
 <p>Enable nested virtualization:</p>
 <pre><code class="lang-bash">$ cat /sys/module/kvm_intel/parameters/nested
 N
@@ -617,7 +625,7 @@ kvm                   586948  1 kvm_intel
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Infrastructure","level":"3.1","depth":1,"next":{"title":"Kubernetes","level":"3.2","depth":1,"path":"testbed/kubernetes.md","ref":"testbed/kubernetes.md","articles":[]},"previous":{"title":"Stream processing","level":"2.4","depth":1,"path":"research/stream_processing.md","ref":"research/stream_processing.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/infra.md","mtime":"2021-02-23T22:25:01.001Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-02-23T22:25:33.255Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Infrastructure","level":"3.1","depth":1,"next":{"title":"Kubernetes","level":"3.2","depth":1,"path":"testbed/kubernetes.md","ref":"testbed/kubernetes.md","articles":[]},"previous":{"title":"Stream processing","level":"2.4","depth":1,"path":"research/stream_processing.md","ref":"research/stream_processing.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/infra.md","mtime":"2021-02-23T22:28:46.572Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-02-23T22:29:09.653Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
