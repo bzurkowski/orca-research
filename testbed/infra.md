@@ -28,7 +28,8 @@ $ yum install -y wget vim git htop curl
 
 Setup network bridge for external interface (`enp6s0`):
 
-```
+```bash
+$ vi /etc/sysconfig/network-scripts/ifcfg-enp6s0
 TYPE="Ethernet"
 PROXY_METHOD="none"
 BROWSER_ONLY="no"
@@ -44,7 +45,10 @@ UUID="5e5822dd-dc88-42dd-98cd-31628d4404bf"
 DEVICE="enp6s0"
 ONBOOT="yes"
 BRIDGE="br0"
+```
 
+```bash
+$ vi /etc/sysconfig/network-scripts/ifcfg-br0
 DEVICE="br0"
 BOOTPROTO="static"
 ONBOOT="yes"
@@ -57,7 +61,8 @@ DNS1="172.29.128.101"
 
 Setup network bridge for internal interface (`enp7s0`):
 
-```
+```bash
+$ vi /etc/sysconfig/network-scripts/ifcfg-enp7s0
 TYPE="Ethernet"
 PROXY_METHOD="none"
 BROWSER_ONLY="no"
@@ -72,7 +77,10 @@ UUID="0674f835-ed1d-479f-8ad8-9ed253588189"
 DEVICE="enp7s0"
 ONBOOT="yes"
 BRIDGE="br1"
+```
 
+```bash
+$ vi /etc/sysconfig/network-scripts/ifcfg-br1
 DEVICE="br1"
 BOOTPROTO="static"
 ONBOOT="yes"
@@ -81,7 +89,13 @@ IPADDR="10.10.10.25"
 PREFIX="24"
 ```
 
-## Setup KVM
+Reboot the OS:
+
+```
+$ reboot
+```
+
+### Setup KVM
 
 Enable nested virtualization:
 
