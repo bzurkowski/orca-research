@@ -195,8 +195,9 @@ part / --fstype ext4 --size 10240
 auth  --useshadow  --enablemd5
 
 #Network information
-network --bootproto=static --ip=172.17.66.31 --netmask=255.255.255.0 --gateway=172.17.66.254 --nameserver=172.29.128.101,8.8.8.8 --device=eth0
-network --bootproto=static --ip=10.10.10.31 --netmask=255.255.255.0 --gateway=10.10.10.1 --nameserver=8.8.8.8 --device=eth1
+network --bootproto=static --ip=172.17.66.31 --netmask=255.255.255.0 --gateway=172.17.66.254 --nameserver=172.29.128.101,8.8.8.8
+network --bootproto=static --ip=10.10.10.31 --netmask=255.255.255.0 --gateway=10.10.10.1 --nameserver=8.8.8.8
+network --hostname=orca1
 
 #Firewall configuration
 firewall --disabled
