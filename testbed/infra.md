@@ -182,7 +182,7 @@ cdrom
 bootloader --location=mbr
 
 #Clear the Master Boot Record
-zerombr yes
+zerombr
 
 #Partition clearing information
 clearpart --all --initlabel
@@ -203,9 +203,14 @@ firewall --disabled
 
 #Do not configure the X Window System
 skipx
+
+#Select packages to install
+%packages
+@^minimal
+%end
 ```
 
-### Setup httpd
+### Setup HTTP Server
 
 Install the HTTP server:
 
@@ -213,7 +218,7 @@ Install the HTTP server:
 $ yum install httpd
 ```
 
-Start the server.
+Start the server:
 
 ```bash
 $ systemctl enable httpd
@@ -243,7 +248,7 @@ $ mv orca*.cfg /var/www/html/kickstart/
 
 ### Provision VMs
 
-Provision VM instance:
+Provision VM instances using the Centos image and prepared Kickstart files:
 
 ```bash
 virt-install \
@@ -257,7 +262,7 @@ virt-install \
     --location=/home/libvirt/images/CentOS-7-x86_64-Minimal-2009.iso \
     --network=bridge=br0,model=virtio \
     --network=bridge=br1,model=virtio \
-    --disk path=/home/libvirt/images/orca1.raw,size=10,bus=virtio,format=raw \
+    --disk path=/home/libvirt/images/orca1.raw,size=20,bus=virtio,format=raw \
     --graphics vnc \
     --initrd-inject=/var/www/html/kickstart/orca1.cfg \
     --extra-args "ks=file:/orca1.cfg"
@@ -276,9 +281,11 @@ Port-forward the VNC port:
 $ ssh root@172.17.80.22 -L 5900:127.0.0.1:5900
 ```
 
-Access the OS installation via VNC Viewer.
+Access the OS installation via VNC Viewer to track the installation progress.
+
 
 #### Links
 
 * https://www.cyberciti.biz/faq/how-to-install-kvm-on-centos-7-rhel-7-headless-server/
 * https://www.cyberciti.biz/faq/kvm-install-centos-redhat-using-kickstart-ks-cfg/
+https://docs.centos.org/en-US/centos/install-guide/Kickstart2/#sect-kickstart-commands
