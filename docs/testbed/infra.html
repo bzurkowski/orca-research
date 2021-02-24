@@ -592,7 +592,7 @@ cdrom
 bootloader --location=mbr
 
 #Clear the Master Boot Record
-zerombr yes
+zerombr
 
 #Partition clearing information
 clearpart --all --initlabel
@@ -613,11 +613,16 @@ firewall --disabled
 
 #Do not configure the X Window System
 skipx
-</code></pre><h3 id="setup-httpd">Setup httpd</h3>
+
+#Select packages to install
+%packages
+@^minimal
+%end
+</code></pre><h3 id="setup-http-server">Setup HTTP Server</h3>
 <p>Install the HTTP server:</p>
 <pre><code class="lang-bash">$ yum install httpd
 </code></pre>
-<p>Start the server.</p>
+<p>Start the server:</p>
 <pre><code class="lang-bash">$ systemctl <span class="hljs-built_in">enable</span> httpd
 $ systemctl start httpd
 </code></pre>
@@ -634,7 +639,7 @@ $ chmod 750 /var/www/html/kickstart
 <pre><code class="lang-bash">$ mv orca*.cfg /var/www/html/kickstart/
 </code></pre>
 <h3 id="provision-vms">Provision VMs</h3>
-<p>Provision VM instance:</p>
+<p>Provision VM instances using the Centos image and prepared Kickstart files:</p>
 <pre><code class="lang-bash">virt-install \
     --virt-type=kvm \
     --name orca1 \
@@ -646,7 +651,7 @@ $ chmod 750 /var/www/html/kickstart
     --location=/home/libvirt/images/CentOS-7-x86_64-Minimal-2009.iso \
     --network=bridge=br0,model=virtio \
     --network=bridge=br1,model=virtio \
-    --disk path=/home/libvirt/images/orca1.raw,size=10,bus=virtio,format=raw \
+    --disk path=/home/libvirt/images/orca1.raw,size=20,bus=virtio,format=raw \
     --graphics vnc \
     --initrd-inject=/var/www/html/kickstart/orca1.cfg \
     --extra-args <span class="hljs-string">&quot;ks=file:/orca1.cfg&quot;</span>
@@ -657,11 +662,12 @@ $ chmod 750 /var/www/html/kickstart
 </code></pre>
 <p>Port-forward the VNC port:</p>
 <pre><code>$ ssh root@172.17.80.22 -L 5900:127.0.0.1:5900
-</code></pre><p>Access the OS installation via VNC Viewer.</p>
+</code></pre><p>Access the OS installation via VNC Viewer to track the installation progress.</p>
 <h4 id="links">Links</h4>
 <ul>
 <li><a href="https://www.cyberciti.biz/faq/how-to-install-kvm-on-centos-7-rhel-7-headless-server/" target="_blank">https://www.cyberciti.biz/faq/how-to-install-kvm-on-centos-7-rhel-7-headless-server/</a></li>
-<li><a href="https://www.cyberciti.biz/faq/kvm-install-centos-redhat-using-kickstart-ks-cfg/" target="_blank">https://www.cyberciti.biz/faq/kvm-install-centos-redhat-using-kickstart-ks-cfg/</a></li>
+<li><a href="https://www.cyberciti.biz/faq/kvm-install-centos-redhat-using-kickstart-ks-cfg/" target="_blank">https://www.cyberciti.biz/faq/kvm-install-centos-redhat-using-kickstart-ks-cfg/</a>
+<a href="https://docs.centos.org/en-US/centos/install-guide/Kickstart2/#sect-kickstart-commands" target="_blank">https://docs.centos.org/en-US/centos/install-guide/Kickstart2/#sect-kickstart-commands</a></li>
 </ul>
 
                                 
@@ -706,7 +712,7 @@ $ chmod 750 /var/www/html/kickstart
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Infrastructure","level":"3.1","depth":1,"next":{"title":"Kubernetes","level":"3.2","depth":1,"path":"testbed/kubernetes.md","ref":"testbed/kubernetes.md","articles":[]},"previous":{"title":"Stream processing","level":"2.4","depth":1,"path":"research/stream_processing.md","ref":"research/stream_processing.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/infra.md","mtime":"2021-02-24T14:11:55.562Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-02-24T14:12:26.561Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Infrastructure","level":"3.1","depth":1,"next":{"title":"Kubernetes","level":"3.2","depth":1,"path":"testbed/kubernetes.md","ref":"testbed/kubernetes.md","articles":[]},"previous":{"title":"Stream processing","level":"2.4","depth":1,"path":"research/stream_processing.md","ref":"research/stream_processing.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/infra.md","mtime":"2021-02-24T14:25:56.514Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-02-24T14:30:52.935Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
