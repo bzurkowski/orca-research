@@ -605,8 +605,9 @@ part / --fstype ext4 --size 10240
 auth  --useshadow  --enablemd5
 
 #Network information
-network --bootproto=static --ip=172.17.66.31 --netmask=255.255.255.0 --gateway=172.17.66.254 --nameserver=172.29.128.101,8.8.8.8 --device=eth0
-network --bootproto=static --ip=10.10.10.31 --netmask=255.255.255.0 --gateway=10.10.10.1 --nameserver=8.8.8.8 --device=eth1
+network --bootproto=static --ip=172.17.66.31 --netmask=255.255.255.0 --gateway=172.17.66.254 --nameserver=172.29.128.101,8.8.8.8
+network --bootproto=static --ip=10.10.10.31 --netmask=255.255.255.0 --gateway=10.10.10.1 --nameserver=8.8.8.8
+network --hostname=orca1
 
 #Firewall configuration
 firewall --disabled
@@ -712,7 +713,7 @@ $ chmod 750 /var/www/html/kickstart
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Infrastructure","level":"3.1","depth":1,"next":{"title":"Kubernetes","level":"3.2","depth":1,"path":"testbed/kubernetes.md","ref":"testbed/kubernetes.md","articles":[]},"previous":{"title":"Stream processing","level":"2.4","depth":1,"path":"research/stream_processing.md","ref":"research/stream_processing.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/infra.md","mtime":"2021-02-24T14:25:56.514Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-02-24T14:30:52.935Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Infrastructure","level":"3.1","depth":1,"next":{"title":"Kubernetes","level":"3.2","depth":1,"path":"testbed/kubernetes.md","ref":"testbed/kubernetes.md","articles":[]},"previous":{"title":"Stream processing","level":"2.4","depth":1,"path":"research/stream_processing.md","ref":"research/stream_processing.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/infra.md","mtime":"2021-02-24T14:40:34.701Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-02-24T14:40:48.004Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
