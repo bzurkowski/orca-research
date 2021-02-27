@@ -22,8 +22,8 @@ $ helm install chaos-mesh chaos-mesh/chaos-mesh \
     --namespace=chaos \
     --create-namespace \
     --set dashboard.create=true \
-    --set controllerManager.nodeSelector."kubernetes\.io/hostname"=node3 \
-    --set dashboard.nodeSelector."kubernetes\.io/hostname"=node3
+    --set controllerManager.nodeSelector.role=exp-control \
+    --set dashboard.nodeSelector.role=exp-control
 ```
 
 ## Cleanup

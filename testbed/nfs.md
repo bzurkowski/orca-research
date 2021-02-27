@@ -57,5 +57,6 @@ $ helm install nfs-provisioner stable/nfs-client-provisioner \
     --set resources.requests.cpu=100m \
     --set resources.requests.memory=100Mi \
     --set resources.limits.cpu=500m \
-    --set resources.limits.memory=300Mi
+    --set resources.limits.memory=300Mi \
+    --set nodeSelector.role=exp-control
 ```

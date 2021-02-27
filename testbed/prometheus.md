@@ -17,12 +17,12 @@ $ helm install prometheus prometheus-community/kube-prometheus-stack \
     --namespace monitoring \
     --create-namespace \
     --values $HOME/Workspace/orca/orca/helm/examples/integrations/prometheus/orca-values.yaml \
-    --set prometheusOperator.nodeSelector."kubernetes\.io/hostname"=node3 \
+    --set prometheusOperator.nodeSelector.role=exp-control \
     --set prometheus.prometheusSpec.scrapeInterval=15s \
-    --set prometheus.prometheusSpec.nodeSelector."kubernetes\.io/hostname"=node3 \
-    --set alertmanager.alertmanagerSpec.nodeSelector."kubernetes\.io/hostname"=node3 \
-    --set grafana.nodeSelector."kubernetes\.io/hostname"=node3 \
-    --set kube-state-metrics.nodeSelector."kubernetes\.io/hostname"=node3
+    --set prometheus.prometheusSpec.nodeSelector.role=exp-control \
+    --set alertmanager.alertmanagerSpec.nodeSelector.role=exp-control \
+    --set grafana.nodeSelector.role=exp-control \
+    --set kube-state-metrics.nodeSelector.role=exp-control
 ```
 
 ```yaml

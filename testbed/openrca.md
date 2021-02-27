@@ -20,9 +20,9 @@ $ helm install orca $HOME/Workspace/orca/orca/helm/orca \
     --set probes.kiali.password=admin \
     --set ingestors.prometheus.enabled=true \
     --set ingestors.falco.enabled=true \
-    --set nodeSelector."kubernetes\.io/hostname"=node3 \
-    --set ui.nodeSelector."kubernetes\.io/hostname"=node3 \
-    --set arangodb.nodeSelector."kubernetes\.io/hostname"=node3
+    --set nodeSelector.role=exp-control \
+    --set ui.nodeSelector.role=exp-control \
+    --set arangodb.nodeSelector.role=exp-control
 ```
 
 ## Cleanup
