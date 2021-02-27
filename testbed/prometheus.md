@@ -49,7 +49,7 @@ config:
 Delete Prometheus chart release:
 
 ```bash
-$ helm -n monitoring uninstall prometheus
+$ helm -n monitoring delete prometheus
 ```
 
 Remove leftover Prometheus CRDs:

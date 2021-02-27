@@ -31,5 +31,5 @@ $ helm install chaos-mesh chaos-mesh/chaos-mesh \
 Delete Chaos Mesh chart release:
 
 ```bash
-$ helm delete --purge chaos-mesh
+$ helm -n chaos delete chaos-mesh
 ```

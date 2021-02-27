@@ -30,5 +30,5 @@ $ helm install orca $HOME/Workspace/orca/orca/helm/orca \
 Delete OpenRCA chart release:
 
 ```bash
-$ helm delete --purge orca
+$ helm -n rca delete orca
 ```
