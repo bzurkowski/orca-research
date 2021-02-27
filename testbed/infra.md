@@ -163,7 +163,7 @@ $ source ./venv/bin/activate
 $ pip install .
 ```
 
-Create Kickstart file for each VM:
+Create Kickstarts for VMs:
 
 ```bash
 $ kick generate \
@@ -251,7 +251,7 @@ $ rsync -avz orca13.cfg orca14.cfg  orca15.cfg  orca16.cfg  root@172.17.80.25:/r
 
 ### Provision VMs
 
-Provision VM instances using the Centos image and prepared Kickstart files:
+Provision VM instances:
 
 ```bash
 $ virt-install \
@@ -292,4 +292,4 @@ Access the OS installation via VNC Viewer to track the installation progress.
 
 * https://www.cyberciti.biz/faq/how-to-install-kvm-on-centos-7-rhel-7-headless-server/
 * https://www.cyberciti.biz/faq/kvm-install-centos-redhat-using-kickstart-ks-cfg/
-https://docs.centos.org/en-US/centos/install-guide/Kickstart2/#sect-kickstart-commands
+* https://docs.centos.org/en-US/centos/install-guide/Kickstart2/#sect-kickstart-commands
