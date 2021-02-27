@@ -33,10 +33,12 @@ $ pip install -r requirements.txt
 Copy SSH keys:
 
 ```bash
-$ ssh-copy-id root@172.17.66.31
-$ ssh-copy-id root@172.17.66.32
-$ ssh-copy-id root@172.17.66.33
-$ ssh-copy-id root@172.17.66.34
+$ ssh-copy-id root@172.17.80.128
+$ ssh-copy-id root@172.17.80.129
+$ ssh-copy-id root@172.17.80.130
+$ ssh-copy-id root@172.17.80.131
+...
+$ ssh-copy-id root@172.17.80.143
 ```
 
 Enable IP forwarding:
