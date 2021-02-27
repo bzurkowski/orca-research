@@ -2,7 +2,7 @@
 
 ### Setup server
 
-Install NFS packages on all nodes:
+Install NFS packages on **all nodes**:
 
 ```bash
 $ yum install -y nfs-utils
@@ -21,12 +21,12 @@ Having `nfs` mount point already prepared:
 
 ```bash
 $ df -h |grep nfs
-/dev/mapper/centos-nfs    40G   33M   40G   1% /nfs
+/dev/vda2       296G   65M  281G   1% /nfs
 ```
 
 ```bash
 $ mount |grep nfs
-/dev/mapper/centos-nfs on /nfs type xfs (rw,relatime,seclabel,attr2,inode64,noquota)
+/dev/vda2 on /nfs type ext4 (rw,relatime,seclabel,data=ordered)
 ...
 ```
 
@@ -50,7 +50,7 @@ Install using Helm chart:
 $ helm install nfs-provisioner stable/nfs-client-provisioner \
     --namespace nfs \
     --create-namespace \
-    --set nfs.server=172.17.80.128 \
+    --set nfs.server=172.17.80.143 \
     --set nfs.path=/nfs  \
     --set storageClass.name=nfs \
     --set storageClass.defaultClass=true \
