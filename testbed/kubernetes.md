@@ -202,7 +202,6 @@ kube_version: v1.16.15
 Update `inventory/orca/group_vars/k8s-cluster/addons.yml`:
 
 ```yaml
-helm_enabled: true
 registry_enabled: true
 metrics_server_enabled: true
 ```
