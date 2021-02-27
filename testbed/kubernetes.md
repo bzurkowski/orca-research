@@ -55,12 +55,12 @@ $ systemctl stop firewalld
 $ systemctl disable firewalld
 ```
 
-Install NTP:
+Install Chrony:
 
 ```bash
-$ yum install -y ntp
-$ systemctl start ntpd
-$ systemctl enable ntpd
+$ yum install -y chrony
+$ systemctl start chronyd
+$ systemctl enable chronyd
 ```
 
 ### Prepare inventory
