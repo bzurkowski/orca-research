@@ -18,12 +18,12 @@ $ curl -sSL https://mirrors.chaos-mesh.org/v0.9.1/crd.yaml | kubectl apply -f -
 Deploy Chaos Mesh chart:
 
 ```bash
-$ helm install chaos-mesh/chaos-mesh \
-    --name=chaos-mesh \
+$ helm install chaos-mesh chaos-mesh/chaos-mesh \
     --namespace=chaos \
+    --create-namespace \
     --set dashboard.create=true \
-    --set controllerManager.nodeSelector."kubernetes\.io/hostname"=node2 \
-    --set dashboard.nodeSelector."kubernetes\.io/hostname"=node2
+    --set controllerManager.nodeSelector."kubernetes\.io/hostname"=node3 \
+    --set dashboard.nodeSelector."kubernetes\.io/hostname"=node3
 ```
 
 ## Cleanup
