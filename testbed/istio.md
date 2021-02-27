@@ -20,10 +20,10 @@ Deploy Istio control plane:
 $ istioctl install \
     -f $HOME/Workspace/orca/orca/helm/examples/integrations/istio/orca-values.yaml \
     --set values.kiali.prometheusAddr=http://prometheus-kube-prometheus-prometheus.monitoring:9090 \
-    --set values.pilot.nodeSelector."kubernetes\.io/hostname"=node2 \
-    --set values.mixer.telemetry.nodeSelector."kubernetes\.io/hostname"=node2 \
-    --set values.kiali.nodeSelector."kubernetes\.io/hostname"=node2 \
-    --set values.gateways.istio-ingressgateway.nodeSelector."kubernetes\.io/hostname"=node2
+    --set values.pilot.nodeSelector."kubernetes\.io/hostname"=node3 \
+    --set values.mixer.telemetry.nodeSelector."kubernetes\.io/hostname"=node3 \
+    --set values.kiali.nodeSelector."kubernetes\.io/hostname"=node3 \
+    --set values.gateways.istio-ingressgateway.nodeSelector."kubernetes\.io/hostname"=node3
 ```
 
 Setup [Grafana dashboards](https://grafana.com/orgs/istio/dashboards) for Istio:
