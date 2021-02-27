@@ -22,6 +22,7 @@ $ helm install chaos-mesh chaos-mesh/chaos-mesh \
     --namespace=chaos \
     --create-namespace \
     --set dashboard.create=true \
+    --set dashboard.securityMode=false \
     --set controllerManager.nodeSelector.role=exp-control \
     --set dashboard.nodeSelector.role=exp-control
 ```
@@ -31,5 +32,5 @@ $ helm install chaos-mesh chaos-mesh/chaos-mesh \
 Delete Chaos Mesh chart release:
 
 ```bash
-$ helm -n chaos delete chaos-mesh
+$ helm -n chaos delete --purge chaos-mesh
 ```
