@@ -21,7 +21,7 @@ LC_ALL=en_US.utf-8
 Setup basic packages:
 
 ```bash
-$ yum install -y wget vim git htop curl
+$ yum install -y wget vim git htop curl tmux
 ```
 
 ### Network interfaces
