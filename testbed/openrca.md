@@ -5,9 +5,9 @@
 Deploy OpenRCA chart:
 
 ```bash
-$ helm install $HOME/Workspace/orca/orca/helm/orca \
-    --name orca \
+$ helm install orca $HOME/Workspace/orca/orca/helm/orca \
     --namespace rca \
+    --create-namespace \
     --set image.pullPolicy=Always \
     --set image.tag=latest \
     --set ui.image.pullPolicy=Always \
@@ -20,9 +20,9 @@ $ helm install $HOME/Workspace/orca/orca/helm/orca \
     --set probes.kiali.password=admin \
     --set ingestors.prometheus.enabled=true \
     --set ingestors.falco.enabled=true \
-    --set nodeSelector."kubernetes\.io/hostname"=node2 \
-    --set ui.nodeSelector."kubernetes\.io/hostname"=node2 \
-    --set arangodb.nodeSelector."kubernetes\.io/hostname"=node2
+    --set nodeSelector."kubernetes\.io/hostname"=node3 \
+    --set ui.nodeSelector."kubernetes\.io/hostname"=node3 \
+    --set arangodb.nodeSelector."kubernetes\.io/hostname"=node3
 ```
 
 ## Cleanup
