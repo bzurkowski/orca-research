@@ -465,9 +465,9 @@
                                 <h1 id="openrca">OpenRCA</h1>
 <h2 id="installation">Installation</h2>
 <p>Deploy OpenRCA chart:</p>
-<pre><code class="lang-bash">$ helm install <span class="hljs-variable">$HOME</span>/Workspace/orca/orca/helm/orca \
-    --name orca \
+<pre><code class="lang-bash">$ helm install orca <span class="hljs-variable">$HOME</span>/Workspace/orca/orca/helm/orca \
     --namespace rca \
+    --create-namespace \
     --set image.pullPolicy=Always \
     --set image.tag=latest \
     --set ui.image.pullPolicy=Always \
@@ -480,9 +480,9 @@
     --set probes.kiali.password=admin \
     --set ingestors.prometheus.enabled=<span class="hljs-literal">true</span> \
     --set ingestors.falco.enabled=<span class="hljs-literal">true</span> \
-    --set nodeSelector.<span class="hljs-string">&quot;kubernetes\.io/hostname&quot;</span>=node2 \
-    --set ui.nodeSelector.<span class="hljs-string">&quot;kubernetes\.io/hostname&quot;</span>=node2 \
-    --set arangodb.nodeSelector.<span class="hljs-string">&quot;kubernetes\.io/hostname&quot;</span>=node2
+    --set nodeSelector.<span class="hljs-string">&quot;kubernetes\.io/hostname&quot;</span>=node3 \
+    --set ui.nodeSelector.<span class="hljs-string">&quot;kubernetes\.io/hostname&quot;</span>=node3 \
+    --set arangodb.nodeSelector.<span class="hljs-string">&quot;kubernetes\.io/hostname&quot;</span>=node3
 </code></pre>
 <h2 id="cleanup">Cleanup</h2>
 <p>Delete OpenRCA chart release:</p>
@@ -531,7 +531,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"OpenRCA","level":"3.10","depth":1,"next":{"title":"Chaos Mesh","level":"3.11","depth":1,"path":"testbed/chaos-mesh.md","ref":"testbed/chaos-mesh.md","articles":[]},"previous":{"title":"Test applications","level":"3.9","depth":1,"path":"testbed/test-apps.md","ref":"testbed/test-apps.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/openrca.md","mtime":"2021-01-31T13:21:08.082Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-02-27T12:59:04.196Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"OpenRCA","level":"3.10","depth":1,"next":{"title":"Chaos Mesh","level":"3.11","depth":1,"path":"testbed/chaos-mesh.md","ref":"testbed/chaos-mesh.md","articles":[]},"previous":{"title":"Test applications","level":"3.9","depth":1,"path":"testbed/test-apps.md","ref":"testbed/test-apps.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/openrca.md","mtime":"2021-02-27T13:08:14.826Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-02-27T13:15:12.331Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
