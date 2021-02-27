@@ -196,7 +196,7 @@ all:
 Update `inventory/orca/group_vars/k8s-cluster/k8s-cluster.yml`:
 
 ```yaml
-kube_version: v1.16.7
+kube_version: v1.16.15
 ```
 
 Update `inventory/orca/group_vars/k8s-cluster/addons.yml`:
