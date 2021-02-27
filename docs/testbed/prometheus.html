@@ -474,12 +474,12 @@ $ helm repo update
     --namespace monitoring \
     --create-namespace \
     --values <span class="hljs-variable">$HOME</span>/Workspace/orca/orca/helm/examples/integrations/prometheus/orca-values.yaml \
-    --set prometheusOperator.nodeSelector.<span class="hljs-string">&quot;kubernetes\.io/hostname&quot;</span>=node3 \
+    --set prometheusOperator.nodeSelector.role=exp-control \
     --set prometheus.prometheusSpec.scrapeInterval=15s \
-    --set prometheus.prometheusSpec.nodeSelector.<span class="hljs-string">&quot;kubernetes\.io/hostname&quot;</span>=node3 \
-    --set alertmanager.alertmanagerSpec.nodeSelector.<span class="hljs-string">&quot;kubernetes\.io/hostname&quot;</span>=node3 \
-    --set grafana.nodeSelector.<span class="hljs-string">&quot;kubernetes\.io/hostname&quot;</span>=node3 \
-    --set kube-state-metrics.nodeSelector.<span class="hljs-string">&quot;kubernetes\.io/hostname&quot;</span>=node3
+    --set prometheus.prometheusSpec.nodeSelector.role=exp-control \
+    --set alertmanager.alertmanagerSpec.nodeSelector.role=exp-control \
+    --set grafana.nodeSelector.role=exp-control \
+    --set kube-state-metrics.nodeSelector.role=exp-control
 </code></pre>
 <pre><code class="lang-yaml"><span class="hljs-comment"># prometheus-operator.yaml</span>
 ...
@@ -555,7 +555,7 @@ kubectl delete crd thanosrulers.monitoring.coreos.com
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Prometheus","level":"3.4","depth":1,"next":{"title":"EFK","level":"3.5","depth":1,"path":"testbed/efk.md","ref":"testbed/efk.md","articles":[]},"previous":{"title":"NFS","level":"3.3","depth":1,"path":"testbed/nfs.md","ref":"testbed/nfs.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/prometheus.md","mtime":"2021-02-27T13:01:46.025Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-02-27T13:15:12.331Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Prometheus","level":"3.4","depth":1,"next":{"title":"EFK","level":"3.5","depth":1,"path":"testbed/efk.md","ref":"testbed/efk.md","articles":[]},"previous":{"title":"NFS","level":"3.3","depth":1,"path":"testbed/nfs.md","ref":"testbed/nfs.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/prometheus.md","mtime":"2021-02-27T13:48:34.642Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-02-27T13:50:36.482Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
