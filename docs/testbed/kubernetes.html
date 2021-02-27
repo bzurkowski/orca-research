@@ -507,7 +507,7 @@ $ systemctl <span class="hljs-built_in">enable</span> ntpd
 <p>Declare target host IPs:</p>
 <pre><code class="lang-bash">$ python3 -c <span class="hljs-string">&apos;print(&quot;declare -a IPS=(%s)&quot; % &quot; &quot;.join([&quot;172.17.80.%s&quot; % i for i in range(128, 144)]))&apos;</span>
 </code></pre>
-<pre><code class="lang-bash">$ <span class="hljs-built_in">declare</span> <span class="hljs-_">-a</span> IPS=(172.17.66.31 172.17.66.32 172.17.66.33 172.17.66.34)
+<pre><code class="lang-bash">$ <span class="hljs-built_in">declare</span> <span class="hljs-_">-a</span> IPS=(172.17.80.128 172.17.80.129 172.17.80.130 172.17.80.131 172.17.80.132 172.17.80.133 172.17.80.134 172.17.80.135 172.17.80.136 172.17.80.137 172.17.80.138 172.17.80.139 172.17.80.140 172.17.80.141 172.17.80.142 172.17.80.143)
 </code></pre>
 <p>Populate inventory:</p>
 <pre><code class="lang-bash">$ CONFIG_FILE=inventory/orca/hosts.yml python3 contrib/inventory_builder/inventory.py <span class="hljs-variable">${IPS[@]}</span>
@@ -516,31 +516,92 @@ $ systemctl <span class="hljs-built_in">enable</span> ntpd
 <pre><code class="lang-yaml"><span class="hljs-attr">all:</span>
 <span class="hljs-attr">  hosts:</span>
 <span class="hljs-attr">    node1:</span>
-<span class="hljs-attr">      ansible_host:</span> <span class="hljs-number">172.17</span><span class="hljs-number">.66</span><span class="hljs-number">.31</span>
-<span class="hljs-attr">      ip:</span> <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.31</span>
+<span class="hljs-attr">      ansible_host:</span> <span class="hljs-number">172.17</span><span class="hljs-number">.80</span><span class="hljs-number">.128</span>
+<span class="hljs-attr">      ip:</span> <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.128</span>
 <span class="hljs-attr">      ansible_user:</span> root
 <span class="hljs-attr">    node2:</span>
-<span class="hljs-attr">      ansible_host:</span> <span class="hljs-number">172.17</span><span class="hljs-number">.66</span><span class="hljs-number">.32</span>
-<span class="hljs-attr">      ip:</span> <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.32</span>
+<span class="hljs-attr">      ansible_host:</span> <span class="hljs-number">172.17</span><span class="hljs-number">.80</span><span class="hljs-number">.129</span>
+<span class="hljs-attr">      ip:</span> <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.129</span>
 <span class="hljs-attr">      ansible_user:</span> root
 <span class="hljs-attr">    node3:</span>
-<span class="hljs-attr">      ansible_host:</span> <span class="hljs-number">172.17</span><span class="hljs-number">.66</span><span class="hljs-number">.33</span>
-<span class="hljs-attr">      ip:</span> <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.33</span>
+<span class="hljs-attr">      ansible_host:</span> <span class="hljs-number">172.17</span><span class="hljs-number">.80</span><span class="hljs-number">.130</span>
+<span class="hljs-attr">      ip:</span> <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.130</span>
 <span class="hljs-attr">      ansible_user:</span> root
 <span class="hljs-attr">    node4:</span>
-<span class="hljs-attr">      ansible_host:</span> <span class="hljs-number">172.17</span><span class="hljs-number">.66</span><span class="hljs-number">.34</span>
-<span class="hljs-attr">      ip:</span> <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.34</span>
+<span class="hljs-attr">      ansible_host:</span> <span class="hljs-number">172.17</span><span class="hljs-number">.80</span><span class="hljs-number">.131</span>
+<span class="hljs-attr">      ip:</span> <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.131</span>
+<span class="hljs-attr">      ansible_user:</span> root
+<span class="hljs-attr">    node5:</span>
+<span class="hljs-attr">      ansible_host:</span> <span class="hljs-number">172.17</span><span class="hljs-number">.80</span><span class="hljs-number">.132</span>
+<span class="hljs-attr">      ip:</span> <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.132</span>
+<span class="hljs-attr">      ansible_user:</span> root
+<span class="hljs-attr">    node6:</span>
+<span class="hljs-attr">      ansible_host:</span> <span class="hljs-number">172.17</span><span class="hljs-number">.80</span><span class="hljs-number">.133</span>
+<span class="hljs-attr">      ip:</span> <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.133</span>
+<span class="hljs-attr">      ansible_user:</span> root
+<span class="hljs-attr">    node7:</span>
+<span class="hljs-attr">      ansible_host:</span> <span class="hljs-number">172.17</span><span class="hljs-number">.80</span><span class="hljs-number">.134</span>
+<span class="hljs-attr">      ip:</span> <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.134</span>
+<span class="hljs-attr">      ansible_user:</span> root
+<span class="hljs-attr">    node8:</span>
+<span class="hljs-attr">      ansible_host:</span> <span class="hljs-number">172.17</span><span class="hljs-number">.80</span><span class="hljs-number">.135</span>
+<span class="hljs-attr">      ip:</span> <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.135</span>
+<span class="hljs-attr">      ansible_user:</span> root
+<span class="hljs-attr">    node9:</span>
+<span class="hljs-attr">      ansible_host:</span> <span class="hljs-number">172.17</span><span class="hljs-number">.80</span><span class="hljs-number">.136</span>
+<span class="hljs-attr">      ip:</span> <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.136</span>
+<span class="hljs-attr">      ansible_user:</span> root
+<span class="hljs-attr">    node10:</span>
+<span class="hljs-attr">      ansible_host:</span> <span class="hljs-number">172.17</span><span class="hljs-number">.80</span><span class="hljs-number">.137</span>
+<span class="hljs-attr">      ip:</span> <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.137</span>
+<span class="hljs-attr">      ansible_user:</span> root
+<span class="hljs-attr">    node11:</span>
+<span class="hljs-attr">      ansible_host:</span> <span class="hljs-number">172.17</span><span class="hljs-number">.80</span><span class="hljs-number">.138</span>
+<span class="hljs-attr">      ip:</span> <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.138</span>
+<span class="hljs-attr">      ansible_user:</span> root
+<span class="hljs-attr">    node12:</span>
+<span class="hljs-attr">      ansible_host:</span> <span class="hljs-number">172.17</span><span class="hljs-number">.80</span><span class="hljs-number">.139</span>
+<span class="hljs-attr">      ip:</span> <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.139</span>
+<span class="hljs-attr">      ansible_user:</span> root
+<span class="hljs-attr">    node13:</span>
+<span class="hljs-attr">      ansible_host:</span> <span class="hljs-number">172.17</span><span class="hljs-number">.80</span><span class="hljs-number">.140</span>
+<span class="hljs-attr">      ip:</span> <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.140</span>
+<span class="hljs-attr">      ansible_user:</span> root
+<span class="hljs-attr">    node14:</span>
+<span class="hljs-attr">      ansible_host:</span> <span class="hljs-number">172.17</span><span class="hljs-number">.80</span><span class="hljs-number">.141</span>
+<span class="hljs-attr">      ip:</span> <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.141</span>
+<span class="hljs-attr">      ansible_user:</span> root
+<span class="hljs-attr">    node15:</span>
+<span class="hljs-attr">      ansible_host:</span> <span class="hljs-number">172.17</span><span class="hljs-number">.80</span><span class="hljs-number">.142</span>
+<span class="hljs-attr">      ip:</span> <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.142</span>
+<span class="hljs-attr">      ansible_user:</span> root
+<span class="hljs-attr">    node16:</span>
+<span class="hljs-attr">      ansible_host:</span> <span class="hljs-number">172.17</span><span class="hljs-number">.80</span><span class="hljs-number">.143</span>
+<span class="hljs-attr">      ip:</span> <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.143</span>
 <span class="hljs-attr">      ansible_user:</span> root
 <span class="hljs-attr">  children:</span>
 <span class="hljs-attr">    kube-master:</span>
 <span class="hljs-attr">      hosts:</span>
 <span class="hljs-attr">        node1:</span>
+<span class="hljs-attr">        node2:</span>
 <span class="hljs-attr">    kube-node:</span>
 <span class="hljs-attr">      hosts:</span>
 <span class="hljs-attr">        node1:</span>
 <span class="hljs-attr">        node2:</span>
 <span class="hljs-attr">        node3:</span>
 <span class="hljs-attr">        node4:</span>
+<span class="hljs-attr">        node5:</span>
+<span class="hljs-attr">        node6:</span>
+<span class="hljs-attr">        node7:</span>
+<span class="hljs-attr">        node8:</span>
+<span class="hljs-attr">        node9:</span>
+<span class="hljs-attr">        node10:</span>
+<span class="hljs-attr">        node11:</span>
+<span class="hljs-attr">        node12:</span>
+<span class="hljs-attr">        node13:</span>
+<span class="hljs-attr">        node14:</span>
+<span class="hljs-attr">        node15:</span>
+<span class="hljs-attr">        node16:</span>
 <span class="hljs-attr">    etcd:</span>
 <span class="hljs-attr">      hosts:</span>
 <span class="hljs-attr">        node1:</span>
@@ -554,11 +615,10 @@ $ systemctl <span class="hljs-built_in">enable</span> ntpd
 <span class="hljs-attr">      hosts:</span> {}
 </code></pre>
 <p>Update <code>inventory/orca/group_vars/k8s-cluster/k8s-cluster.yml</code>:</p>
-<pre><code class="lang-yaml"><span class="hljs-attr">kube_version:</span> v1<span class="hljs-number">.16</span><span class="hljs-number">.7</span>
+<pre><code class="lang-yaml"><span class="hljs-attr">kube_version:</span> v1<span class="hljs-number">.16</span><span class="hljs-number">.15</span>
 </code></pre>
 <p>Update <code>inventory/orca/group_vars/k8s-cluster/addons.yml</code>:</p>
-<pre><code class="lang-yaml"><span class="hljs-attr">helm_enabled:</span> <span class="hljs-literal">true</span>
-<span class="hljs-attr">registry_enabled:</span> <span class="hljs-literal">true</span>
+<pre><code class="lang-yaml"><span class="hljs-attr">registry_enabled:</span> <span class="hljs-literal">true</span>
 <span class="hljs-attr">metrics_server_enabled:</span> <span class="hljs-literal">true</span>
 </code></pre>
 <h3 id="deploy-cluster">Deploy cluster</h3>
@@ -612,7 +672,7 @@ $ systemctl <span class="hljs-built_in">enable</span> ntpd
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Kubernetes","level":"3.2","depth":1,"next":{"title":"NFS","level":"3.3","depth":1,"path":"testbed/nfs.md","ref":"testbed/nfs.md","articles":[]},"previous":{"title":"Infrastructure","level":"3.1","depth":1,"path":"testbed/infra.md","ref":"testbed/infra.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/kubernetes.md","mtime":"2021-02-27T12:02:19.288Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-02-27T12:33:11.563Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Kubernetes","level":"3.2","depth":1,"next":{"title":"NFS","level":"3.3","depth":1,"path":"testbed/nfs.md","ref":"testbed/nfs.md","articles":[]},"previous":{"title":"Infrastructure","level":"3.1","depth":1,"path":"testbed/infra.md","ref":"testbed/infra.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/kubernetes.md","mtime":"2021-02-27T12:35:34.203Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-02-27T12:43:15.790Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
