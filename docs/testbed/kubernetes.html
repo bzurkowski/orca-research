@@ -469,7 +469,7 @@
 $ <span class="hljs-built_in">cd</span> ./kubespray
 </code></pre>
 <p>Checkout:</p>
-<pre><code class="lang-bash">$ git checkout -b v2.12.3 tags/v2.12.3
+<pre><code class="lang-bash">$ git checkout -b v2.12.10 tags/v2.12.10
 </code></pre>
 <p>Create and activate a virtual env:</p>
 <pre><code class="lang-bash">$ virtualenv -p $(<span class="hljs-built_in">which</span> python3) ~/.venvs/kubespray
@@ -480,10 +480,12 @@ $ <span class="hljs-built_in">source</span> ~/.venvs/kubespray/bin/activate
 </code></pre>
 <h3 id="setup-target-hosts">Setup target hosts</h3>
 <p>Copy SSH keys:</p>
-<pre><code class="lang-bash">$ ssh-copy-id root@172.17.66.31
-$ ssh-copy-id root@172.17.66.32
-$ ssh-copy-id root@172.17.66.33
-$ ssh-copy-id root@172.17.66.34
+<pre><code class="lang-bash">$ ssh-copy-id root@172.17.80.128
+$ ssh-copy-id root@172.17.80.129
+$ ssh-copy-id root@172.17.80.130
+$ ssh-copy-id root@172.17.80.131
+...
+$ ssh-copy-id root@172.17.80.143
 </code></pre>
 <p>Enable IP forwarding:</p>
 <pre><code class="lang-bash">$ <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;net.ipv4.ip_forward = 1&quot;</span> &gt;&gt; /etc/sysctl.conf
@@ -610,7 +612,7 @@ $ systemctl <span class="hljs-built_in">enable</span> ntpd
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Kubernetes","level":"3.2","depth":1,"next":{"title":"NFS","level":"3.3","depth":1,"path":"testbed/nfs.md","ref":"testbed/nfs.md","articles":[]},"previous":{"title":"Infrastructure","level":"3.1","depth":1,"path":"testbed/infra.md","ref":"testbed/infra.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/kubernetes.md","mtime":"2021-02-27T11:47:12.668Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-02-27T11:52:32.818Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Kubernetes","level":"3.2","depth":1,"next":{"title":"NFS","level":"3.3","depth":1,"path":"testbed/nfs.md","ref":"testbed/nfs.md","articles":[]},"previous":{"title":"Infrastructure","level":"3.1","depth":1,"path":"testbed/infra.md","ref":"testbed/infra.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/kubernetes.md","mtime":"2021-02-27T12:02:19.288Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-02-27T12:33:11.563Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
