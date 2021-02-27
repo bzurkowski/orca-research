@@ -33,7 +33,7 @@ $ mount |grep nfs
 Add share to `/etc/exports`:
 
 ```bash
-echo "/nfs	172.17.66.0/24(rw,sync,no_root_squash)" >> /etc/exports
+echo "/nfs	172.17.80.0/24(rw,sync,no_root_squash)" >> /etc/exports
 ```
 
 Reload exports:
@@ -47,12 +47,12 @@ $ exportfs -r
 Install using Helm chart:
 
 ```bash
-$ helm install stable/nfs-client-provisioner \
-    --name nfs-provisioner \
-    --namespace kube-system \
-    --set nfs.server=172.17.66.31 \
+$ helm install nfs-provisioner stable/nfs-client-provisioner \
+    --namespace nfs \
+    --create-namespace \
+    --set nfs.server=172.17.80.128 \
     --set nfs.path=/nfs  \
-    --set storageClass.name=nfs-client \
+    --set storageClass.name=nfs \
     --set storageClass.defaultClass=true \
     --set resources.requests.cpu=100m \
     --set resources.requests.memory=100Mi \
