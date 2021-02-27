@@ -570,7 +570,7 @@ $ <span class="hljs-built_in">source</span> ./venv/bin/activate
 </code></pre>
 <pre><code class="lang-bash">$ pip install .
 </code></pre>
-<p>Create Kickstart file for each VM:</p>
+<p>Create Kickstarts for VMs:</p>
 <pre><code class="lang-bash">$ kick generate \
     --name=orca \
     --num-hosts=16 \
@@ -645,7 +645,7 @@ $ rsync -avz orca9.cfg  orca10.cfg  orca11.cfg  orca12.cfg  root@172.17.80.24:/r
 $ rsync -avz orca13.cfg orca14.cfg  orca15.cfg  orca16.cfg  root@172.17.80.25:/root/kickstart
 </code></pre>
 <h3 id="provision-vms">Provision VMs</h3>
-<p>Provision VM instances using the Centos image and prepared Kickstart files:</p>
+<p>Provision VM instances:</p>
 <pre><code class="lang-bash">$ virt-install \
     --virt-type=kvm \
     --name orca1 \
@@ -673,8 +673,8 @@ $ rsync -avz orca13.cfg orca14.cfg  orca15.cfg  orca16.cfg  root@172.17.80.25:/r
 <h4 id="links">Links</h4>
 <ul>
 <li><a href="https://www.cyberciti.biz/faq/how-to-install-kvm-on-centos-7-rhel-7-headless-server/" target="_blank">https://www.cyberciti.biz/faq/how-to-install-kvm-on-centos-7-rhel-7-headless-server/</a></li>
-<li><a href="https://www.cyberciti.biz/faq/kvm-install-centos-redhat-using-kickstart-ks-cfg/" target="_blank">https://www.cyberciti.biz/faq/kvm-install-centos-redhat-using-kickstart-ks-cfg/</a>
-<a href="https://docs.centos.org/en-US/centos/install-guide/Kickstart2/#sect-kickstart-commands" target="_blank">https://docs.centos.org/en-US/centos/install-guide/Kickstart2/#sect-kickstart-commands</a></li>
+<li><a href="https://www.cyberciti.biz/faq/kvm-install-centos-redhat-using-kickstart-ks-cfg/" target="_blank">https://www.cyberciti.biz/faq/kvm-install-centos-redhat-using-kickstart-ks-cfg/</a></li>
+<li><a href="https://docs.centos.org/en-US/centos/install-guide/Kickstart2/#sect-kickstart-commands" target="_blank">https://docs.centos.org/en-US/centos/install-guide/Kickstart2/#sect-kickstart-commands</a></li>
 </ul>
 
                                 
@@ -719,7 +719,7 @@ $ rsync -avz orca13.cfg orca14.cfg  orca15.cfg  orca16.cfg  root@172.17.80.25:/r
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Infrastructure","level":"3.1","depth":1,"next":{"title":"Kubernetes","level":"3.2","depth":1,"path":"testbed/kubernetes.md","ref":"testbed/kubernetes.md","articles":[]},"previous":{"title":"Stream processing","level":"2.4","depth":1,"path":"research/stream_processing.md","ref":"research/stream_processing.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/infra.md","mtime":"2021-02-27T12:32:39.047Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-02-27T14:32:36.126Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Infrastructure","level":"3.1","depth":1,"next":{"title":"Kubernetes","level":"3.2","depth":1,"path":"testbed/kubernetes.md","ref":"testbed/kubernetes.md","articles":[]},"previous":{"title":"Stream processing","level":"2.4","depth":1,"path":"research/stream_processing.md","ref":"research/stream_processing.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/infra.md","mtime":"2021-02-27T14:39:10.027Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-02-27T14:39:25.926Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
