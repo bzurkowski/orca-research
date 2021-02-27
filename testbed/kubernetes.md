@@ -12,7 +12,7 @@ $ cd ./kubespray
 Checkout:
 
 ```bash
-$ git checkout -b v2.12.3 tags/v2.12.3
+$ git checkout -b v2.12.10 tags/v2.12.10
 ```
 
 Create and activate a virtual env:
