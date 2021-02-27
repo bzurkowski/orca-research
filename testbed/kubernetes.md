@@ -72,6 +72,10 @@ $ cp -r inventory/sample inventory/orca
 Declare target host IPs:
 
 ```bash
+$ python3 -c 'print("declare -a IPS=(%s)" % " ".join(["172.17.80.%s" % i for i in range(128, 144)]))'
+```
+
+```bash
 $ declare -a IPS=(172.17.66.31 172.17.66.32 172.17.66.33 172.17.66.34)
 ```
 
