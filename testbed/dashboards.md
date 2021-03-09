@@ -35,3 +35,9 @@ $ while true; do kubectl -n chaos port-forward svc/chaos-dashboard 2333; sleep 0
 ```bash
 $ while true; do kubectl -n load port-forward svc/fortio 8082; sleep 0.1; done
 ```
+
+[ArangoDB](http://localhost:8529):
+
+```bash
+$ while true; do kubectl -n rca port-forward svc/arangodb 8529; sleep 0.1; done
+```
