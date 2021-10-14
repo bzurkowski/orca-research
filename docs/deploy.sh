@@ -9,7 +9,7 @@ printf "\033[0;32mRebuilding book...\033[0m\n"
 rm -rf docs
 
 # Rebuild the book
-gitbook build . docs
+docker run --rm -v "$PWD:/gitbook" -p 4000:4000 billryan/gitbook gitbook build . docs
 
 # Stage changes
 git add docs
