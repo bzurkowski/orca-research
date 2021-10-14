@@ -22,6 +22,7 @@
 * [Test applications](testbed/test-apps.md)
 * [OpenRCA](testbed/openrca.md)
 * [Chaos Mesh](testbed/chaos-mesh.md)
+* [PSMDB](testbed/psmdb.md)
 * [Dashboards](testbed/dashboards.md)
 * [Tools](testbed/tools.md)
 
