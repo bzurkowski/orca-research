@@ -14,14 +14,14 @@ metadata:
   name: mdb-secrets
 type: Opaque
 stringData:
-  MONGODB_BACKUP_USER: admin
-  MONGODB_BACKUP_PASSWORD: admin
-  MONGODB_CLUSTER_ADMIN_USER: admin
-  MONGODB_CLUSTER_ADMIN_PASSWORD: admin
-  MONGODB_CLUSTER_MONITOR_USER: admin
-  MONGODB_CLUSTER_MONITOR_PASSWORD: admin
-  MONGODB_USER_ADMIN_USER: admin
-  MONGODB_USER_ADMIN_PASSWORD: admin
+  MONGODB_BACKUP_USER: backup
+  MONGODB_BACKUP_PASSWORD: backup123456
+  MONGODB_CLUSTER_ADMIN_USER: clusterAdmin
+  MONGODB_CLUSTER_ADMIN_PASSWORD: clusterAdmin123456
+  MONGODB_CLUSTER_MONITOR_USER: clusterMonitor
+  MONGODB_CLUSTER_MONITOR_PASSWORD: clusterMonitor123456
+  MONGODB_USER_ADMIN_USER: userAdmin
+  MONGODB_USER_ADMIN_PASSWORD: userAdmin123456
   PMM_SERVER_USER: admin
   PMM_SERVER_PASSWORD: admin
 EOF
@@ -31,14 +31,13 @@ Provision cluster from CR:
 
 ```yaml
 cat <<EOF | kubectl -npsmdb apply -f -
-apiVersion: psmdb.percona.com/v1-10-0
+apiVersion: psmdb.percona.com/v1-9-0
 kind: PerconaServerMongoDB
 metadata:
   name: mdb
   finalizers:
   - delete-psmdb-pvc
 spec:
-  platform: kubernetes
   crVersion: 1.9.0
   image: percona/percona-server-mongodb:4.4.6-8
   imagePullPolicy: Always
@@ -64,44 +63,8 @@ spec:
       antiAffinityTopologyKey: "kubernetes.io/hostname"
     resources:
       limits:
-        cpu: "300m"
-        memory: "0.5G"
-      requests:
-        cpu: "300m"
-        memory: "0.5G"
-    volumeSpec:
-      persistentVolumeClaim:
-        resources:
-          requests:
-            storage: 100Mi
-  - name: rs1
-    size: 3
-    storage:
-      engine: wiredTiger
-    affinity:
-      antiAffinityTopologyKey: "kubernetes.io/hostname"
-    resources:
-      limits:
-        cpu: "300m"
-        memory: "0.5G"
-      requests:
-        cpu: "300m"
-        memory: "0.5G"
-    volumeSpec:
-      persistentVolumeClaim:
-        resources:
-          requests:
-            storage: 100Mi
-  - name: rs2
-    size: 3
-    storage:
-      engine: wiredTiger
-    affinity:
-      antiAffinityTopologyKey: "kubernetes.io/hostname"
-    resources:
-      limits:
-        cpu: "300m"
-        memory: "0.5G"
+        cpu: "1000m"
+        memory: "1G"
       requests:
         cpu: "300m"
         memory: "0.5G"
@@ -118,8 +81,8 @@ spec:
         antiAffinityTopologyKey: "kubernetes.io/hostname"
       resources:
         limits:
-          cpu: "300m"
-          memory: "0.5G"
+          cpu: "1000m"
+          memory: "1G"
         requests:
           cpu: "300m"
           memory: "0.5G"
@@ -134,8 +97,8 @@ spec:
         antiAffinityTopologyKey: "kubernetes.io/hostname"
       resources:
         limits:
-          cpu: "300m"
-          memory: "0.5G"
+          cpu: "1000m"
+          memory: "1G"
         requests:
           cpu: "300m"
           memory: "0.5G"
