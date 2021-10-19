@@ -506,28 +506,27 @@
 <span class="hljs-attr">  name:</span> mdb-secrets
 <span class="hljs-attr">type:</span> Opaque
 <span class="hljs-attr">stringData:</span>
-<span class="hljs-attr">  MONGODB_BACKUP_USER:</span> admin
-<span class="hljs-attr">  MONGODB_BACKUP_PASSWORD:</span> admin
-<span class="hljs-attr">  MONGODB_CLUSTER_ADMIN_USER:</span> admin
-<span class="hljs-attr">  MONGODB_CLUSTER_ADMIN_PASSWORD:</span> admin
-<span class="hljs-attr">  MONGODB_CLUSTER_MONITOR_USER:</span> admin
-<span class="hljs-attr">  MONGODB_CLUSTER_MONITOR_PASSWORD:</span> admin
-<span class="hljs-attr">  MONGODB_USER_ADMIN_USER:</span> admin
-<span class="hljs-attr">  MONGODB_USER_ADMIN_PASSWORD:</span> admin
+<span class="hljs-attr">  MONGODB_BACKUP_USER:</span> backup
+<span class="hljs-attr">  MONGODB_BACKUP_PASSWORD:</span> backup123456
+<span class="hljs-attr">  MONGODB_CLUSTER_ADMIN_USER:</span> clusterAdmin
+<span class="hljs-attr">  MONGODB_CLUSTER_ADMIN_PASSWORD:</span> clusterAdmin123456
+<span class="hljs-attr">  MONGODB_CLUSTER_MONITOR_USER:</span> clusterMonitor
+<span class="hljs-attr">  MONGODB_CLUSTER_MONITOR_PASSWORD:</span> clusterMonitor123456
+<span class="hljs-attr">  MONGODB_USER_ADMIN_USER:</span> userAdmin
+<span class="hljs-attr">  MONGODB_USER_ADMIN_PASSWORD:</span> userAdmin123456
 <span class="hljs-attr">  PMM_SERVER_USER:</span> admin
 <span class="hljs-attr">  PMM_SERVER_PASSWORD:</span> admin
 EOF
 </code></pre>
 <p>Provision cluster from CR:</p>
 <pre><code class="lang-yaml">cat &lt;&lt;EOF | kubectl -npsmdb apply -f -
-<span class="hljs-attr">apiVersion:</span> psmdb.percona.com/v1<span class="hljs-bullet">-10</span><span class="hljs-bullet">-0</span>
+<span class="hljs-attr">apiVersion:</span> psmdb.percona.com/v1<span class="hljs-bullet">-9</span><span class="hljs-bullet">-0</span>
 <span class="hljs-attr">kind:</span> PerconaServerMongoDB
 <span class="hljs-attr">metadata:</span>
 <span class="hljs-attr">  name:</span> mdb
 <span class="hljs-attr">  finalizers:</span>
 <span class="hljs-bullet">  -</span> delete-psmdb-pvc
 <span class="hljs-attr">spec:</span>
-<span class="hljs-attr">  platform:</span> kubernetes
 <span class="hljs-attr">  crVersion:</span> <span class="hljs-number">1.9</span><span class="hljs-number">.0</span>
 <span class="hljs-attr">  image:</span> percona/percona-server-mongodb:<span class="hljs-number">4.4</span><span class="hljs-number">.6</span><span class="hljs-bullet">-8</span>
 <span class="hljs-attr">  imagePullPolicy:</span> Always
@@ -553,44 +552,8 @@ EOF
 <span class="hljs-attr">      antiAffinityTopologyKey:</span> <span class="hljs-string">&quot;kubernetes.io/hostname&quot;</span>
 <span class="hljs-attr">    resources:</span>
 <span class="hljs-attr">      limits:</span>
-<span class="hljs-attr">        cpu:</span> <span class="hljs-string">&quot;300m&quot;</span>
-<span class="hljs-attr">        memory:</span> <span class="hljs-string">&quot;0.5G&quot;</span>
-<span class="hljs-attr">      requests:</span>
-<span class="hljs-attr">        cpu:</span> <span class="hljs-string">&quot;300m&quot;</span>
-<span class="hljs-attr">        memory:</span> <span class="hljs-string">&quot;0.5G&quot;</span>
-<span class="hljs-attr">    volumeSpec:</span>
-<span class="hljs-attr">      persistentVolumeClaim:</span>
-<span class="hljs-attr">        resources:</span>
-<span class="hljs-attr">          requests:</span>
-<span class="hljs-attr">            storage:</span> <span class="hljs-number">100</span>Mi
-<span class="hljs-attr">  - name:</span> rs1
-<span class="hljs-attr">    size:</span> <span class="hljs-number">3</span>
-<span class="hljs-attr">    storage:</span>
-<span class="hljs-attr">      engine:</span> wiredTiger
-<span class="hljs-attr">    affinity:</span>
-<span class="hljs-attr">      antiAffinityTopologyKey:</span> <span class="hljs-string">&quot;kubernetes.io/hostname&quot;</span>
-<span class="hljs-attr">    resources:</span>
-<span class="hljs-attr">      limits:</span>
-<span class="hljs-attr">        cpu:</span> <span class="hljs-string">&quot;300m&quot;</span>
-<span class="hljs-attr">        memory:</span> <span class="hljs-string">&quot;0.5G&quot;</span>
-<span class="hljs-attr">      requests:</span>
-<span class="hljs-attr">        cpu:</span> <span class="hljs-string">&quot;300m&quot;</span>
-<span class="hljs-attr">        memory:</span> <span class="hljs-string">&quot;0.5G&quot;</span>
-<span class="hljs-attr">    volumeSpec:</span>
-<span class="hljs-attr">      persistentVolumeClaim:</span>
-<span class="hljs-attr">        resources:</span>
-<span class="hljs-attr">          requests:</span>
-<span class="hljs-attr">            storage:</span> <span class="hljs-number">100</span>Mi
-<span class="hljs-attr">  - name:</span> rs2
-<span class="hljs-attr">    size:</span> <span class="hljs-number">3</span>
-<span class="hljs-attr">    storage:</span>
-<span class="hljs-attr">      engine:</span> wiredTiger
-<span class="hljs-attr">    affinity:</span>
-<span class="hljs-attr">      antiAffinityTopologyKey:</span> <span class="hljs-string">&quot;kubernetes.io/hostname&quot;</span>
-<span class="hljs-attr">    resources:</span>
-<span class="hljs-attr">      limits:</span>
-<span class="hljs-attr">        cpu:</span> <span class="hljs-string">&quot;300m&quot;</span>
-<span class="hljs-attr">        memory:</span> <span class="hljs-string">&quot;0.5G&quot;</span>
+<span class="hljs-attr">        cpu:</span> <span class="hljs-string">&quot;1000m&quot;</span>
+<span class="hljs-attr">        memory:</span> <span class="hljs-string">&quot;1G&quot;</span>
 <span class="hljs-attr">      requests:</span>
 <span class="hljs-attr">        cpu:</span> <span class="hljs-string">&quot;300m&quot;</span>
 <span class="hljs-attr">        memory:</span> <span class="hljs-string">&quot;0.5G&quot;</span>
@@ -607,8 +570,8 @@ EOF
 <span class="hljs-attr">        antiAffinityTopologyKey:</span> <span class="hljs-string">&quot;kubernetes.io/hostname&quot;</span>
 <span class="hljs-attr">      resources:</span>
 <span class="hljs-attr">        limits:</span>
-<span class="hljs-attr">          cpu:</span> <span class="hljs-string">&quot;300m&quot;</span>
-<span class="hljs-attr">          memory:</span> <span class="hljs-string">&quot;0.5G&quot;</span>
+<span class="hljs-attr">          cpu:</span> <span class="hljs-string">&quot;1000m&quot;</span>
+<span class="hljs-attr">          memory:</span> <span class="hljs-string">&quot;1G&quot;</span>
 <span class="hljs-attr">        requests:</span>
 <span class="hljs-attr">          cpu:</span> <span class="hljs-string">&quot;300m&quot;</span>
 <span class="hljs-attr">          memory:</span> <span class="hljs-string">&quot;0.5G&quot;</span>
@@ -623,8 +586,8 @@ EOF
 <span class="hljs-attr">        antiAffinityTopologyKey:</span> <span class="hljs-string">&quot;kubernetes.io/hostname&quot;</span>
 <span class="hljs-attr">      resources:</span>
 <span class="hljs-attr">        limits:</span>
-<span class="hljs-attr">          cpu:</span> <span class="hljs-string">&quot;300m&quot;</span>
-<span class="hljs-attr">          memory:</span> <span class="hljs-string">&quot;0.5G&quot;</span>
+<span class="hljs-attr">          cpu:</span> <span class="hljs-string">&quot;1000m&quot;</span>
+<span class="hljs-attr">          memory:</span> <span class="hljs-string">&quot;1G&quot;</span>
 <span class="hljs-attr">        requests:</span>
 <span class="hljs-attr">          cpu:</span> <span class="hljs-string">&quot;300m&quot;</span>
 <span class="hljs-attr">          memory:</span> <span class="hljs-string">&quot;0.5G&quot;</span>
@@ -746,7 +709,7 @@ $ kubectl -n bookinfo apply <span class="hljs-_">-f</span> <span class="hljs-var
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Experiment 1","level":"4.1","depth":1,"next":{"title":"Falco","level":"5.1","depth":1,"path":"integrations/falco.md","ref":"integrations/falco.md","articles":[]},"previous":{"title":"Tools","level":"3.14","depth":1,"path":"testbed/tools.md","ref":"testbed/tools.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"experiments/exp-1.md","mtime":"2021-10-19T17:07:03.059Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-10-19T17:10:11.902Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Experiment 1","level":"4.1","depth":1,"next":{"title":"Falco","level":"5.1","depth":1,"path":"integrations/falco.md","ref":"integrations/falco.md","articles":[]},"previous":{"title":"Tools","level":"3.14","depth":1,"path":"testbed/tools.md","ref":"testbed/tools.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"experiments/exp-1.md","mtime":"2021-10-19T20:00:54.363Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-10-19T20:13:00.097Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
