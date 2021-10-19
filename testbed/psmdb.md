@@ -14,7 +14,7 @@ $ helm repo update
 Install Percona MongoDB Operator:
 
 ```
-$ helm install --namespace psmdb --create-namespace psmdb-operator percona/psmdb-operator
+$ helm install --namespace psmdb --create-namespace psmdb-operator percona/psmdb-operator --version 1.9.0
 ```
 
 Add Percona Helm repository with PMM:
@@ -75,8 +75,8 @@ metadata:
   - delete-psmdb-pvc
 spec:
   platform: kubernetes
-  crVersion: 1.10.0
-  image: percona/percona-server-mongodb:4.4.8-9
+  crVersion: 1.9.0
+  image: percona/percona-server-mongodb:4.4.6-8
   imagePullPolicy: Always
   allowUnsafeConfigurations: false
   updateStrategy: SmartUpdate
@@ -89,7 +89,7 @@ spec:
     users: mdb-secrets
   pmm:
     enabled: true
-    image: percona/pmm-client:2.21.0
+    image: percona/pmm-client:2.18.0
     serverHost: psmdb-pmm-service
   replsets:
   - name: rs0
