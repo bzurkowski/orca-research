@@ -632,7 +632,7 @@ $ kubectl -n bookinfo apply <span class="hljs-_">-f</span> <span class="hljs-var
 </code></pre>
 <h3 id="setup-application-database">Setup application database</h3>
 <p>Create DB user:</p>
-<pre><code class="lang-bash">$ kubectl -n psmdb <span class="hljs-built_in">exec</span> -it $(kubectl -n psmdb get pods |grep mongos |head -n1 |awk <span class="hljs-string">&apos;{print $1}&apos;</span>) -- mongo -u admin -p admin --authenticationDatabase admin
+<pre><code class="lang-bash">$ kubectl -n psmdb <span class="hljs-built_in">exec</span> -it $(kubectl -n psmdb get pods |grep mongos |head -n1 |awk <span class="hljs-string">&apos;{print $1}&apos;</span>) -- mongo -u userAdmin -p userAdmin123456 --authenticationDatabase admin
 
 &gt; use bookinfo
 &gt; db.createUser(
@@ -645,26 +645,31 @@ $ kubectl -n bookinfo apply <span class="hljs-_">-f</span> <span class="hljs-var
   }
 )
 </code></pre>
+<p>Enable sharding:</p>
+<pre><code class="lang-bash">$ kubectl -n psmdb <span class="hljs-built_in">exec</span> -it $(kubectl -n psmdb get pods |grep mongos |head -n1 |awk <span class="hljs-string">&apos;{print $1}&apos;</span>) -- mongo -u clusterAdmin -p clusterAdmin123456 --authenticationDatabase admin
+
+&gt; sh.enableSharding(<span class="hljs-string">&quot;bookinfo&quot;</span>)
+</code></pre>
 <p>Create collection:</p>
 <pre><code class="lang-bash">kubectl -n psmdb <span class="hljs-built_in">exec</span> -it $(kubectl -n psmdb get pods |grep mongos |head -n1 |awk <span class="hljs-string">&apos;{print $1}&apos;</span>) -- mongo -u bookinfo -p bookinfo --authenticationDatabase bookinfo
 
 &gt; use bookinfo
 &gt; db.createCollection(<span class="hljs-string">&quot;ratings&quot;</span>)
-
-&gt; db.ratings.insert({<span class="hljs-string">&quot;rating&quot;</span>: 5})
-&gt; db.ratings.insert({<span class="hljs-string">&quot;rating&quot;</span>: 4})
 </code></pre>
 <p>Shard the collection:</p>
-<pre><code class="lang-bash">$ kubectl -n psmdb <span class="hljs-built_in">exec</span> -it $(kubectl -n psmdb get pods |grep mongos |head -n1 |awk <span class="hljs-string">&apos;{print $1}&apos;</span>) -- mongo -u admin -p admin --authenticationDatabase admin
+<pre><code class="lang-bash">$ kubectl -n psmdb <span class="hljs-built_in">exec</span> -it $(kubectl -n psmdb get pods |grep mongos |head -n1 |awk <span class="hljs-string">&apos;{print $1}&apos;</span>) -- mongo -u clusterAdmin -p clusterAdmin123456 --authenticationDatabase admin
 
-&gt; sh.enableSharding(<span class="hljs-string">&quot;bookinfo&quot;</span>)
 &gt; sh.shardCollection(<span class="hljs-string">&quot;bookinfo.ratings&quot;</span>, {<span class="hljs-string">&quot;_id&quot;</span>: <span class="hljs-string">&quot;hashed&quot;</span>})
 </code></pre>
 <p>Populate data into the collection:</p>
-<pre><code class="lang-bash">kubectl -n psmdb <span class="hljs-built_in">exec</span> -it $(kubectl -n psmdb get pods |grep mongos |head -n1 |awk <span class="hljs-string">&apos;{print $1}&apos;</span>) -- mongo -u bookinfo -p bookinfo $ --authenticationDatabase bookinfo
+<pre><code class="lang-bash">kubectl -n psmdb <span class="hljs-built_in">exec</span> -it $(kubectl -n psmdb get pods |grep mongos |head -n1 |awk <span class="hljs-string">&apos;{print $1}&apos;</span>) -- mongo -u bookinfo -p bookinfo --authenticationDatabase bookinfo
 
 &gt; use bookinfo
-&gt; TODO
+&gt; db.ratings.insert({<span class="hljs-string">&quot;rating&quot;</span>: 5})
+&gt; db.ratings.insert({<span class="hljs-string">&quot;rating&quot;</span>: 4})
+</code></pre>
+<p>Set MongoDB URI in app environment:</p>
+<pre><code class="lang-bash">$ kubectl -n bookinfo <span class="hljs-built_in">set</span> env deployment/ratings-v2 <span class="hljs-string">&quot;MONGO_DB_URL=mongodb://bookinfo:bookinfo@mdb-mongos.psmdb:27017/bookinfo&quot;</span>
 </code></pre>
 
                                 
@@ -709,7 +714,7 @@ $ kubectl -n bookinfo apply <span class="hljs-_">-f</span> <span class="hljs-var
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Experiment 1","level":"4.1","depth":1,"next":{"title":"Falco","level":"5.1","depth":1,"path":"integrations/falco.md","ref":"integrations/falco.md","articles":[]},"previous":{"title":"Tools","level":"3.14","depth":1,"path":"testbed/tools.md","ref":"testbed/tools.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"experiments/exp-1.md","mtime":"2021-10-19T20:00:54.363Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-10-19T20:13:00.097Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Experiment 1","level":"4.1","depth":1,"next":{"title":"Falco","level":"5.1","depth":1,"path":"integrations/falco.md","ref":"integrations/falco.md","articles":[]},"previous":{"title":"Tools","level":"3.14","depth":1,"path":"testbed/tools.md","ref":"testbed/tools.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"experiments/exp-1.md","mtime":"2021-10-19T22:15:14.445Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-10-19T22:29:36.579Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
