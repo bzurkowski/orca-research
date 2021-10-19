@@ -482,7 +482,7 @@
 <pre><code>$ helm repo add percona https://percona.github.io/percona-helm-charts/
 $ helm repo update
 </code></pre><p>Install Percona MongoDB Operator:</p>
-<pre><code>$ helm install --namespace psmdb --create-namespace psmdb-operator percona/psmdb-operator
+<pre><code>$ helm install --namespace psmdb --create-namespace psmdb-operator percona/psmdb-operator --version 1.9.0
 </code></pre><p>Add Percona Helm repository with PMM:</p>
 <pre><code>$ helm repo add percona2 https://percona-charts.storage.googleapis.com
 $ helm repo update
@@ -527,8 +527,8 @@ EOF
 <span class="hljs-bullet">  -</span> delete-psmdb-pvc
 <span class="hljs-attr">spec:</span>
 <span class="hljs-attr">  platform:</span> kubernetes
-<span class="hljs-attr">  crVersion:</span> <span class="hljs-number">1.10</span><span class="hljs-number">.0</span>
-<span class="hljs-attr">  image:</span> percona/percona-server-mongodb:<span class="hljs-number">4.4</span><span class="hljs-number">.8</span><span class="hljs-bullet">-9</span>
+<span class="hljs-attr">  crVersion:</span> <span class="hljs-number">1.9</span><span class="hljs-number">.0</span>
+<span class="hljs-attr">  image:</span> percona/percona-server-mongodb:<span class="hljs-number">4.4</span><span class="hljs-number">.6</span><span class="hljs-bullet">-8</span>
 <span class="hljs-attr">  imagePullPolicy:</span> Always
 <span class="hljs-attr">  allowUnsafeConfigurations:</span> <span class="hljs-literal">false</span>
 <span class="hljs-attr">  updateStrategy:</span> SmartUpdate
@@ -541,7 +541,7 @@ EOF
 <span class="hljs-attr">    users:</span> mdb-secrets
 <span class="hljs-attr">  pmm:</span>
 <span class="hljs-attr">    enabled:</span> <span class="hljs-literal">true</span>
-<span class="hljs-attr">    image:</span> percona/pmm-client:<span class="hljs-number">2.21</span><span class="hljs-number">.0</span>
+<span class="hljs-attr">    image:</span> percona/pmm-client:<span class="hljs-number">2.18</span><span class="hljs-number">.0</span>
 <span class="hljs-attr">    serverHost:</span> psmdb-pmm-service
 <span class="hljs-attr">  replsets:</span>
 <span class="hljs-attr">  - name:</span> rs0
@@ -682,7 +682,7 @@ $ helm -n psmdb delete psmdb-operator
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"PSMDB","level":"3.12","depth":1,"next":{"title":"Dashboards","level":"3.13","depth":1,"path":"testbed/dashboards.md","ref":"testbed/dashboards.md","articles":[]},"previous":{"title":"Chaos Mesh","level":"3.11","depth":1,"path":"testbed/chaos-mesh.md","ref":"testbed/chaos-mesh.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/psmdb.md","mtime":"2021-10-14T09:06:19.910Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-10-14T12:59:34.976Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"PSMDB","level":"3.12","depth":1,"next":{"title":"Dashboards","level":"3.13","depth":1,"path":"testbed/dashboards.md","ref":"testbed/dashboards.md","articles":[]},"previous":{"title":"Chaos Mesh","level":"3.11","depth":1,"path":"testbed/chaos-mesh.md","ref":"testbed/chaos-mesh.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/psmdb.md","mtime":"2021-10-18T13:32:23.440Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-10-19T17:07:46.755Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
