@@ -171,7 +171,7 @@ $ kubectl -n bookinfo apply -f $HOME/Workspace/orca/orca-testapps/bookinfo/desti
 Create DB user:
 
 ```bash
-$ kubectl -n psmdb exec -it $(kubectl -n psmdb get pods |grep mongos |head -n1 |awk '{print $1}') -- mongo -u admin -p admin --authenticationDatabase admin
+$ kubectl -n psmdb exec -it $(kubectl -n psmdb get pods |grep mongos |head -n1 |awk '{print $1}') -- mongo -u userAdmin -p userAdmin123456 --authenticationDatabase admin
 
 > use bookinfo
 > db.createUser(
@@ -185,6 +185,14 @@ $ kubectl -n psmdb exec -it $(kubectl -n psmdb get pods |grep mongos |head -n1 |
 )
 ```
 
+Enable sharding:
+
+```bash
+$ kubectl -n psmdb exec -it $(kubectl -n psmdb get pods |grep mongos |head -n1 |awk '{print $1}') -- mongo -u clusterAdmin -p clusterAdmin123456 --authenticationDatabase admin
+
+> sh.enableSharding("bookinfo")
+```
+
 Create collection:
 
 ```bash
@@ -192,27 +200,28 @@ kubectl -n psmdb exec -it $(kubectl -n psmdb get pods |grep mongos |head -n1 |aw
 
 > use bookinfo
 > db.createCollection("ratings")
-
-> db.ratings.insert({"rating": 5})
-> db.ratings.insert({"rating": 4})
 ```
 
 Shard the collection:
 
 ```bash
-$ kubectl -n psmdb exec -it $(kubectl -n psmdb get pods |grep mongos |head -n1 |awk '{print $1}') -- mongo -u admin -p admin --authenticationDatabase admin
+$ kubectl -n psmdb exec -it $(kubectl -n psmdb get pods |grep mongos |head -n1 |awk '{print $1}') -- mongo -u clusterAdmin -p clusterAdmin123456 --authenticationDatabase admin
 
-> sh.enableSharding("bookinfo")
 > sh.shardCollection("bookinfo.ratings", {"_id": "hashed"})
 ```
 
 Populate data into the collection:
 
 ```bash
-kubectl -n psmdb exec -it $(kubectl -n psmdb get pods |grep mongos |head -n1 |awk '{print $1}') -- mongo -u bookinfo -p bookinfo $ --authenticationDatabase bookinfo
+kubectl -n psmdb exec -it $(kubectl -n psmdb get pods |grep mongos |head -n1 |awk '{print $1}') -- mongo -u bookinfo -p bookinfo --authenticationDatabase bookinfo
 
 > use bookinfo
-> TODO
+> db.ratings.insert({"rating": 5})
+> db.ratings.insert({"rating": 4})
 ```
 
+Set MongoDB URI in app environment:
 
+```bash
+$ kubectl -n bookinfo set env deployment/ratings-v2 "MONGO_DB_URL=mongodb://bookinfo:bookinfo@mdb-mongos.psmdb:27017/bookinfo"
+```
