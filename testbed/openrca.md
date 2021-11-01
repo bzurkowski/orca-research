@@ -18,7 +18,8 @@ $ helm install orca $HOME/Workspace/orca/orca/helm/orca \
     --set probes.kiali.url=http://kiali.istio-system:20001 \
     --set probes.kiali.username=admin \
     --set probes.kiali.password=admin \
-    --set ingestors.prometheus.enabled=true \
+    --set ingestors.prometheus.enabled=false \
+    --set ingestors.elastalert.enabled=true \
     --set ingestors.falco.enabled=true \
     --set nodeSelector.role=exp-control \
     --set ui.nodeSelector.role=exp-control \
