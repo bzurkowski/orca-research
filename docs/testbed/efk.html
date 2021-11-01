@@ -497,25 +497,40 @@
                                 
                                 <h1 id="efk-stack">EFK stack</h1>
 <h2 id="installation">Installation</h2>
-<p>Deploy Elasticsearch chart:</p>
-<pre><code class="lang-bash">$ helm install elasticsearch stable/elasticsearch \
+<p>Add Helm repository:</p>
+<pre><code class="lang-bash">$ helm repo add elastic https://helm.elastic.co
+</code></pre>
+<p>Deploy Elasticsearch cluster using Helm:</p>
+<pre><code class="lang-bash">$ helm install elasticsearch-master elastic/elasticsearch \
+    --version 7.15.0 \
     --namespace logging \
     --create-namespace \
-    --values <span class="hljs-variable">$HOME</span>/Workspace/orca/orca/helm/examples/integrations/efk/elasticsearch/orca-values.yaml
+    --values <span class="hljs-variable">$HOME</span>/Workspace/orca/orca/helm/examples/integrations/efk/elasticsearch/master-values.yaml
+</code></pre>
+<pre><code class="lang-bash">$ helm install elasticsearch-data elastic/elasticsearch \
+    --version 7.15.0 \
+    --namespace logging \
+    --values <span class="hljs-variable">$HOME</span>/Workspace/orca/orca/helm/examples/integrations/efk/elasticsearch/data-values.yaml
+</code></pre>
+<pre><code class="lang-bash">$ helm install elasticsearch-client elastic/elasticsearch \
+    --version 7.15.0 \
+    --namespace logging \
+    --values <span class="hljs-variable">$HOME</span>/Workspace/orca/orca/helm/examples/integrations/efk/elasticsearch/client-values.yaml
 </code></pre>
 <p>Wait until Elasticsearch cluster is ready:</p>
-<pre><code class="lang-bash">$ watch <span class="hljs-string">&apos;kubectl -n logging exec -it elasticsearch-master-0 -- curl -v localhost:9200/_cat/health |grep green&apos;</span>
-1635264067 16:01:07 elasticsearch green 6 2 0 0 0 0 0 0 - 100.0%
+<pre><code class="lang-bash">$ helm --namespace=logging <span class="hljs-built_in">test</span> elasticsearch-master
 </code></pre>
 <p>Deploy FluentBit chart:</p>
-<pre><code class="lang-bash">$ helm install fluent-bit stable/fluent-bit \
+<pre><code class="lang-bash">$ helm install filebeat elastic/filebeat \
+    --version 7.15.0 \
     --namespace logging \
-    --values <span class="hljs-variable">$HOME</span>/Workspace/orca/orca/helm/examples/integrations/efk/fluent-bit/orca-values.yaml
+    --values <span class="hljs-variable">$HOME</span>/Workspace/orca/orca/helm/examples/integrations/efk/filebeat/values.yaml
 </code></pre>
 <p>Deploy Kibana chart:</p>
-<pre><code class="lang-bash">$ helm install kibana stable/kibana \
+<pre><code class="lang-bash">$ helm install kibana elastic/kibana \
+    --version 7.15.0 \
     --namespace logging \
-    --values <span class="hljs-variable">$HOME</span>/Workspace/orca/orca/helm/examples/integrations/efk/kibana/orca-values.yaml
+    --values <span class="hljs-variable">$HOME</span>/Workspace/orca/orca/helm/examples/integrations/efk/kibana/values.yaml
 </code></pre>
 <h2 id="cleanup">Cleanup</h2>
 <p>Delete Kibana chart release:</p>
@@ -570,7 +585,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"EFK","level":"3.5","depth":1,"next":{"title":"Elastalert","level":"3.6","depth":1,"path":"testbed/elastalert.md","ref":"testbed/elastalert.md","articles":[]},"previous":{"title":"Prometheus","level":"3.4","depth":1,"path":"testbed/prometheus.md","ref":"testbed/prometheus.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/efk.md","mtime":"2021-10-26T16:55:23.894Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-10-26T16:56:24.064Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"EFK","level":"3.5","depth":1,"next":{"title":"Elastalert","level":"3.6","depth":1,"path":"testbed/elastalert.md","ref":"testbed/elastalert.md","articles":[]},"previous":{"title":"Prometheus","level":"3.4","depth":1,"path":"testbed/prometheus.md","ref":"testbed/prometheus.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/efk.md","mtime":"2021-11-01T18:39:05.746Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-11-01T18:39:24.458Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

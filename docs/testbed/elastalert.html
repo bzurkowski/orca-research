@@ -497,19 +497,27 @@
                                 
                                 <h1 id="elastalert">Elastalert</h1>
 <h2 id="installation">Installation</h2>
-<p>Deploy Elastalert chart:</p>
-<pre><code class="lang-bash">$ helm install stable/elastalert \
-    --name elastalert \
+<p>Add Helm repository:</p>
+<pre><code class="lang-bash">$ helm repo add jertel https://helm.jertel.com
+</code></pre>
+<p>Deploy Elastalert cluster using Helm:</p>
+<pre><code class="lang-bash">$ helm install elastalert jertel/elastalert2 \
+    --version 2.2.2 \
     --namespace logging \
-    --values <span class="hljs-variable">$HOME</span>/Workspace/orca/orca/helm/examples/integrations/elastalert/orca-values.yaml
+    --create-namespace \
+    --values <span class="hljs-variable">$HOME</span>/Workspace/orca/orca/helm/examples/integrations/elastalert/values.yaml
 </code></pre>
 <h2 id="cleanup">Cleanup</h2>
 <p>Delete Elastalert chart release:</p>
-<pre><code class="lang-bash">$ helm delete --purge elastalert
+<pre><code class="lang-bash">$ helm -n logging delete elastalert
 </code></pre>
 <h2 id="links">Links</h2>
 <ul>
 <li><a href="https://www.youtube.com/watch?v=udustJZQ-yI" target="_blank">https://www.youtube.com/watch?v=udustJZQ-yI</a></li>
+<li><a href="https://github.com/jertel/elastalert2" target="_blank">https://github.com/jertel/elastalert2</a></li>
+<li><a href="https://github.com/Yelp/elastalert/issues/288" target="_blank">https://github.com/Yelp/elastalert/issues/288</a></li>
+<li><a href="https://github.com/jertel/elastalert2/discussions/115" target="_blank">https://github.com/jertel/elastalert2/discussions/115</a></li>
+<li><a href="https://elastalert2.readthedocs.io/en/latest/recipes/faq.html?highlight=flatline#how-can-i-get-a-resolve-event" target="_blank">https://elastalert2.readthedocs.io/en/latest/recipes/faq.html?highlight=flatline#how-can-i-get-a-resolve-event</a></li>
 </ul>
 
                                 
@@ -554,7 +562,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Elastalert","level":"3.6","depth":1,"next":{"title":"Istio","level":"3.7","depth":1,"path":"testbed/istio.md","ref":"testbed/istio.md","articles":[]},"previous":{"title":"EFK","level":"3.5","depth":1,"path":"testbed/efk.md","ref":"testbed/efk.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/elastalert.md","mtime":"2020-12-08T20:40:03.717Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-10-26T16:56:24.064Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Elastalert","level":"3.6","depth":1,"next":{"title":"Istio","level":"3.7","depth":1,"path":"testbed/istio.md","ref":"testbed/istio.md","articles":[]},"previous":{"title":"EFK","level":"3.5","depth":1,"path":"testbed/efk.md","ref":"testbed/efk.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/elastalert.md","mtime":"2021-11-01T18:39:09.366Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-11-01T18:39:24.458Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
