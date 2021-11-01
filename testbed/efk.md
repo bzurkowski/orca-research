@@ -2,37 +2,59 @@
 
 ## Installation
 
-Deploy Elasticsearch chart:
+Add Helm repository:
 
 ```bash
-$ helm install elasticsearch stable/elasticsearch \
+$ helm repo add elastic https://helm.elastic.co
+```
+
+Deploy Elasticsearch cluster using Helm:
+
+```bash
+$ helm install elasticsearch-master elastic/elasticsearch \
+    --version 7.15.0 \
     --namespace logging \
     --create-namespace \
-    --values $HOME/Workspace/orca/orca/helm/examples/integrations/efk/elasticsearch/orca-values.yaml
+    --values $HOME/Workspace/orca/orca/helm/examples/integrations/efk/elasticsearch/master-values.yaml
+```
+
+```bash
+$ helm install elasticsearch-data elastic/elasticsearch \
+    --version 7.15.0 \
+    --namespace logging \
+    --values $HOME/Workspace/orca/orca/helm/examples/integrations/efk/elasticsearch/data-values.yaml
+```
+
+```bash
+$ helm install elasticsearch-client elastic/elasticsearch \
+    --version 7.15.0 \
+    --namespace logging \
+    --values $HOME/Workspace/orca/orca/helm/examples/integrations/efk/elasticsearch/client-values.yaml
 ```
 
 Wait until Elasticsearch cluster is ready:
 
 
 ```bash
-$ watch 'kubectl -n logging exec -it elasticsearch-master-0 -- curl -v localhost:9200/_cat/health |grep green'
-1635264067 16:01:07 elasticsearch green 6 2 0 0 0 0 0 0 - 100.0%
+$ helm --namespace=logging test elasticsearch-master
 ```
 
 Deploy FluentBit chart:
 
 ```bash
-$ helm install fluent-bit stable/fluent-bit \
+$ helm install filebeat elastic/filebeat \
+    --version 7.15.0 \
     --namespace logging \
-    --values $HOME/Workspace/orca/orca/helm/examples/integrations/efk/fluent-bit/orca-values.yaml
+    --values $HOME/Workspace/orca/orca/helm/examples/integrations/efk/filebeat/values.yaml
 ```
 
 Deploy Kibana chart:
 
 ```bash
-$ helm install kibana stable/kibana \
+$ helm install kibana elastic/kibana \
+    --version 7.15.0 \
     --namespace logging \
-    --values $HOME/Workspace/orca/orca/helm/examples/integrations/efk/kibana/orca-values.yaml
+    --values $HOME/Workspace/orca/orca/helm/examples/integrations/efk/kibana/values.yaml
 ```
 
 ## Cleanup
