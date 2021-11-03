@@ -611,25 +611,23 @@ EOF
 <p>Wait until cluster is ready:</p>
 <pre><code class="lang-bash">$ watch <span class="hljs-string">&apos;kubectl -n psmdb describe psmdb mdb |grep State&apos;</span>
 </code></pre>
-<p>Enable cluster monitoring:</p>
-<pre><code class="lang-bash">$ kubectl -n psmdb edit psmdb mdb
-</code></pre>
-<pre><code class="lang-yaml">...
-<span class="hljs-attr">spec:</span>
-  ...
-<span class="hljs-attr">  pmm:</span>
-<span class="hljs-attr">    enabled:</span> <span class="hljs-literal">true</span>
-    ...
-</code></pre>
-<p>Wait until cluster is ready:</p>
-<pre><code class="lang-bash">$ watch <span class="hljs-string">&apos;kubectl -n psmdb describe psmdb mdb |grep State&apos;</span>
-</code></pre>
 <h3 id="deploy-hipster-test-app">Deploy Hipster test app</h3>
+<p>Clone app repository:</p>
+<pre><code class="lang-bash">$ git <span class="hljs-built_in">clone</span> https://github.com/GoogleCloudPlatform/microservices-demo.git
+</code></pre>
 <p>Create namespace:</p>
 <pre><code class="lang-bash">$ kubectl create namespace hipster
 $ kubectl label namespace hipster istio-injection=enabled
 </code></pre>
-<p>TODO</p>
+<p>Apply Kubernetes manifests:</p>
+<pre><code class="lang-bash">$ kubectl -n hipster apply <span class="hljs-_">-f</span> ./release/kubernetes-manifests.yaml
+</code></pre>
+<p>Apply Istio manifests:</p>
+<pre><code class="lang-bash">$ kubectl -n hipster apply <span class="hljs-_">-f</span> ./release/istio-manifests.yaml
+</code></pre>
+<p>Use custom Cart Service image with MongoDB as cart store:</p>
+<pre><code class="lang-bash">$ kubectl -n hipster <span class="hljs-built_in">set</span> image deployment/cartservice server=bzurkowski/cartservice:latest
+</code></pre>
 <h3 id="setup-application-database">Setup application database</h3>
 <p>Create DB user:</p>
 <pre><code class="lang-bash">$ kubectl -n psmdb <span class="hljs-built_in">exec</span> -it $(kubectl -n psmdb get pods |grep mongos |head -n1 |awk <span class="hljs-string">&apos;{print $1}&apos;</span>) -- mongo -u userAdmin -p userAdmin123456 --authenticationDatabase admin
@@ -662,7 +660,7 @@ $ kubectl label namespace hipster istio-injection=enabled
 &gt; sh.shardCollection(<span class="hljs-string">&quot;hipster.carts&quot;</span>, {<span class="hljs-string">&quot;_id&quot;</span>: <span class="hljs-string">&quot;hashed&quot;</span>})
 </code></pre>
 <p>Set MongoDB URI in app environment:</p>
-<pre><code class="lang-bash">$ kubectl -n hipster <span class="hljs-built_in">set</span> env deployment/cartservice <span class="hljs-string">&quot;MONGO_DB_URL=mongodb://hipster:hipster@mdb-mongos.psmdb:27017/hipster&quot;</span>
+<pre><code class="lang-bash">$ kubectl -n hipster <span class="hljs-built_in">set</span> env deployment/cartservice <span class="hljs-string">&quot;MONGODB_URL=mongodb://hipster:hipster@mdb-mongos.psmdb:27017/hipster&quot;</span>
 </code></pre>
 
                                 
@@ -707,7 +705,7 @@ $ kubectl label namespace hipster istio-injection=enabled
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Experiment 2","level":"4.2","depth":1,"next":{"title":"Falco","level":"5.1","depth":1,"path":"integrations/falco.md","ref":"integrations/falco.md","articles":[]},"previous":{"title":"Experiment 1","level":"4.1","depth":1,"path":"experiments/exp-1.md","ref":"experiments/exp-1.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"experiments/exp-2.md","mtime":"2021-11-03T11:27:10.133Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-11-03T11:27:42.885Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Experiment 2","level":"4.2","depth":1,"next":{"title":"Falco","level":"5.1","depth":1,"path":"integrations/falco.md","ref":"integrations/falco.md","articles":[]},"previous":{"title":"Experiment 1","level":"4.1","depth":1,"path":"experiments/exp-1.md","ref":"experiments/exp-1.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"experiments/exp-2.md","mtime":"2021-11-03T15:28:15.305Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-11-03T15:28:59.393Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
