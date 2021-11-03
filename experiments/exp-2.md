@@ -115,6 +115,12 @@ $ watch 'kubectl -n psmdb describe psmdb mdb |grep State'
 
 ### Deploy Hipster test app
 
+Clone app repository:
+
+```bash
+$ git clone https://github.com/GoogleCloudPlatform/microservices-demo.git
+```
+
 Create namespace:
 
 ```bash
@@ -122,7 +128,17 @@ $ kubectl create namespace hipster
 $ kubectl label namespace hipster istio-injection=enabled
 ```
 
-TODO
+Apply Kubernetes manifests:
+
+```bash
+$ kubectl -n hipster apply -f ./release/kubernetes-manifests.yaml
+```
+
+Apply Istio manifests:
+
+```bash
+$ kubectl -n hipster apply -f ./release/istio-manifests.yaml
+```
 
 Use custom Cart Service image with MongoDB as cart store:
 
