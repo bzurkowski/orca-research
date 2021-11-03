@@ -29,6 +29,7 @@
 ## Experiments
 
 * [Experiment 1](experiments/exp-1.md)
+* [Experiment 2](experiments/exp-2.md)
 
 ## Integrations
 
