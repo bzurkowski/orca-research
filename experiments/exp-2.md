@@ -145,6 +145,12 @@ $ kubectl label namespace hipster istio-injection=enabled
 
 TODO
 
+Use custom Cart Service image with MongoDB as cart store:
+
+```bash
+$ kubectl -n hipster set image deployment/cartservice server=bzurkowski/cartservice:latest
+```
+
 ### Setup application database
 
 Create DB user:
@@ -192,5 +198,5 @@ $ kubectl -n psmdb exec -it $(kubectl -n psmdb get pods |grep mongos |head -n1 |
 Set MongoDB URI in app environment:
 
 ```bash
-$ kubectl -n hipster set env deployment/cartservice "MONGO_DB_URL=mongodb://hipster:hipster@mdb-mongos.psmdb:27017/hipster"
+$ kubectl -n hipster set env deployment/cartservice "MONGODB_URL=mongodb://hipster:hipster@mdb-mongos.psmdb:27017/hipster"
 ```
