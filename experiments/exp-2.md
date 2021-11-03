@@ -113,27 +113,6 @@ Wait until cluster is ready:
 $ watch 'kubectl -n psmdb describe psmdb mdb |grep State'
 ```
 
-Enable cluster monitoring:
-
-```bash
-$ kubectl -n psmdb edit psmdb mdb
-```
-
-```yaml
-...
-spec:
-  ...
-  pmm:
-    enabled: true
-    ...
-```
-
-Wait until cluster is ready:
-
-```bash
-$ watch 'kubectl -n psmdb describe psmdb mdb |grep State'
-```
-
 ### Deploy Hipster test app
 
 Create namespace:
