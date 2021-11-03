@@ -140,6 +140,19 @@ Apply Istio manifests:
 $ kubectl -n hipster apply -f ./release/istio-manifests.yaml
 ```
 
+Change Cart Service image pull policy to `Always`:
+
+```bash
+$ kubectl -n hipster edit deploy cartservice
+```
+
+```yaml
+containers:
+- name: server
+  image: bzurkowski/cartservice:latest
+  imagePullPolicy: Always
+```
+
 Use custom Cart Service image with MongoDB as cart store:
 
 ```bash
