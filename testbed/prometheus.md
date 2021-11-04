@@ -16,7 +16,7 @@ $ helm install prometheus prometheus-community/kube-prometheus-stack \
     --version 12.7.0 \
     --namespace monitoring \
     --create-namespace \
-    --values $HOME/Workspace/orca/orca/helm/examples/integrations/prometheus/orca-values.yaml \
+    --values $HOME/Workspace/orca/orca/helm/examples/integrations/prometheus/values.yaml \
     --set prometheusOperator.nodeSelector.role=exp-control \
     --set prometheus.prometheusSpec.scrapeInterval=15s \
     --set prometheus.prometheusSpec.nodeSelector.role=exp-control \
