@@ -510,135 +510,40 @@
                                 
                                 <h1 id="experiment-1">Experiment 1</h1>
 <h2 id="preparation">Preparation</h2>
-<h3 id="deploy-mongodb-cluster">Deploy MongoDB Cluster</h3>
-<p>Create cluster credentials:</p>
-<pre><code class="lang-yaml">cat &lt;&lt;EOF | kubectl -npsmdb apply -f -
-<span class="hljs-attr">apiVersion:</span> v1
-<span class="hljs-attr">kind:</span> Secret
-<span class="hljs-attr">metadata:</span>
-<span class="hljs-attr">  name:</span> mdb-secrets
-<span class="hljs-attr">type:</span> Opaque
-<span class="hljs-attr">stringData:</span>
-<span class="hljs-attr">  MONGODB_BACKUP_USER:</span> backup
-<span class="hljs-attr">  MONGODB_BACKUP_PASSWORD:</span> backup123456
-<span class="hljs-attr">  MONGODB_CLUSTER_ADMIN_USER:</span> clusterAdmin
-<span class="hljs-attr">  MONGODB_CLUSTER_ADMIN_PASSWORD:</span> clusterAdmin123456
-<span class="hljs-attr">  MONGODB_CLUSTER_MONITOR_USER:</span> clusterMonitor
-<span class="hljs-attr">  MONGODB_CLUSTER_MONITOR_PASSWORD:</span> clusterMonitor123456
-<span class="hljs-attr">  MONGODB_USER_ADMIN_USER:</span> userAdmin
-<span class="hljs-attr">  MONGODB_USER_ADMIN_PASSWORD:</span> userAdmin123456
-<span class="hljs-attr">  PMM_SERVER_USER:</span> admin
-<span class="hljs-attr">  PMM_SERVER_PASSWORD:</span> admin
-EOF
-</code></pre>
-<p>Provision cluster from CR:</p>
-<pre><code class="lang-yaml">cat &lt;&lt;EOF | kubectl -npsmdb apply -f -
-<span class="hljs-attr">apiVersion:</span> psmdb.percona.com/v1<span class="hljs-bullet">-9</span><span class="hljs-bullet">-0</span>
-<span class="hljs-attr">kind:</span> PerconaServerMongoDB
-<span class="hljs-attr">metadata:</span>
-<span class="hljs-attr">  name:</span> mdb
-<span class="hljs-attr">  finalizers:</span>
-<span class="hljs-bullet">  -</span> delete-psmdb-pvc
-<span class="hljs-attr">spec:</span>
-<span class="hljs-attr">  crVersion:</span> <span class="hljs-number">1.9</span><span class="hljs-number">.0</span>
-<span class="hljs-attr">  image:</span> percona/percona-server-mongodb:<span class="hljs-number">4.4</span><span class="hljs-number">.6</span><span class="hljs-bullet">-8</span>
-<span class="hljs-attr">  imagePullPolicy:</span> Always
-<span class="hljs-attr">  allowUnsafeConfigurations:</span> <span class="hljs-literal">false</span>
-<span class="hljs-attr">  updateStrategy:</span> SmartUpdate
-<span class="hljs-attr">  upgradeOptions:</span>
-<span class="hljs-attr">    versionServiceEndpoint:</span> https://check.percona.com
-<span class="hljs-attr">    apply:</span> <span class="hljs-number">4.4</span>-recommended
-<span class="hljs-attr">    schedule:</span> <span class="hljs-string">&quot;0 2 * * *&quot;</span>
-<span class="hljs-attr">    setFCV:</span> <span class="hljs-literal">false</span>
-<span class="hljs-attr">  secrets:</span>
-<span class="hljs-attr">    users:</span> mdb-secrets
-<span class="hljs-attr">  pmm:</span>
-<span class="hljs-attr">    enabled:</span> <span class="hljs-literal">false</span>
-<span class="hljs-attr">    image:</span> percona/pmm-client:<span class="hljs-number">2.18</span><span class="hljs-number">.0</span>
-<span class="hljs-attr">    serverHost:</span> psmdb-pmm-service
-<span class="hljs-attr">  replsets:</span>
-<span class="hljs-attr">  - name:</span> rs0
-<span class="hljs-attr">    size:</span> <span class="hljs-number">3</span>
-<span class="hljs-attr">    storage:</span>
-<span class="hljs-attr">      engine:</span> wiredTiger
-<span class="hljs-attr">    affinity:</span>
-<span class="hljs-attr">      antiAffinityTopologyKey:</span> <span class="hljs-string">&quot;kubernetes.io/hostname&quot;</span>
-<span class="hljs-attr">    resources:</span>
-<span class="hljs-attr">      limits:</span>
-<span class="hljs-attr">        cpu:</span> <span class="hljs-string">&quot;1000m&quot;</span>
-<span class="hljs-attr">        memory:</span> <span class="hljs-string">&quot;1G&quot;</span>
-<span class="hljs-attr">      requests:</span>
-<span class="hljs-attr">        cpu:</span> <span class="hljs-string">&quot;300m&quot;</span>
-<span class="hljs-attr">        memory:</span> <span class="hljs-string">&quot;0.5G&quot;</span>
-<span class="hljs-attr">    volumeSpec:</span>
-<span class="hljs-attr">      persistentVolumeClaim:</span>
-<span class="hljs-attr">        resources:</span>
-<span class="hljs-attr">          requests:</span>
-<span class="hljs-attr">            storage:</span> <span class="hljs-number">100</span>Mi
-<span class="hljs-attr">  sharding:</span>
-<span class="hljs-attr">    enabled:</span> <span class="hljs-literal">true</span>
-<span class="hljs-attr">    configsvrReplSet:</span>
-<span class="hljs-attr">      size:</span> <span class="hljs-number">3</span>
-<span class="hljs-attr">      affinity:</span>
-<span class="hljs-attr">        antiAffinityTopologyKey:</span> <span class="hljs-string">&quot;kubernetes.io/hostname&quot;</span>
-<span class="hljs-attr">      resources:</span>
-<span class="hljs-attr">        limits:</span>
-<span class="hljs-attr">          cpu:</span> <span class="hljs-string">&quot;1000m&quot;</span>
-<span class="hljs-attr">          memory:</span> <span class="hljs-string">&quot;1G&quot;</span>
-<span class="hljs-attr">        requests:</span>
-<span class="hljs-attr">          cpu:</span> <span class="hljs-string">&quot;300m&quot;</span>
-<span class="hljs-attr">          memory:</span> <span class="hljs-string">&quot;0.5G&quot;</span>
-<span class="hljs-attr">      volumeSpec:</span>
-<span class="hljs-attr">        persistentVolumeClaim:</span>
-<span class="hljs-attr">          resources:</span>
-<span class="hljs-attr">            requests:</span>
-<span class="hljs-attr">              storage:</span> <span class="hljs-number">100</span>Mi
-<span class="hljs-attr">    mongos:</span>
-<span class="hljs-attr">      size:</span> <span class="hljs-number">3</span>
-<span class="hljs-attr">      affinity:</span>
-<span class="hljs-attr">        antiAffinityTopologyKey:</span> <span class="hljs-string">&quot;kubernetes.io/hostname&quot;</span>
-<span class="hljs-attr">      resources:</span>
-<span class="hljs-attr">        limits:</span>
-<span class="hljs-attr">          cpu:</span> <span class="hljs-string">&quot;1000m&quot;</span>
-<span class="hljs-attr">          memory:</span> <span class="hljs-string">&quot;1G&quot;</span>
-<span class="hljs-attr">        requests:</span>
-<span class="hljs-attr">          cpu:</span> <span class="hljs-string">&quot;300m&quot;</span>
-<span class="hljs-attr">          memory:</span> <span class="hljs-string">&quot;0.5G&quot;</span>
-<span class="hljs-attr">      expose:</span>
-<span class="hljs-attr">        exposeType:</span> ClusterIP
-EOF
-</code></pre>
-<p>Wait until cluster is ready:</p>
-<pre><code class="lang-bash">$ watch <span class="hljs-string">&apos;kubectl -n psmdb describe psmdb mdb |grep State&apos;</span>
-</code></pre>
 <h3 id="deploy-hipster-test-app">Deploy Hipster test app</h3>
 <p>Clone app repository:</p>
-<pre><code class="lang-bash">$ git <span class="hljs-built_in">clone</span> https://github.com/GoogleCloudPlatform/microservices-demo.git
+<pre><code class="lang-bash">$ git <span class="hljs-built_in">clone</span> https://github.com/openrca/orca-testapps.git
+$ <span class="hljs-built_in">cd</span> ./orca-testapps
 </code></pre>
 <p>Create namespace:</p>
 <pre><code class="lang-bash">$ kubectl create namespace hipster
 $ kubectl label namespace hipster istio-injection=enabled
 </code></pre>
 <p>Apply Kubernetes manifests:</p>
-<pre><code class="lang-bash">$ kubectl -n hipster apply <span class="hljs-_">-f</span> ./release/kubernetes-manifests.yaml
+<pre><code class="lang-bash">$ kubectl -n hipster apply <span class="hljs-_">-f</span> ./hipster/kubernetes-manifests.yaml
 </code></pre>
 <p>Apply Istio manifests:</p>
-<pre><code class="lang-bash">$ kubectl -n hipster apply <span class="hljs-_">-f</span> ./release/istio-manifests.yaml
+<pre><code class="lang-bash">$ kubectl -n hipster apply <span class="hljs-_">-f</span> ./hipster/istio-manifests.yaml
 </code></pre>
-<p>Change Cart Service image pull policy to <code>Always</code>:</p>
-<pre><code class="lang-bash">$ kubectl -n hipster edit deploy cartservice
-</code></pre>
-<pre><code class="lang-yaml"><span class="hljs-attr">containers:</span>
-<span class="hljs-attr">- name:</span> server
-<span class="hljs-attr">  image:</span> bzurkowski/cartservice:latest
-<span class="hljs-attr">  imagePullPolicy:</span> Always
-</code></pre>
-<p>Use custom Cart Service image with MongoDB as cart store:</p>
-<pre><code class="lang-bash">$ kubectl -n hipster <span class="hljs-built_in">set</span> image deployment/cartservice server=bzurkowski/cartservice:latest
+<p>Scale Cart Service down to offload database during startup:</p>
+<pre><code class="lang-bash">$ kubectl -n hipster scale deploy cartservice-v1 --replicas=0
 </code></pre>
 <h3 id="setup-application-database">Setup application database</h3>
+<p>Deploy Percona MongoDB Operator using Helm (cluster-wide mode is not <a href="https://jira.percona.com/browse/K8SPSMDB-203" target="_blank">supported</a>):</p>
+<pre><code class="lang-bash">$ helm install --namespace hipster --create-namespace psmdb-operator percona/psmdb-operator --version 1.9.0
+</code></pre>
+<p>Wait until operator is ready:</p>
+<pre><code class="lang-bash">$ kubectl -n hipster get pods |grep operator
+</code></pre>
+<p>Deploy MongoDB cluster:</p>
+<pre><code class="lang-bash">$ kubectl -n hipster apply <span class="hljs-_">-f</span> ./hipster/mongodb-manifests.yaml
+</code></pre>
+<p>Wait until cluster is ready:</p>
+<pre><code class="lang-bash">$ watch kubectl -n hipster get pods
+$ watch <span class="hljs-string">&apos;kubectl -n hipster describe psmdb mdb |grep State&apos;</span>
+</code></pre>
 <p>Create DB user:</p>
-<pre><code class="lang-bash">$ kubectl -n psmdb <span class="hljs-built_in">exec</span> -it $(kubectl -n psmdb get pods |grep mongos |head -n1 |awk <span class="hljs-string">&apos;{print $1}&apos;</span>) -- mongo -u userAdmin -p userAdmin123456 --authenticationDatabase admin
+<pre><code class="lang-bash">$ kubectl -n hipster <span class="hljs-built_in">exec</span> -it $(kubectl -n hipster get pods |grep mongos |head -n1 |awk <span class="hljs-string">&apos;{print $1}&apos;</span>) -- mongo -u userAdmin -p userAdmin123456 --authenticationDatabase admin
 
 &gt; use hipster
 &gt; db.createUser(
@@ -652,23 +557,26 @@ $ kubectl label namespace hipster istio-injection=enabled
 )
 </code></pre>
 <p>Enable sharding:</p>
-<pre><code class="lang-bash">$ kubectl -n psmdb <span class="hljs-built_in">exec</span> -it $(kubectl -n psmdb get pods |grep mongos |head -n1 |awk <span class="hljs-string">&apos;{print $1}&apos;</span>) -- mongo -u clusterAdmin -p clusterAdmin123456 --authenticationDatabase admin
+<pre><code class="lang-bash">$ kubectl -n hipster <span class="hljs-built_in">exec</span> -it $(kubectl -n hipster get pods |grep mongos |head -n1 |awk <span class="hljs-string">&apos;{print $1}&apos;</span>) -- mongo -u clusterAdmin -p clusterAdmin123456 --authenticationDatabase admin
 
 &gt; sh.enableSharding(<span class="hljs-string">&quot;hipster&quot;</span>)
 </code></pre>
 <p>Create collection:</p>
-<pre><code class="lang-bash">kubectl -n psmdb <span class="hljs-built_in">exec</span> -it $(kubectl -n psmdb get pods |grep mongos |head -n1 |awk <span class="hljs-string">&apos;{print $1}&apos;</span>) -- mongo -u hipster -p hipster --authenticationDatabase hipster
+<pre><code class="lang-bash">kubectl -n hipster <span class="hljs-built_in">exec</span> -it $(kubectl -n hipster get pods |grep mongos |head -n1 |awk <span class="hljs-string">&apos;{print $1}&apos;</span>) -- mongo -u hipster -p hipster --authenticationDatabase hipster
 
 &gt; use hipster
 &gt; db.createCollection(<span class="hljs-string">&quot;carts&quot;</span>)
 </code></pre>
 <p>Shard the collection:</p>
-<pre><code class="lang-bash">$ kubectl -n psmdb <span class="hljs-built_in">exec</span> -it $(kubectl -n psmdb get pods |grep mongos |head -n1 |awk <span class="hljs-string">&apos;{print $1}&apos;</span>) -- mongo -u clusterAdmin -p clusterAdmin123456 --authenticationDatabase admin
+<pre><code class="lang-bash">$ kubectl -n hipster <span class="hljs-built_in">exec</span> -it $(kubectl -n hipster get pods |grep mongos |head -n1 |awk <span class="hljs-string">&apos;{print $1}&apos;</span>) -- mongo -u clusterAdmin -p clusterAdmin123456 --authenticationDatabase admin
 
 &gt; sh.shardCollection(<span class="hljs-string">&quot;hipster.carts&quot;</span>, {<span class="hljs-string">&quot;_id&quot;</span>: <span class="hljs-string">&quot;hashed&quot;</span>})
 </code></pre>
-<p>Set MongoDB URI in app environment:</p>
-<pre><code class="lang-bash">$ kubectl -n hipster <span class="hljs-built_in">set</span> env deployment/cartservice <span class="hljs-string">&quot;MONGODB_URL=mongodb://hipster:hipster@mdb-mongos.psmdb:27017/hipster&quot;</span>
+<p>Set MongoDB address in app environment:</p>
+<pre><code class="lang-bash">$ kubectl -n hipster <span class="hljs-built_in">set</span> env deployment/cartservice-v1 <span class="hljs-string">&quot;MONGODB_URL=mongodb://hipster:hipster@mdb-mongos.hipster:27017/hipster&quot;</span>
+</code></pre>
+<p>Scale Cart Service back to the original replicas number:</p>
+<pre><code class="lang-bash">$ kubectl -n hipster scale deploy cartservice-v1 --replicas=1
 </code></pre>
 
                                 
@@ -713,7 +621,7 @@ $ kubectl label namespace hipster istio-injection=enabled
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Experiment 2","level":"4.2","depth":1,"next":{"title":"Falco","level":"5.1","depth":1,"path":"integrations/falco.md","ref":"integrations/falco.md","articles":[]},"previous":{"title":"Experiment 1","level":"4.1","depth":1,"path":"experiments/exp-1.md","ref":"experiments/exp-1.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"experiments/exp-2.md","mtime":"2021-11-03T16:00:28.363Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-11-03T16:01:13.905Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Experiment 2","level":"4.2","depth":1,"next":{"title":"Falco","level":"5.1","depth":1,"path":"integrations/falco.md","ref":"integrations/falco.md","articles":[]},"previous":{"title":"Experiment 1","level":"4.1","depth":1,"path":"experiments/exp-1.md","ref":"experiments/exp-1.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"experiments/exp-2.md","mtime":"2021-11-04T19:02:20.640Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-11-04T19:10:10.985Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

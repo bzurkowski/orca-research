@@ -511,19 +511,35 @@
                                 <h1 id="istio">Istio</h1>
 <h2 id="installation">Installation</h2>
 <p>Download Istio release:</p>
-<pre><code class="lang-bash">$ curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.6.14 sh -
+<pre><code class="lang-bash">$ curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.11.4 sh -
 </code></pre>
 <p>Add <code>istioctl</code> binary to the system path:</p>
-<pre><code class="lang-bash">$ mv istio-1.6.14/bin/istioctl /usr/<span class="hljs-built_in">local</span>/bin/
+<pre><code class="lang-bash">$ mv ./istio-1.11.4/bin/istioctl /usr/<span class="hljs-built_in">local</span>/bin/
 </code></pre>
 <p>Deploy Istio control plane:</p>
 <pre><code class="lang-bash">$ istioctl install \
-    <span class="hljs-_">-f</span> <span class="hljs-variable">$HOME</span>/Workspace/orca/orca/helm/examples/integrations/istio/orca-values.yaml \
-    --set values.kiali.prometheusAddr=http://prometheus-kube-prometheus-prometheus.monitoring:9090 \
+    <span class="hljs-_">-f</span> <span class="hljs-variable">$HOME</span>/Workspace/orca/orca/helm/examples/integrations/istio/values.yaml \
     --set values.pilot.nodeSelector.role=exp-control \
     --set values.mixer.telemetry.nodeSelector.role=exp-control \
     --set values.kiali.nodeSelector.role=exp-control \
     --set values.gateways.istio-ingressgateway.nodeSelector.role=exp-control
+</code></pre>
+<p>Wait until Istio pods are up and running:</p>
+<pre><code class="lang-bash">$ kubectl -n istio-system get pods
+</code></pre>
+<p>Deploy Kiali dashboard:</p>
+<pre><code class="lang-bash">$ kubectl -n istio-system apply <span class="hljs-_">-f</span> ./istio-1.11.4/samples/addons/kiali.yaml
+</code></pre>
+<p>Edit Prometheus address in Kiali config:</p>
+<pre><code class="lang-bash">$ kubectl -n istio-system edit cm kiali
+</code></pre>
+<pre><code class="lang-yaml">  config.yaml: <span class="hljs-string">|
+    ...
+</span><span class="hljs-attr">    external_services:</span>
+<span class="hljs-attr">      custom_dashboards:</span>
+<span class="hljs-attr">        enabled:</span> <span class="hljs-literal">true</span>
+<span class="hljs-attr">      prometheus:</span>
+<span class="hljs-attr">        url:</span> http://prometheus-operated.monitoring:<span class="hljs-number">9090</span>
 </code></pre>
 <p>Setup <a href="https://grafana.com/orgs/istio/dashboards" target="_blank">Grafana dashboards</a> for Istio:</p>
 <ul>
@@ -603,7 +619,7 @@ $ git checkout -b v1.4.5 tags/1.4.5
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Istio","level":"3.7","depth":1,"next":{"title":"Falco","level":"3.8","depth":1,"path":"testbed/falco.md","ref":"testbed/falco.md","articles":[]},"previous":{"title":"Elastalert","level":"3.6","depth":1,"path":"testbed/elastalert.md","ref":"testbed/elastalert.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/istio.md","mtime":"2021-02-27T13:48:33.646Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-11-03T16:01:13.905Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Istio","level":"3.7","depth":1,"next":{"title":"Falco","level":"3.8","depth":1,"path":"testbed/falco.md","ref":"testbed/falco.md","articles":[]},"previous":{"title":"Elastalert","level":"3.6","depth":1,"path":"testbed/elastalert.md","ref":"testbed/elastalert.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/istio.md","mtime":"2021-11-04T19:09:35.674Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-11-04T19:10:10.985Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
