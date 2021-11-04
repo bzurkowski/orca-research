@@ -2,123 +2,13 @@
 
 ## Preparation
 
-### Deploy MongoDB Cluster
-
-Create cluster credentials:
-
-```yaml
-cat <<EOF | kubectl -npsmdb apply -f -
-apiVersion: v1
-kind: Secret
-metadata:
-  name: mdb-secrets
-type: Opaque
-stringData:
-  MONGODB_BACKUP_USER: backup
-  MONGODB_BACKUP_PASSWORD: backup123456
-  MONGODB_CLUSTER_ADMIN_USER: clusterAdmin
-  MONGODB_CLUSTER_ADMIN_PASSWORD: clusterAdmin123456
-  MONGODB_CLUSTER_MONITOR_USER: clusterMonitor
-  MONGODB_CLUSTER_MONITOR_PASSWORD: clusterMonitor123456
-  MONGODB_USER_ADMIN_USER: userAdmin
-  MONGODB_USER_ADMIN_PASSWORD: userAdmin123456
-  PMM_SERVER_USER: admin
-  PMM_SERVER_PASSWORD: admin
-EOF
-```
-
-Provision cluster from CR:
-
-```yaml
-cat <<EOF | kubectl -npsmdb apply -f -
-apiVersion: psmdb.percona.com/v1-9-0
-kind: PerconaServerMongoDB
-metadata:
-  name: mdb
-  finalizers:
-  - delete-psmdb-pvc
-spec:
-  crVersion: 1.9.0
-  image: percona/percona-server-mongodb:4.4.6-8
-  imagePullPolicy: Always
-  allowUnsafeConfigurations: false
-  updateStrategy: SmartUpdate
-  upgradeOptions:
-    versionServiceEndpoint: https://check.percona.com
-    apply: 4.4-recommended
-    schedule: "0 2 * * *"
-    setFCV: false
-  secrets:
-    users: mdb-secrets
-  pmm:
-    enabled: false
-    image: percona/pmm-client:2.18.0
-    serverHost: psmdb-pmm-service
-  replsets:
-  - name: rs0
-    size: 3
-    storage:
-      engine: wiredTiger
-    affinity:
-      antiAffinityTopologyKey: "kubernetes.io/hostname"
-    resources:
-      limits:
-        cpu: "1000m"
-        memory: "1G"
-      requests:
-        cpu: "300m"
-        memory: "0.5G"
-    volumeSpec:
-      persistentVolumeClaim:
-        resources:
-          requests:
-            storage: 100Mi
-  sharding:
-    enabled: true
-    configsvrReplSet:
-      size: 3
-      affinity:
-        antiAffinityTopologyKey: "kubernetes.io/hostname"
-      resources:
-        limits:
-          cpu: "1000m"
-          memory: "1G"
-        requests:
-          cpu: "300m"
-          memory: "0.5G"
-      volumeSpec:
-        persistentVolumeClaim:
-          resources:
-            requests:
-              storage: 100Mi
-    mongos:
-      size: 3
-      affinity:
-        antiAffinityTopologyKey: "kubernetes.io/hostname"
-      resources:
-        limits:
-          cpu: "1000m"
-          memory: "1G"
-        requests:
-          cpu: "300m"
-          memory: "0.5G"
-      expose:
-        exposeType: ClusterIP
-EOF
-```
-
-Wait until cluster is ready:
-
-```bash
-$ watch 'kubectl -n psmdb describe psmdb mdb |grep State'
-```
-
 ### Deploy Hipster test app
 
 Clone app repository:
 
 ```bash
-$ git clone https://github.com/GoogleCloudPlatform/microservices-demo.git
+$ git clone https://github.com/openrca/orca-testapps.git
+$ cd ./orca-testapps
 ```
 
 Create namespace:
@@ -131,40 +21,52 @@ $ kubectl label namespace hipster istio-injection=enabled
 Apply Kubernetes manifests:
 
 ```bash
-$ kubectl -n hipster apply -f ./release/kubernetes-manifests.yaml
+$ kubectl -n hipster apply -f ./hipster/kubernetes-manifests.yaml
 ```
 
 Apply Istio manifests:
 
 ```bash
-$ kubectl -n hipster apply -f ./release/istio-manifests.yaml
+$ kubectl -n hipster apply -f ./hipster/istio-manifests.yaml
 ```
 
-Change Cart Service image pull policy to `Always`:
+Scale Cart Service down to offload database during startup:
 
 ```bash
-$ kubectl -n hipster edit deploy cartservice
-```
-
-```yaml
-containers:
-- name: server
-  image: bzurkowski/cartservice:latest
-  imagePullPolicy: Always
-```
-
-Use custom Cart Service image with MongoDB as cart store:
-
-```bash
-$ kubectl -n hipster set image deployment/cartservice server=bzurkowski/cartservice:latest
+$ kubectl -n hipster scale deploy cartservice-v1 --replicas=0
 ```
 
 ### Setup application database
 
+Deploy Percona MongoDB Operator using Helm (cluster-wide mode is not [supported](https://jira.percona.com/browse/K8SPSMDB-203)):
+
+```bash
+$ helm install --namespace hipster --create-namespace psmdb-operator percona/psmdb-operator --version 1.9.0
+```
+
+Wait until operator is ready:
+
+```bash
+$ kubectl -n hipster get pods |grep operator
+```
+
+Deploy MongoDB cluster:
+
+```bash
+$ kubectl -n hipster apply -f ./hipster/mongodb-manifests.yaml
+```
+
+Wait until cluster is ready:
+
+```bash
+$ watch kubectl -n hipster get pods
+$ watch 'kubectl -n hipster describe psmdb mdb |grep State'
+```
+
 Create DB user:
 
 ```bash
-$ kubectl -n psmdb exec -it $(kubectl -n psmdb get pods |grep mongos |head -n1 |awk '{print $1}') -- mongo -u userAdmin -p userAdmin123456 --authenticationDatabase admin
+$ kubectl -n hipster exec -it $(kubectl -n hipster get pods |grep mongos |head -n1 |awk '{print $1}') -- mongo -u userAdmin -p userAdmin123456 --authenticationDatabase admin
 
 > use hipster
 > db.createUser(
@@ -181,7 +83,7 @@ $ kubectl -n psmdb exec -it $(kubectl -n psmdb get pods |grep mongos |head -n1 |
 Enable sharding:
 
 ```bash
-$ kubectl -n psmdb exec -it $(kubectl -n psmdb get pods |grep mongos |head -n1 |awk '{print $1}') -- mongo -u clusterAdmin -p clusterAdmin123456 --authenticationDatabase admin
+$ kubectl -n hipster exec -it $(kubectl -n hipster get pods |grep mongos |head -n1 |awk '{print $1}') -- mongo -u clusterAdmin -p clusterAdmin123456 --authenticationDatabase admin
 
 > sh.enableSharding("hipster")
 ```
@@ -189,7 +91,7 @@ $ kubectl -n psmdb exec -it $(kubectl -n psmdb get pods |grep mongos |head -n1 |
 Create collection:
 
 ```bash
-kubectl -n psmdb exec -it $(kubectl -n psmdb get pods |grep mongos |head -n1 |awk '{print $1}') -- mongo -u hipster -p hipster --authenticationDatabase hipster
+kubectl -n hipster exec -it $(kubectl -n hipster get pods |grep mongos |head -n1 |awk '{print $1}') -- mongo -u hipster -p hipster --authenticationDatabase hipster
 
 > use hipster
 > db.createCollection("carts")
@@ -198,13 +100,19 @@ kubectl -n psmdb exec -it $(kubectl -n psmdb get pods |grep mongos |head -n1 |aw
 Shard the collection:
 
 ```bash
-$ kubectl -n psmdb exec -it $(kubectl -n psmdb get pods |grep mongos |head -n1 |awk '{print $1}') -- mongo -u clusterAdmin -p clusterAdmin123456 --authenticationDatabase admin
+$ kubectl -n hipster exec -it $(kubectl -n hipster get pods |grep mongos |head -n1 |awk '{print $1}') -- mongo -u clusterAdmin -p clusterAdmin123456 --authenticationDatabase admin
 
 > sh.shardCollection("hipster.carts", {"_id": "hashed"})
 ```
 
-Set MongoDB URI in app environment:
+Set MongoDB address in app environment:
 
 ```bash
-$ kubectl -n hipster set env deployment/cartservice "MONGODB_URL=mongodb://hipster:hipster@mdb-mongos.psmdb:27017/hipster"
+$ kubectl -n hipster set env deployment/cartservice-v1 "MONGODB_URL=mongodb://hipster:hipster@mdb-mongos.hipster:27017/hipster"
+```
+
+Scale Cart Service back to the original replicas number:
+
+```bash
+$ kubectl -n hipster scale deploy cartservice-v1 --replicas=1
 ```
