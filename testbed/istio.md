@@ -5,25 +5,52 @@
 Download Istio release:
 
 ```bash
-$ curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.6.14 sh -
+$ curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.11.4 sh -
 ```
 
 Add `istioctl` binary to the system path:
 
 ```bash
-$ mv istio-1.6.14/bin/istioctl /usr/local/bin/
+$ mv ./istio-1.11.4/bin/istioctl /usr/local/bin/
 ```
 
 Deploy Istio control plane:
 
 ```bash
 $ istioctl install \
-    -f $HOME/Workspace/orca/orca/helm/examples/integrations/istio/orca-values.yaml \
-    --set values.kiali.prometheusAddr=http://prometheus-kube-prometheus-prometheus.monitoring:9090 \
+    -f $HOME/Workspace/orca/orca/helm/examples/integrations/istio/values.yaml \
     --set values.pilot.nodeSelector.role=exp-control \
     --set values.mixer.telemetry.nodeSelector.role=exp-control \
     --set values.kiali.nodeSelector.role=exp-control \
     --set values.gateways.istio-ingressgateway.nodeSelector.role=exp-control
+```
+
+Wait until Istio pods are up and running:
+
+```bash
+$ kubectl -n istio-system get pods
+```
+
+Deploy Kiali dashboard:
+
+```bash
+$ kubectl -n istio-system apply -f ./istio-1.11.4/samples/addons/kiali.yaml
+```
+
+Edit Prometheus address in Kiali config:
+
+```bash
+$ kubectl -n istio-system edit cm kiali
+```
+
+```yaml
+  config.yaml: |
+    ...
+    external_services:
+      custom_dashboards:
+        enabled: true
+      prometheus:
+        url: http://prometheus-operated.monitoring:9090
 ```
 
 Setup [Grafana dashboards](https://grafana.com/orgs/istio/dashboards) for Istio:
@@ -45,7 +72,6 @@ Setup [Grafana dashboards](https://grafana.com/orgs/istio/dashboards) for Istio:
     ```
     https://grafana.com/api/dashboards/7636/revisions/45/download
     ```
-
 
 ## Cleanup
 
