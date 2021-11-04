@@ -78,7 +78,7 @@ Setup [Grafana dashboards](https://grafana.com/orgs/istio/dashboards) for Istio:
 Delete Istio deployment:
 
 ```bash
-$ istioctl manifest generate -f $HOME/Workspace/orca/orca/helm/examples/integrations/istio/orca-values.yaml | kubectl delete -f -
+$ istioctl manifest generate -f $HOME/Workspace/orca/orca/helm/examples/integrations/istio/values.yaml | kubectl delete -f -
 ```
 
 ## Helm-based installation (deprecated)

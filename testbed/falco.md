@@ -20,7 +20,7 @@ Deploy Falco chart:
 $ helm install stable/falco \
     --name falco \
     --namespace falco \
-    --values $HOME/Workspace/orca/orca/helm/examples/integrations/falco/orca-values.yaml
+    --values $HOME/Workspace/orca/orca/helm/examples/integrations/falco/values.yaml
 ```
 
 By default, Falco chart creates an audit sink policy with `service` webhook reference instead of `url` reference. It is correct for in-cluster webhook setup, however, for some reason, when using `service` reference, the specified webhook port is not respected by the API server - it attempts to communicate with the webhook service using HTTPS on port 443. To fix the issue, the created audit sink must be modified to use `url` reference for which the port is respected:
