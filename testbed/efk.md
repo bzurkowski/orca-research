@@ -15,21 +15,24 @@ $ helm install elasticsearch-master elastic/elasticsearch \
     --version 7.15.0 \
     --namespace logging \
     --create-namespace \
-    --values $HOME/Workspace/orca/orca/helm/examples/integrations/efk/elasticsearch/master-values.yaml
+    --values $HOME/Workspace/orca/orca/helm/examples/integrations/efk/elasticsearch/master-values.yaml \
+    --set nodeSelector.role=exp-control
 ```
 
 ```bash
 $ helm install elasticsearch-data elastic/elasticsearch \
     --version 7.15.0 \
     --namespace logging \
-    --values $HOME/Workspace/orca/orca/helm/examples/integrations/efk/elasticsearch/data-values.yaml
+    --values $HOME/Workspace/orca/orca/helm/examples/integrations/efk/elasticsearch/data-values.yaml \
+    --set nodeSelector.role=exp-control
 ```
 
 ```bash
 $ helm install elasticsearch-client elastic/elasticsearch \
     --version 7.15.0 \
     --namespace logging \
-    --values $HOME/Workspace/orca/orca/helm/examples/integrations/efk/elasticsearch/client-values.yaml
+    --values $HOME/Workspace/orca/orca/helm/examples/integrations/efk/elasticsearch/client-values.yaml \
+    --set nodeSelector.role=exp-control
 ```
 
 Wait until Elasticsearch cluster is ready:
@@ -45,7 +48,8 @@ Deploy FluentBit chart:
 $ helm install filebeat elastic/filebeat \
     --version 7.15.0 \
     --namespace logging \
-    --values $HOME/Workspace/orca/orca/helm/examples/integrations/efk/filebeat/values.yaml
+    --values $HOME/Workspace/orca/orca/helm/examples/integrations/efk/filebeat/values.yaml \
+    --set nodeSelector.role=exp-control
 ```
 
 Deploy Kibana chart:
@@ -54,7 +58,8 @@ Deploy Kibana chart:
 $ helm install kibana elastic/kibana \
     --version 7.15.0 \
     --namespace logging \
-    --values $HOME/Workspace/orca/orca/helm/examples/integrations/efk/kibana/values.yaml
+    --values $HOME/Workspace/orca/orca/helm/examples/integrations/efk/kibana/values.yaml \
+    --set nodeSelector.role=exp-control
 ```
 
 ## Cleanup
