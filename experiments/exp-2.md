@@ -28,6 +28,18 @@ helm install orca $HOME/Workspace/orca/orca/helm/orca \
     --set arangodb.nodeSelector.role=exp-control
 ```
 
+Delete default Prometheus alert rules:
+
+```bash
+$ kubectl -n monitoring delete prometheusrules $(kubectl -n monitoring get prometheusrules |awk '{print $1}')
+```
+
+Apply custom Prometheus alert rules:
+
+```bash
+kubectl -n rca apply -f $HOME/Workspace/orca/orca/helm/examples/integrations/rules.yaml
+```
+
 ### Deploy Hipster test app
 
 Clone app repository:
