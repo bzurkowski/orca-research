@@ -15,7 +15,8 @@ $ helm install elastalert jertel/elastalert2 \
     --version 2.2.2 \
     --namespace logging \
     --create-namespace \
-    --values $HOME/Workspace/orca/orca/helm/examples/integrations/elastalert/values.yaml
+    --values $HOME/Workspace/orca/orca/helm/examples/integrations/elastalert/values.yaml \
+    --set nodeSelector.role=exp-control
 ```
 
 ## Cleanup
