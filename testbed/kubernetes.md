@@ -217,8 +217,8 @@ $ ansible-playbook -i ./inventory/orca/hosts.yml cluster.yml -b -v
 ### Label nodes
 
 ```bash
-$ kubectl label nodes node1 node2 node3 node4 role=exp-control
-$ kubectl label nodes node5 node6 node7 node8 node9 node10 node11 node12 node13 node14 node15 node16 role=exp-subject
+$ kubectl label nodes node3 node4 node5 node6 node7 node8 role=exp-control
+$ kubectl label nodes node9 node10 node11 node12 node13 node14 node15 node16 role=exp-subject
 ```
 
 ## Upgrade
