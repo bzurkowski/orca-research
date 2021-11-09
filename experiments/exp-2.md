@@ -79,7 +79,7 @@ $ kubectl -n hipster scale deploy cartservice-v1 --replicas=0
 Deploy Percona MongoDB Operator using Helm (cluster-wide mode is not [supported](https://jira.percona.com/browse/K8SPSMDB-203)):
 
 ```bash
-$ helm install --namespace hipster --create-namespace psmdb-operator percona/psmdb-operator --version 1.9.0role=exp-subject
+$ helm install --namespace hipster --create-namespace psmdb-operator percona/psmdb-operator --version 1.9.0 --set nodeSelector.role=exp-subject
 ```
 
 Wait until operator is ready:
