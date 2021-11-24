@@ -508,8 +508,36 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="experiment-1">Experiment 1</h1>
+                                <h1 id="experiment-2">Experiment 2</h1>
 <h2 id="preparation">Preparation</h2>
+<h2 id="setup-openrca">Setup OpenRCA</h2>
+<p>Deploy OpenRCA using Helm:</p>
+<pre><code class="lang-bash">helm install orca <span class="hljs-variable">$HOME</span>/Workspace/orca/orca/helm/orca \
+    --namespace rca \
+    --create-namespace \
+    --set image.pullPolicy=Always \
+    --set image.tag=latest \
+    --set ui.image.pullPolicy=Always \
+    --set ui.image.tag=latest \
+    --set probes.prometheus.enabled=<span class="hljs-literal">true</span> \
+    --set probes.prometheus.url=http://prometheus-kube-prometheus-prometheus.monitoring:9090 \
+    --set probes.kiali.enabled=<span class="hljs-literal">true</span> \
+    --set probes.kiali.url=http://kiali.istio-system:20001 \
+    --set probes.kiali.username=admin \
+    --set probes.kiali.password=admin \
+    --set ingestors.prometheus.enabled=<span class="hljs-literal">false</span> \
+    --set ingestors.elastalert.enabled=<span class="hljs-literal">true</span> \
+    --set ingestors.falco.enabled=<span class="hljs-literal">true</span> \
+    --set nodeSelector.role=exp-control \
+    --set ui.nodeSelector.role=exp-control \
+    --set arangodb.nodeSelector.role=exp-control
+</code></pre>
+<p>Delete default Prometheus alert rules:</p>
+<pre><code class="lang-bash">$ kubectl -n monitoring delete prometheusrules $(kubectl -n monitoring get prometheusrules |awk <span class="hljs-string">&apos;{print $1}&apos;</span>)
+</code></pre>
+<p>Apply custom Prometheus alert rules:</p>
+<pre><code class="lang-bash">kubectl -n rca apply <span class="hljs-_">-f</span> <span class="hljs-variable">$HOME</span>/Workspace/orca/orca/helm/examples/integrations/rules.yaml
+</code></pre>
 <h3 id="deploy-hipster-test-app">Deploy Hipster test app</h3>
 <p>Clone app repository:</p>
 <pre><code class="lang-bash">$ git <span class="hljs-built_in">clone</span> https://github.com/openrca/orca-testapps.git
@@ -530,7 +558,7 @@ $ kubectl label namespace hipster istio-injection=enabled
 </code></pre>
 <h3 id="setup-application-database">Setup application database</h3>
 <p>Deploy Percona MongoDB Operator using Helm (cluster-wide mode is not <a href="https://jira.percona.com/browse/K8SPSMDB-203" target="_blank">supported</a>):</p>
-<pre><code class="lang-bash">$ helm install --namespace hipster --create-namespace psmdb-operator percona/psmdb-operator --version 1.9.0
+<pre><code class="lang-bash">$ helm install --namespace hipster --create-namespace psmdb-operator percona/psmdb-operator --version 1.9.0 --set nodeSelector.role=exp-subject
 </code></pre>
 <p>Wait until operator is ready:</p>
 <pre><code class="lang-bash">$ kubectl -n hipster get pods |grep operator
@@ -621,7 +649,7 @@ $ watch <span class="hljs-string">&apos;kubectl -n hipster describe psmdb mdb |g
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Experiment 2","level":"4.2","depth":1,"next":{"title":"Falco","level":"5.1","depth":1,"path":"integrations/falco.md","ref":"integrations/falco.md","articles":[]},"previous":{"title":"Experiment 1","level":"4.1","depth":1,"path":"experiments/exp-1.md","ref":"experiments/exp-1.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"experiments/exp-2.md","mtime":"2021-11-04T19:02:20.640Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-11-04T19:16:12.357Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Experiment 2","level":"4.2","depth":1,"next":{"title":"Falco","level":"5.1","depth":1,"path":"integrations/falco.md","ref":"integrations/falco.md","articles":[]},"previous":{"title":"Experiment 1","level":"4.1","depth":1,"path":"experiments/exp-1.md","ref":"experiments/exp-1.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"experiments/exp-2.md","mtime":"2021-11-09T23:54:03.120Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-11-24T10:17:47.410Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
