@@ -8,6 +8,13 @@ Add Helm repository:
 $ helm repo add jertel https://helm.jertel.com
 ```
 
+Create config map with match enhancements:
+
+```
+$ kubectl -n logging create cm enhancements \
+    --from-file=$HOME/Workspace/orca/orca/helm/examples/integrations/elastalert/enhancements.py
+```
+
 Deploy Elastalert cluster using Helm:
 
 ```bash
