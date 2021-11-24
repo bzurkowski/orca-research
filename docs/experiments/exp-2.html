@@ -606,6 +606,20 @@ $ watch <span class="hljs-string">&apos;kubectl -n hipster describe psmdb mdb |g
 <p>Scale Cart Service back to the original replicas number:</p>
 <pre><code class="lang-bash">$ kubectl -n hipster scale deploy cartservice-v1 --replicas=1
 </code></pre>
+<h2 id="cleanup">Cleanup</h2>
+<p>Delete Hipster test app:</p>
+<pre><code class="lang-bash">$ kubectl -n hipster delete <span class="hljs-_">-f</span> <span class="hljs-variable">$HOME</span>/Workspace/orca/orca-testapps/hipster/kubernetes-manifests.yaml
+$ kubectl -n hipster delete <span class="hljs-_">-f</span> <span class="hljs-variable">$HOME</span>/Workspace/orca/orca-testapps/hipster/istio-manifests.yaml
+</code></pre>
+<p>Delete MongoDB cluster:</p>
+<pre><code class="lang-bash">$ kubectl -n hipster delete <span class="hljs-_">-f</span> <span class="hljs-variable">$HOME</span>/Workspace/orca/orca-testapps/hipster/mongodb-manifests.yaml
+</code></pre>
+<p>Wait until MongoDB pods are terminated:</p>
+<pre><code class="lang-bash">$ watch kubectl -n hipster get pod
+</code></pre>
+<p>Delete MongoDB Operator:</p>
+<pre><code class="lang-bash">$ helm -n hipster delete psmdb-operator
+</code></pre>
 
                                 
                                 </section>
@@ -649,7 +663,7 @@ $ watch <span class="hljs-string">&apos;kubectl -n hipster describe psmdb mdb |g
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Experiment 2","level":"4.2","depth":1,"next":{"title":"Falco","level":"5.1","depth":1,"path":"integrations/falco.md","ref":"integrations/falco.md","articles":[]},"previous":{"title":"Experiment 1","level":"4.1","depth":1,"path":"experiments/exp-1.md","ref":"experiments/exp-1.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"experiments/exp-2.md","mtime":"2021-11-09T23:54:03.120Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-11-24T10:17:47.410Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Experiment 2","level":"4.2","depth":1,"next":{"title":"Falco","level":"5.1","depth":1,"path":"integrations/falco.md","ref":"integrations/falco.md","articles":[]},"previous":{"title":"Experiment 1","level":"4.1","depth":1,"path":"experiments/exp-1.md","ref":"experiments/exp-1.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"experiments/exp-2.md","mtime":"2021-11-24T10:34:58.941Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-11-24T10:36:07.382Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
