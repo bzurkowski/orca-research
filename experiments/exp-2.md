@@ -154,3 +154,30 @@ Scale Cart Service back to the original replicas number:
 ```bash
 $ kubectl -n hipster scale deploy cartservice-v1 --replicas=1
 ```
+
+## Cleanup
+
+Delete Hipster test app:
+
+```bash
+$ kubectl -n hipster delete -f $HOME/Workspace/orca/orca-testapps/hipster/kubernetes-manifests.yaml
+$ kubectl -n hipster delete -f $HOME/Workspace/orca/orca-testapps/hipster/istio-manifests.yaml
+```
+
+Delete MongoDB cluster:
+
+```bash
+$ kubectl -n hipster delete -f $HOME/Workspace/orca/orca-testapps/hipster/mongodb-manifests.yaml
+```
+
+Wait until MongoDB pods are terminated:
+
+```bash
+$ watch kubectl -n hipster get pod
+```
+
+Delete MongoDB Operator:
+
+```bash
+$ helm -n hipster delete psmdb-operator
+```
