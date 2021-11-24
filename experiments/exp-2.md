@@ -42,13 +42,6 @@ kubectl -n rca apply -f $HOME/Workspace/orca/orca/helm/examples/integrations/rul
 
 ### Deploy Hipster test app
 
-Clone app repository:
-
-```bash
-$ git clone https://github.com/openrca/orca-testapps.git
-$ cd ./orca-testapps
-```
-
 Create namespace:
 
 ```bash
@@ -59,13 +52,13 @@ $ kubectl label namespace hipster istio-injection=enabled
 Apply Kubernetes manifests:
 
 ```bash
-$ kubectl -n hipster apply -f ./hipster/kubernetes-manifests.yaml
+$ kubectl -n hipster apply -f $HOME/Workspace/orca/orca-testapps/hipster/kubernetes-manifests.yaml
 ```
 
 Apply Istio manifests:
 
 ```bash
-$ kubectl -n hipster apply -f ./hipster/istio-manifests.yaml
+$ kubectl -n hipster apply -f $HOME/Workspace/orca/orca-testapps/hipster/istio-manifests.yaml
 ```
 
 Scale Cart Service down to offload database during startup:
@@ -91,7 +84,7 @@ $ kubectl -n hipster get pods |grep operator
 Deploy MongoDB cluster:
 
 ```bash
-$ kubectl -n hipster apply -f ./hipster/mongodb-manifests.yaml
+$ kubectl -n hipster apply -f $HOME/Workspace/orca/orca-testapps/hipster/mongodb-manifests.yaml
 ```
 
 Wait until cluster is ready:
