@@ -26,6 +26,12 @@ $ helm install elastalert jertel/elastalert2 \
     --set nodeSelector.role=exp-control
 ```
 
+Check Elastalert for errors:
+
+```bash
+$ kubectl -n logging logs $(kubectl -n logging get pods |grep elastalert |awk '{print $1}') |grep -i error
+```
+
 Port-forward Kibana dashboard:
 
 ```bash
