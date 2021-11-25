@@ -34,3 +34,9 @@ Delete Chaos Mesh chart release:
 ```bash
 $ helm -n chaos delete chaos-mesh
 ```
+
+Remove Chaos Mesh CRDs:
+
+```bash
+$ kubectl delete crds $(kubectl get crds |grep "chaos-mesh.org" |awk '{print $1}')
+```
