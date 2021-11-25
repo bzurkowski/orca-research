@@ -66,6 +66,12 @@ $ helm install kibana elastic/kibana \
     --set nodeSelector.role=exp-control
 ```
 
+Check Filebeat for parsing and transport errors:
+
+```bash
+$ for p in $(kubectl -n logging get pods |grep filebeat |awk '{print $1}'); do echo $p; kubectl -n logging logs $p |grep -i error |grep -iv cri; done
+```
+
 Wait until buffered logs are pushed to Elasticsearch (10-15 minutes)...
 
 Port-forward Kibana dashboard:
