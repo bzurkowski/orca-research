@@ -66,6 +66,18 @@ $ helm install kibana elastic/kibana \
     --set nodeSelector.role=exp-control
 ```
 
+Wait until buffered logs are pushed to Elasticsearch (10-15 minutes)...
+
+Port-forward Kibana dashboard:
+
+```bash
+$ kubectl -n logging port-forward svc/kibana 4444:5601
+```
+
+Open [Kibana dashboard](http://localhost:4444) and create index pattern:
+
+![](/assets/images/efk-index-pattern.png)
+
 ## Cleanup
 
 Delete Kibana chart release:
