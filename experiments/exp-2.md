@@ -161,3 +161,9 @@ Delete MongoDB Operator:
 ```bash
 $ helm -n hipster delete psmdb-operator
 ```
+
+Delete test app namespace:
+
+```bash
+$ kubectl delete ns hipster
+```
