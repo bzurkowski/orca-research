@@ -35,6 +35,12 @@ $ helm install elasticsearch-client elastic/elasticsearch \
     --set nodeSelector.role=exp-control
 ```
 
+Wait until all Elasticsearch pods are ready:
+
+```bash
+$ watch kubectl -n logging get pods
+```
+
 Wait until Elasticsearch cluster is ready:
 
 ```bash
@@ -77,7 +83,9 @@ $ helm -n logging delete filebeat
 Delete Elasticsearch chart release:
 
 ```bash
-$ helm -n logging delete elasticsearch
+$ helm -n logging delete elasticsearch-client
+$ helm -n logging delete elasticsearch-master
+$ helm -n logging delete elasticsearch-data
 ```
 
 Delete logging namespace:
