@@ -189,8 +189,8 @@ $ helm -n psmdb delete psmdb-pmm
 $ helm -n psmdb delete psmdb-operator
 ```
 
-Remove leftover Prometheus CRDs:
+Remove PSMDB CRDs:
 
 ```bash
-kubectl delete crds $(kubectl get crds |grep -i percona |awk '{print $1}')
+$ kubectl delete crds $(kubectl get crds |grep "psmdb.percona.com" |awk '{print $1}')
 ```
