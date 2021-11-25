@@ -81,3 +81,9 @@ Delete Elasticsearch chart release:
 ```bash
 $ helm -n logging delete elasticsearch
 ```
+
+Delete logging namespace:
+
+```bash
+$ kubectl delete ns logging
+```
