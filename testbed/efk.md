@@ -42,7 +42,7 @@ Wait until Elasticsearch cluster is ready:
 $ helm --namespace=logging test elasticsearch-master
 ```
 
-Deploy FluentBit chart:
+Deploy Filebeat chart:
 
 ```bash
 $ helm install filebeat elastic/filebeat \
@@ -70,10 +70,10 @@ Delete Kibana chart release:
 $ helm -n logging delete kibana
 ```
 
-Delete FluentBit chart release:
+Delete Filebeat chart release:
 
 ```bash
-$ helm -n logging delete fluent-bit
+$ helm -n logging delete filebeat
 ```
 
 Delete Elasticsearch chart release:
