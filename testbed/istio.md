@@ -29,6 +29,8 @@ Wait until Istio pods are up and running:
 $ kubectl -n istio-system get pods
 ```
 
+### Deploy Kiali
+
 Deploy Kiali dashboard:
 
 ```bash
@@ -50,6 +52,14 @@ $ kubectl -n istio-system edit cm kiali
       prometheus:
         url: http://prometheus-operated.monitoring:9090
 ```
+
+Restart Kiali pod:
+
+```bash
+$ kubectl -n istio-system delete pod $(kubectl -n istio-system get pods |grep kiali |awk '{print $1}')
+```
+
+### Setup Grafana
 
 Setup [Grafana dashboards](https://grafana.com/orgs/istio/dashboards) for Istio:
 
