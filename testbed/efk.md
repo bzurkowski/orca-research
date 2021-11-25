@@ -37,7 +37,6 @@ $ helm install elasticsearch-client elastic/elasticsearch \
 
 Wait until Elasticsearch cluster is ready:
 
-
 ```bash
 $ helm --namespace=logging test elasticsearch-master
 ```
@@ -48,8 +47,7 @@ Deploy Filebeat chart:
 $ helm install filebeat elastic/filebeat \
     --version 7.15.0 \
     --namespace logging \
-    --values $HOME/Workspace/orca/orca/helm/examples/integrations/efk/filebeat/values.yaml \
-    --set nodeSelector.role=exp-control
+    --values $HOME/Workspace/orca/orca/helm/examples/integrations/efk/filebeat/values.yaml
 ```
 
 Deploy Kibana chart:
