@@ -13,7 +13,7 @@ $ helm install orca $HOME/Workspace/orca/orca/helm/orca \
     --set ui.image.pullPolicy=Always \
     --set ui.image.tag=latest \
     --set probes.prometheus.enabled=true \
-    --set probes.prometheus.url=http://prometheus-kube-prometheus-prometheus.monitoring:9090 \
+    --set probes.prometheus.url=http://prometheus-prometheus.monitoring:9090 \
     --set probes.kiali.enabled=true \
     --set probes.kiali.url=http://kiali.istio-system:20001 \
     --set probes.kiali.username=admin \
