@@ -34,6 +34,12 @@ Delete Elastalert chart release:
 $ helm -n logging delete elastalert
 ```
 
+Delete config map with match enhancements:
+
+```bash
+$ kubectl -n logging delete cm enhancements
+```
+
 ## Links
 
 * https://www.youtube.com/watch?v=udustJZQ-yI
