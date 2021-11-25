@@ -26,6 +26,16 @@ $ helm install elastalert jertel/elastalert2 \
     --set nodeSelector.role=exp-control
 ```
 
+Port-forward Kibana dashboard:
+
+```bash
+$ kubectl -n logging port-forward svc/kibana 4444:5601
+```
+
+Open [Kibana dashboard](http://localhost:4444) and create index pattern:
+
+![](/assets/images/efk-index-pattern-elastalert.png)
+
 ## Cleanup
 
 Delete Elastalert chart release:
