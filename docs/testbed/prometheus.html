@@ -548,15 +548,11 @@ $ helm repo update
 <p>Delete Prometheus chart release:</p>
 <pre><code class="lang-bash">$ helm -n monitoring delete prometheus
 </code></pre>
-<p>Remove leftover Prometheus CRDs:</p>
-<pre><code class="lang-bash">kubectl delete crd alertmanagerconfigs.monitoring.coreos.com
-kubectl delete crd alertmanagers.monitoring.coreos.com
-kubectl delete crd podmonitors.monitoring.coreos.com
-kubectl delete crd probes.monitoring.coreos.com
-kubectl delete crd prometheuses.monitoring.coreos.com
-kubectl delete crd prometheusrules.monitoring.coreos.com
-kubectl delete crd servicemonitors.monitoring.coreos.com
-kubectl delete crd thanosrulers.monitoring.coreos.com
+<p>Remove Prometheus CRDs:</p>
+<pre><code class="lang-bash">$ kubectl delete crds $(kubectl get crds |grep <span class="hljs-string">&quot;monitoring.coreos.com&quot;</span> |awk <span class="hljs-string">&apos;{print $1}&apos;</span>)
+</code></pre>
+<p>Delete monitoring namespace:</p>
+<pre><code class="lang-bash">$ kubectl delete ns monitoring
 </code></pre>
 
                                 
@@ -601,7 +597,7 @@ kubectl delete crd thanosrulers.monitoring.coreos.com
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Prometheus","level":"3.4","depth":1,"next":{"title":"EFK","level":"3.5","depth":1,"path":"testbed/efk.md","ref":"testbed/efk.md","articles":[]},"previous":{"title":"NFS","level":"3.3","depth":1,"path":"testbed/nfs.md","ref":"testbed/nfs.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/prometheus.md","mtime":"2021-11-04T19:10:36.736Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-11-24T10:36:07.382Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Prometheus","level":"3.4","depth":1,"next":{"title":"EFK","level":"3.5","depth":1,"path":"testbed/efk.md","ref":"testbed/efk.md","articles":[]},"previous":{"title":"NFS","level":"3.3","depth":1,"path":"testbed/nfs.md","ref":"testbed/nfs.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/prometheus.md","mtime":"2021-11-25T10:05:31.070Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-11-25T10:33:44.841Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

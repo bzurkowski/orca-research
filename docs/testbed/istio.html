@@ -519,10 +519,8 @@
 <p>Deploy Istio control plane:</p>
 <pre><code class="lang-bash">$ istioctl install \
     <span class="hljs-_">-f</span> <span class="hljs-variable">$HOME</span>/Workspace/orca/orca/helm/examples/integrations/istio/values.yaml \
-    --set values.pilot.nodeSelector.role=exp-control \
-    --set values.mixer.telemetry.nodeSelector.role=exp-control \
-    --set values.kiali.nodeSelector.role=exp-control \
-    --set values.gateways.istio-ingressgateway.nodeSelector.role=exp-control
+    --set <span class="hljs-string">&quot;components.pilot.k8s.nodeSelector.role=exp-control&quot;</span> \
+    --set <span class="hljs-string">&quot;components.ingressGateways[0].k8s.nodeSelector.role=exp-control&quot;</span>
 </code></pre>
 <p>Wait until Istio pods are up and running:</p>
 <pre><code class="lang-bash">$ kubectl -n istio-system get pods
@@ -555,7 +553,10 @@
 </ul>
 <h2 id="cleanup">Cleanup</h2>
 <p>Delete Istio deployment:</p>
-<pre><code class="lang-bash">$ istioctl manifest generate <span class="hljs-_">-f</span> <span class="hljs-variable">$HOME</span>/Workspace/orca/orca/helm/examples/integrations/istio/values.yaml | kubectl delete <span class="hljs-_">-f</span> -
+<pre><code class="lang-bash">$ istioctl x uninstall --purge
+</code></pre>
+<p>Delete Istio namespace:</p>
+<pre><code class="lang-bash">$ kubectl delete ns istio-system
 </code></pre>
 <h2 id="helm-based-installation-deprecated">Helm-based installation (deprecated)</h2>
 <p>Add Istio repository:</p>
@@ -619,7 +620,7 @@ $ git checkout -b v1.4.5 tags/1.4.5
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Istio","level":"3.7","depth":1,"next":{"title":"Falco","level":"3.8","depth":1,"path":"testbed/falco.md","ref":"testbed/falco.md","articles":[]},"previous":{"title":"Elastalert","level":"3.6","depth":1,"path":"testbed/elastalert.md","ref":"testbed/elastalert.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/istio.md","mtime":"2021-11-04T19:15:34.967Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-11-24T10:36:07.382Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Istio","level":"3.7","depth":1,"next":{"title":"Falco","level":"3.8","depth":1,"path":"testbed/falco.md","ref":"testbed/falco.md","articles":[]},"previous":{"title":"Elastalert","level":"3.6","depth":1,"path":"testbed/elastalert.md","ref":"testbed/elastalert.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"testbed/istio.md","mtime":"2021-11-25T10:31:32.482Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-11-25T10:33:44.841Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

@@ -539,19 +539,15 @@
 <pre><code class="lang-bash">kubectl -n rca apply <span class="hljs-_">-f</span> <span class="hljs-variable">$HOME</span>/Workspace/orca/orca/helm/examples/integrations/rules.yaml
 </code></pre>
 <h3 id="deploy-hipster-test-app">Deploy Hipster test app</h3>
-<p>Clone app repository:</p>
-<pre><code class="lang-bash">$ git <span class="hljs-built_in">clone</span> https://github.com/openrca/orca-testapps.git
-$ <span class="hljs-built_in">cd</span> ./orca-testapps
-</code></pre>
 <p>Create namespace:</p>
 <pre><code class="lang-bash">$ kubectl create namespace hipster
 $ kubectl label namespace hipster istio-injection=enabled
 </code></pre>
 <p>Apply Kubernetes manifests:</p>
-<pre><code class="lang-bash">$ kubectl -n hipster apply <span class="hljs-_">-f</span> ./hipster/kubernetes-manifests.yaml
+<pre><code class="lang-bash">$ kubectl -n hipster apply <span class="hljs-_">-f</span> <span class="hljs-variable">$HOME</span>/Workspace/orca/orca-testapps/hipster/kubernetes-manifests.yaml
 </code></pre>
 <p>Apply Istio manifests:</p>
-<pre><code class="lang-bash">$ kubectl -n hipster apply <span class="hljs-_">-f</span> ./hipster/istio-manifests.yaml
+<pre><code class="lang-bash">$ kubectl -n hipster apply <span class="hljs-_">-f</span> <span class="hljs-variable">$HOME</span>/Workspace/orca/orca-testapps/hipster/istio-manifests.yaml
 </code></pre>
 <p>Scale Cart Service down to offload database during startup:</p>
 <pre><code class="lang-bash">$ kubectl -n hipster scale deploy cartservice-v1 --replicas=0
@@ -564,7 +560,7 @@ $ kubectl label namespace hipster istio-injection=enabled
 <pre><code class="lang-bash">$ kubectl -n hipster get pods |grep operator
 </code></pre>
 <p>Deploy MongoDB cluster:</p>
-<pre><code class="lang-bash">$ kubectl -n hipster apply <span class="hljs-_">-f</span> ./hipster/mongodb-manifests.yaml
+<pre><code class="lang-bash">$ kubectl -n hipster apply <span class="hljs-_">-f</span> <span class="hljs-variable">$HOME</span>/Workspace/orca/orca-testapps/hipster/mongodb-manifests.yaml
 </code></pre>
 <p>Wait until cluster is ready:</p>
 <pre><code class="lang-bash">$ watch kubectl -n hipster get pods
@@ -620,6 +616,9 @@ $ kubectl -n hipster delete <span class="hljs-_">-f</span> <span class="hljs-var
 <p>Delete MongoDB Operator:</p>
 <pre><code class="lang-bash">$ helm -n hipster delete psmdb-operator
 </code></pre>
+<p>Delete test app namespace:</p>
+<pre><code class="lang-bash">$ kubectl delete ns hipster
+</code></pre>
 
                                 
                                 </section>
@@ -663,7 +662,7 @@ $ kubectl -n hipster delete <span class="hljs-_">-f</span> <span class="hljs-var
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Experiment 2","level":"4.2","depth":1,"next":{"title":"Falco","level":"5.1","depth":1,"path":"integrations/falco.md","ref":"integrations/falco.md","articles":[]},"previous":{"title":"Experiment 1","level":"4.1","depth":1,"path":"experiments/exp-1.md","ref":"experiments/exp-1.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"experiments/exp-2.md","mtime":"2021-11-24T10:34:58.941Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-11-24T10:36:07.382Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Experiment 2","level":"4.2","depth":1,"next":{"title":"Falco","level":"5.1","depth":1,"path":"integrations/falco.md","ref":"integrations/falco.md","articles":[]},"previous":{"title":"Experiment 1","level":"4.1","depth":1,"path":"experiments/exp-1.md","ref":"experiments/exp-1.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"experiments/exp-2.md","mtime":"2021-11-24T10:37:22.189Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-11-25T10:33:44.841Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
