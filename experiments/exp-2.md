@@ -24,7 +24,7 @@ $ kubectl -n monitoring delete prometheusrules $(kubectl -n monitoring get prome
 Apply custom Prometheus alert rules:
 
 ```bash
-kubectl -n rca apply -f $HOME/Workspace/orca/orca/helm/examples/integrations/rules.yaml
+kubectl -n rca apply -f $HOME/Workspace/orca/orca/helm/examples/integrations/prometheus/rules.yaml
 ```
 
 ### Deploy Hipster test app
