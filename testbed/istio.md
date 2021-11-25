@@ -19,10 +19,8 @@ Deploy Istio control plane:
 ```bash
 $ istioctl install \
     -f $HOME/Workspace/orca/orca/helm/examples/integrations/istio/values.yaml \
-    --set values.pilot.nodeSelector.role=exp-control \
-    --set values.mixer.telemetry.nodeSelector.role=exp-control \
-    --set values.kiali.nodeSelector.role=exp-control \
-    --set values.gateways.istio-ingressgateway.nodeSelector.role=exp-control
+    --set "components.pilot.k8s.nodeSelector.role=exp-control" \
+    --set "components.ingressGateways[0].k8s.nodeSelector.role=exp-control"
 ```
 
 Wait until Istio pods are up and running:
